@@ -1,8 +1,14 @@
+import Navbar from "./layout/navbar"
+import Head from "./sections/head"
+import Search from "./sections/search"
+
 function App() {
 
   return (
     <>
-      <h1>Hello, my clinic app</h1>
+      <Navbar />
+      <Head />
+      <Search />
     </>
   )
 }

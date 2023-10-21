@@ -4,3 +4,20 @@
 :root {
   font-family: 'Roboto', sans-serif;
 }
+@layer components{
+  .link-hover {
+    @apply cursor-pointer relative before:absolute before:w-full before:h-full before:content-['']
+  before:bg-teal-color before:z-[-1] px-2 py-1 before:top-2/4 before:left-2/4 before:translate-x-[-50%]
+    before:translate-y-[-50%] before:transform md:before:origin-bottom md:before:scale-y-0
+    before:origin-left before:scale-x-0 hover:before:scale-x-100 md:before:scale-x-100
+    md:hover:before:scale-y-100 before:transition-all duration-300 hover:text-white
+  }
+  .link-border-hover {
+    @apply cursor-pointer relative before:absolute before:w-full before:h-full before:content-['']
+  text-teal-color border border-teal-color hover:bg-dark-color hover:border-dark-color
+  before:bg-teal-color before:z-[-1] px-2 py-1 before:top-2/4 before:left-2/4 before:translate-x-[-50%]
+    before:translate-y-[-50%] before:transform md:before:origin-bottom md:before:scale-y-0
+    before:origin-left before:scale-x-0 hover:before:scale-x-100 md:before:scale-x-100
+    md:hover:before:scale-y-100 before:transition-all duration-300 hover:text-white
+  }
+}
