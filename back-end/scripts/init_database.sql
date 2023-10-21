@@ -1,11 +1,11 @@
-# mysql script used to create new database of clinic app #
-
-# create new database if not exists #
+# Create a new database if it does not exist #
 CREATE DATABASE IF NOT EXISTS clinic_db;
 
-# create user api to access all data on database #
-CREATE USER IF NOT EXISTS 'api'@'localhost';
+# Create a user 'apiflask' if it does not exist #
+CREATE USER IF NOT EXISTS 'api'@'localhost' IDENTIFIED BY 'api_pass';
 
-# give privilages to tables that can api user can access or modify on it #
+# Grant all privileges on the 'clinic_db' database to the 'apiflask' user #
 GRANT ALL PRIVILEGES ON clinic_db.* TO 'api'@'localhost';
+
+# Flush privileges to apply the changes immediately #
 FLUSH PRIVILEGES;

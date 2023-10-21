@@ -5,6 +5,10 @@
 from uuid import uuid4
 from datetime import datetime
 from sqlalchemy import Column, String, DateTime
+from sqlalchemy.ext.declarative import declarative_base
+
+
+Base = declarative_base()
 
 
 class BaseModel:
@@ -15,11 +19,11 @@ class BaseModel:
 				created_at: date which that row is created
 				updated_at: date which that row is updated or modify
 	"""
-	id = Column(String(60), primary_key=True, nullable=False)
+	id = Column(String(60), primary_key=True, nullable=False, unique=True)
 	created_at = Column(DateTime, nullable=False)
 	updated_at = Column(DateTime, nullable=False)
 
-	def __init__(self, *args, **kwargs={}):
+	def __init__(self, *args, **kwargs):
 		""" init magic method that initate the new value in start of class
 				if new instance create new value
 				if provide dictionary of value set values to rows
@@ -28,7 +32,7 @@ class BaseModel:
 					**kwargs: dictionary of values that add to rows
 		"""
 		for key, value in kwargs.items():
-			if key != table_name:
+			if key != 'table_name':
 				setattr(self, key, value)
 		if kwargs.get('created_at'):
 			self.created_at = kwargs['created_at']

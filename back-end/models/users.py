@@ -2,12 +2,11 @@
 """ module that create table of users inherite from Base
 		of sqlalchemy and from Basemodel
 """
-from models import Base
-from models.base_model import BaseModel
-from sqlalchemy import Column, String, Int, LargeBinary
+from models.base_model import BaseModel, Base
+from sqlalchemy import Column, String, LargeBinary
 
 
-class Users(BaseModel, Base):
+class User(BaseModel, Base):
 	""" class or models to create users tables in databases
 			Columns:
 				id: represnt id of each row in table using uuid library inherit from Basemodel

@@ -3,8 +3,11 @@
 		contain engine and session of all databases
 """
 from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker, scoped_session
+from models.base_model import Base
 
 
-Base = declarative_base()
-engine = create_engine('mysql+mysqldb//api@localhost/clinic_db')
+engine = create_engine('mysql+mysqldb://api@localhost/clinic_db', pool_pre_ping=True)
+Base.metadata.create_all(engine)
+session_creator = sessionmaker(bind=engine, expire_on_commit=False)
+Session = scoped_session(session_creator)
