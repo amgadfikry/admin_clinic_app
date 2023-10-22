@@ -9,9 +9,13 @@ function Head() {
       <section className='order-2 lg:order-1 container mx-auto lg:w-1/2 lg:flex lg:flex-col lg:justify-center'>
         <h3 className='font-thin text-7xl text-gray-500 mb-5 text-center'>Providing<br></br>Best</h3>
         <h1 className='font-[900] text-5xl text-teal-color text-center mb-5 md:text-6xl'>Medical Service</h1>
-        <p className='text-dark-color text-center md:w-[75%] md:mx-auto'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus quaerat consectetur totam.
+        <p className='text-dark-color text-center md:w-[75%] md:mx-auto text-sm'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus quaerat consectetur totam.
           Repellendus, fugit eius nulla laudantium modi blanditiis voluptate
         </p>
+        <div className='flex flex-row items-center justify-center mt-6'>
+          <button className='btn-dark mr-5'>Get Started</button>
+          <button className='btn-teal'>Explore</button>
+        </div>
       </section>
       <div className='w-[20px] h-[50px] absolute left-0 top-10 bg-yellow-color opacity-30'></div>
       <div className='w-[20px] h-[50px] absolute left-0 bottom-[200px] bg-teal-color opacity-30'></div>

@@ -1,6 +1,8 @@
 import { TbCalendarPlus } from 'react-icons/tb'
+import SearchForm from '../components/searchForm'
 
 function Search() {
+
   return (
     <section className="bg-gray-color py-8">
       <div className="container mx-auto bg-white drop-shadow-lg rounded-lg py-3">
@@ -11,6 +13,7 @@ function Search() {
             <p className='font-[300] text-sm'>Examination or procedure</p>
           </div>
         </div>
+        <SearchForm />
       </div>
     </section>
   )

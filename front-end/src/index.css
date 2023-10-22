@@ -4,6 +4,16 @@
 :root {
   font-family: 'Roboto', sans-serif;
 }
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #1B9C85;
+  border-radius: 5px;
+}
 @layer components{
   .link-hover {
     @apply cursor-pointer relative before:absolute before:w-full before:h-full before:content-['']
@@ -19,5 +29,21 @@
     before:translate-y-[-50%] before:transform md:before:origin-bottom md:before:scale-y-0
     before:origin-left before:scale-x-0 hover:before:scale-x-100 md:before:scale-x-100
     md:hover:before:scale-y-100 before:transition-all duration-300 hover:text-white
+  }
+  .btn-dark {
+    @apply cursor-pointer relative before:absolute before:w-full before:h-full before:content-['']
+  text-teal-color border border-teal-color hover:bg-dark-color hover:border-dark-color
+  before:bg-teal-color w-[140px] h-[50px] font-[500] before:top-2/4 before:translate-x-[-50%]
+  before:translate-y-[-50%] before:transform lg:before:origin-bottom lg:before:scale-y-0 text-lg
+    before:origin-left before:scale-x-0 hover:before:scale-x-100 lg:before:scale-x-100 before:z-[-1]
+    lg:hover:before:scale-y-100 before:transition-all duration-300 hover:text-white before:left-2/4
+  }
+  .btn-teal{
+    @apply cursor-pointer relative before:absolute before:w-full before:h-full before:content-['']
+  text-dark-color border border-dark-color hover:bg-teal-color hover:border-teal-color
+  before:bg-teal-color w-[140px] h-[50px] font-[500] before:top-2/4 before:translate-x-[-50%]
+    before:translate-y-[-50%] before:transform lg:before:origin-bottom lg:before:scale-y-0 text-lg
+    before:origin-left before:scale-x-0 hover:before:scale-x-100 lg:before:scale-x-100 before:z-[-1]
+    lg:hover:before:scale-y-100 before:transition-all duration-300 hover:text-white before:left-2/4
   }
 }
