@@ -4,6 +4,7 @@
 """
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, LargeBinary
+from sqlalchemy.orm import relationship
 
 
 class User(BaseModel, Base):
@@ -22,3 +23,6 @@ class User(BaseModel, Base):
 	password = Column(String(128), nullable=False)
 	email = Column(String(128), nullable=False)
 	image = Column(LargeBinary, nullable=True)
+	reviews = relationship("Review", backref="user")
+	appointments = relationship("Appointment", backref='user')
+	
