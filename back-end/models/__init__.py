@@ -5,6 +5,12 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 from models.base_model import Base
+from models.user import User
+from models.appointment import Appointment
+from models.doctor import Doctor
+from models.review import Review
+from models.speciality import Speciality
+from models.time import Time
 
 
 engine = create_engine('mysql+mysqldb://api@localhost/clinic_db', pool_pre_ping=True)

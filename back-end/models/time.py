@@ -6,6 +6,7 @@ from models.base_model import Base, BaseModel
 from sqlalchemy import Column, String, Integer
 from sqlalchemy.orm import column_property
 
+
 class Time(BaseModel, Base):
 	""" class or models to create times tables in databases
 			Columns:
@@ -21,4 +22,4 @@ class Time(BaseModel, Base):
 	day = Column(String(60), nullable=False)
 	start = Column(Integer, nullable=False)
 	end = Column(Integer, nullable=False)
-	max_patients = column_property(int((end - start) / 2))
+	max_patients = column_property((end - start) / 10) 
