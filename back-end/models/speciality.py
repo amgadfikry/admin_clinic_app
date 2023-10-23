@@ -16,7 +16,7 @@ class Speciality(BaseModel, Base):
 				name: string represent name of speciality
 				price: integer preresent default price
 	"""
-	__tablename__ = 'reviews'
+	__tablename__ = 'specialities'
 	name = Column(String(128), nullable=False)
 	price = Column(Integer, nullable=False)
 	doctors = relationship('Doctor', backref='speciality')

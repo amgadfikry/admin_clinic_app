@@ -17,7 +17,7 @@ class Review(BaseModel, Base):
 				stars: represent number of stars given to doctor
 	"""
 	__tablename__ = 'reviews'
-	user_id = Column(String(60), ForeignKey(users.id), nullable=False)
-	doctor_id = Column(String(60), ForeignKey(doctors.id), nullable=False)
+	user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
+	doctor_id = Column(String(60), ForeignKey('doctors.id'), nullable=False)
 	text = Column(String(1024), nullable=True)
 	stars = Column(Integer, nullable=False)

@@ -17,7 +17,7 @@ class Time(BaseModel, Base):
 				end: string represent end of hours
 				max_patients: calculate numbers of pateints in hours work
 	"""
-	__tablename__ = 'reviews'
+	__tablename__ = 'times'
 	day = Column(String(60), nullable=False)
 	start = Column(Integer, nullable=False)
 	end = Column(Integer, nullable=False)

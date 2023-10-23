@@ -17,7 +17,7 @@ class Appointment(BaseModel, Base):
 				date: datetime represent date and time of appointemnt
 	"""
 	__tablename__ = 'users'
-	user_id = Column(String(60), ForeignKey(users.id), nullable=False)
-	doctor_id = Column(String(60), ForeignKey(doctors.id), nullable=False)
+	user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
+	doctor_id = Column(String(60), ForeignKey('doctors.id'), nullable=False)
 	date = Column(DateTime, nullable=False)
 	

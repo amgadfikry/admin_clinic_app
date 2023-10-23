@@ -37,7 +37,7 @@ class Doctor(BaseModel, Base):
 	"""
 	__tablename__ = 'doctors'
 	full_name = Column(String(256), nullable=False)
-	speciality_id = Column(String(60), ForeignKey, nullable=False)
+	speciality_id = Column(String(60), ForeignKey('specialities.id'), nullable=False)
 	title = Column(String(128), nullable=False)
 	image = Column(LargeBinary, nullable=True)
 	price = Column(Integer, nullable=True)
