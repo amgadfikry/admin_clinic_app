@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" module that create table of reviews inherite from Base
+""" module that create table of testimonials inherite from Base
 		of sqlalchemy and from Basemodel
 """
 
@@ -7,19 +7,17 @@
 from models.base_model import Base, BaseModel
 
 # import rquired properties for creating databases columns in class
-from sqlalchemy import Column, String, Integer, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey
 
 
-class Review(BaseModel, Base):
+class Testimonial(BaseModel, Base):
 	""" class or models to create reviews tables in databases
 			Columns:
 				user_id: string represent user id as foreign key
-				doctor_id: string represent doctor id as foreign key
-				text: long string represent review details
+				details: long string represent review details
 				stars: integer represent number of stars given to doctor in review
 	"""
-	__tablename__ = 'reviews'
+	__tablename__ = 'testimonials'
 	user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
-	doctor_id = Column(String(60), ForeignKey('doctors.id'), nullable=False)
-	text = Column(String(1024), nullable=True)
 	stars = Column(Integer, nullable=False)
+	details = Column(String(1024), nullable=False)

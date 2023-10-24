@@ -7,6 +7,8 @@ from models.doctor import Doctor
 from models.review import Review
 from models.speciality import Speciality
 from models.time import Time
+from models.offer import Offer
+from datetime import datetime
 
 user1 = {'full_name': 'moaz', 'email': 'moaz_amgad@yahoo.com',
 						'password': '343432'}
@@ -32,6 +34,11 @@ appo2 ={'user_id': '05c89a1f-00dc-4211-bdfc-ca691981628f', 'doctor_id':'3174844f
  'date': 'sunday'}
 time2 = {'day':'friday', 'start':12, 'end':14}
 time1 = {'day':'sunday', 'start':17, 'end':20}
+offer = {'title':'weight loss', 'old_price': 100, 'new_price': 70, 'description': 'pla pla pla',
+'speciality_id': 'b35a3d4d-73ea-4d0a-b0a9-4339b7d5dcc0', 'expire_date': datetime(2023, 12, 15, 0 , 0 , 0), }
 
-result = Session.query(Doctor).first()
-print(result.times[0].day)
+new = Offer(**offer)
+Session.add(new)
+Session.commit()
+result = Session.query(Offer).first()
+print(result.to_dict())

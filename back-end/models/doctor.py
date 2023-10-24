@@ -2,11 +2,23 @@
 """ module that create table of doctors inherite from Base
 		of sqlalchemy and from Basemodel
 """
+
+# import Base and BaseModel provide ingeritance to table or model
 from models.base_model import BaseModel, Base
+
+# import rquired properties for creating databases columns in class
 from sqlalchemy import Column, String, Integer, ForeignKey, LargeBinary, Table
+
+# import propety to create relationship with other tables
 from sqlalchemy.orm import relationship
 
 
+"""create secondary table that connect doctors table or Doctor model
+	with times table or Time model
+	Colums:
+		doctor_id: string represent doctor id as foreign key
+		time_id: string represent time id as foreign key
+"""
 doctor_time = Table('doctor_time', Base.metadata,
 										Column('doctor_id',
 														String(60),
@@ -23,17 +35,20 @@ doctor_time = Table('doctor_time', Base.metadata,
 										)
 
 class Doctor(BaseModel, Base):
-	""" class or models to create doctors tables in databases
+	""" class or models to create doctors tables in database
 			Columns:
-				id: represnt id of each row in table using uuid library inherit from Basemodel
-				created_at: date which that row is created inherit from Basemodel
-				updated_at: date which that row is updated or modify inherit from Basemodel
 				full_name: string represent doctor full name
 				title: string represent title of doctor
-				speciality_id: string represent id of speciality
+				speciality_id: string represent speciality id as foreign key
 				price: integer for price of examination
-				details: string of details of doctor
+				details: long string of details about doctor
 				image: binary represent image of doctor
+				reviews: relationship with reviews tables or Review model with back refrence
+					doctor in reviews table
+				appointments: relationship with appointments tables or Appointment model with back refrence
+					doctor in appointments table
+				all_times: relationship with secondary table called doctor_time and back reference
+					in times table with all_doctors
 	"""
 	__tablename__ = 'doctors'
 	full_name = Column(String(256), nullable=False)
@@ -44,7 +59,7 @@ class Doctor(BaseModel, Base):
 	details = Column(String(1024), nullable=False)
 	reviews = relationship("Review", backref="doctor")
 	appointments = relationship("Appointment", backref='doctor')
-	times = relationship('Time', secondary='doctor_time', 
-												viewonly=False, backref='doctor_times'
+	all_times = relationship('Time', secondary='doctor_time', 
+												viewonly=False, backref='all_doctors'
 											)
 	

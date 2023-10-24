@@ -1,23 +1,31 @@
 #!/usr/bin/env python3
-""" model of database tables that hold all common features in all
-		others models as created at, updated at, id
+""" module of base_model class that hold all common features in all
+		others models of sqlalchemy as created at, updated at, id
 """
+
+# import uuid library to use for generate id
 from uuid import uuid4
+
+# import datetime library to get and set current time
 from datetime import datetime
+
+# import rquired properties for creating databases columns in class
 from sqlalchemy import Column, String, DateTime
+
+# import rquired object to create base class
 from sqlalchemy.ext.declarative import declarative_base
 
-
+# initiate Base class of sqlalchemy
 Base = declarative_base()
 
 
 class BaseModel:
-	""" model that is base for other models prepresents tables
-			inherit from Base class of sqlalchemy
+	""" model that is base for other models prepresents tables of database
+			using sqlalchemy
 			Columns:
-				id: represnt id of each row in table using uuid library
-				created_at: date which that row is created
-				updated_at: date which that row is updated or modify
+				id: represnt id column in table using uuid library
+				created_at: represend date of creation of new row in table using datetime library
+				updated_at: represend updated date when update row in table using datetime library
 	"""
 	id = Column(String(60), primary_key=True, nullable=False, unique=True)
 	created_at = Column(DateTime, nullable=False)
@@ -26,13 +34,14 @@ class BaseModel:
 	def __init__(self, *args, **kwargs):
 		""" init magic method that initate the new value in start of class
 				if new instance create new value
-				if provide dictionary of value set values to rows
+				if provide dictionary of value set values to column
+				and pass key values that not part from models as table_name
 				ATTR:
 					*args: list of arguments of function
 					**kwargs: dictionary of values that add to rows
 		"""
 		for key, value in kwargs.items():
-			if key != 'table_name':
+			if key not in ['table_name']:
 				setattr(self, key, value)
 		if kwargs.get('created_at'):
 			self.created_at = kwargs['created_at']
@@ -49,10 +58,19 @@ class BaseModel:
 
 	def to_dict(self):
 		""" instance public method that convert class to dictionary with
-				add new dict key and value about table name
+				add new dict key and value represent table name
 		"""
 		new_dict = {}
-		for key, value in self.__dict__.items():
-			setattr(new_dict, key, value)
+		new_dict.update(self.__dict__)
 		new_dict['table_name'] = self.__tablename__
 		return new_dict
+
+	def update(self, key, value):
+		""" public instance method that update value in model
+				and update updated_at value
+				Params:
+					key: represent key or column name in table
+					value: represent new value to update it
+		"""
+		self.updated_at = datetime.now()
+		setattr(self, key, value) 

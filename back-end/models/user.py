@@ -2,21 +2,30 @@
 """ module that create table of users inherite from Base
 		of sqlalchemy and from Basemodel
 """
+
+# import Base and BaseModel provide ingeritance to table or model
 from models.base_model import BaseModel, Base
+
+# import rquired properties for creating databases columns in class
 from sqlalchemy import Column, String, LargeBinary
+
+# import propety to create relationship with other tables
 from sqlalchemy.orm import relationship
 
 
 class User(BaseModel, Base):
 	""" class or models to create users tables in databases
 			Columns:
-				id: represnt id of each row in table using uuid library inherit from Basemodel
-				created_at: date which that row is created inherit from Basemodel
-				updated_at: date which that row is updated or modify inherit from Basemodel
 				full_name: string represent user full name
-				password: string represent password of user
+				password:  hashed string represent password of user
 				email: string represent email of user
-				image: dinary data to save profile image
+				image: binary represent profile image of user
+				reviews: relationship with reviews tables or Review model with back refrence
+					user in reviews table
+				appointments: relationship with appointments tables or Appointment model with back refrence
+					user in appointments table
+				testimonials: relationship with testimonials tables or Testimonial model with back refrence
+					user in testimonials table
 	"""
 	__tablename__ = 'users'
 	full_name = Column(String(256), nullable=False)
@@ -25,4 +34,5 @@ class User(BaseModel, Base):
 	image = Column(LargeBinary, nullable=True)
 	reviews = relationship("Review", backref="user")
 	appointments = relationship("Appointment", backref='user')
+	testimonials = relationship('Testimonial', backref='user')
 	
