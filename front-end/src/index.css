@@ -47,3 +47,17 @@
     lg:hover:before:scale-y-100 before:transition-all duration-300 hover:text-white before:left-2/4
   }
 }
+@layer utilities {
+  @variants responsive {
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
+  }
+}

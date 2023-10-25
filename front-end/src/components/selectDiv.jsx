@@ -22,7 +22,7 @@ function SelectDiv() {
         <input type='text' name='speciality' id='speciality' value={soecialityValue} readOnly placeholder='Choose Speciality'
           className='text-center focus:outline-0 active:outline-0 pointer-event-none cursor-pointer placeholder:text-dark-color' />
         <ul className={`absolute w-full border bg-white rounded-b-lg top-[103%] left-0 overflow-hidden text-center md:text-left
-          ${specialityMenu ? 'block' : 'hidden'} max-h-[200px] overflow-scroll z-10 pointer-events-auto`}>
+          ${specialityMenu ? 'block' : 'hidden'} max-h-[200px] overflow-y-scroll z-10 pointer-events-auto`}>
           <li className='border-b hover:bg-teal-color hover:text-white cursor-pointer px-4 py-2'
             onClick={(e) => handleSpecialitySelect(e)} >All</li>
           <li className='border-b hover:bg-teal-color hover:text-white cursor-pointer px-4 py-2'
