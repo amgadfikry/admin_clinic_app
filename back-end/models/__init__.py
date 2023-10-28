@@ -20,6 +20,7 @@ from models.speciality import Speciality
 from models.time import Time
 from models.offer import Offer
 from models.testimonial import Testimonial
+from models.admin import Admin
 
 
 # create engine with mysql database, user is api, host is local, and clinic_db database

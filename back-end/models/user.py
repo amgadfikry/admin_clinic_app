@@ -17,6 +17,7 @@ class User(BaseModel, Base):
 	""" class or models to create users tables in databases
 			Columns:
 				full_name: string represent user full name
+				user_name: string represent user user name
 				password:  hashed string represent password of user
 				email: string represent email of user
 				image: binary represent profile image of user
@@ -29,6 +30,7 @@ class User(BaseModel, Base):
 	"""
 	__tablename__ = 'users'
 	full_name = Column(String(256), nullable=False)
+	user_name = Column(String(128), nullable=False)
 	password = Column(String(128), nullable=False)
 	email = Column(String(128), nullable=False)
 	image = Column(LargeBinary, nullable=True)

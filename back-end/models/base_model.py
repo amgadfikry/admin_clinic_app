@@ -62,6 +62,8 @@ class BaseModel:
 		"""
 		new_dict = {}
 		new_dict.update(self.__dict__)
+		if new_dict.get('password'):
+			del new_dict['password']
 		new_dict['table_name'] = self.__tablename__
 		return new_dict
 

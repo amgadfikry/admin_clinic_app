@@ -26,6 +26,7 @@ from models.speciality import Speciality
 from models.time import Time
 from models.offer import Offer
 from models.testimonial import Testimonial
+from models.admin import Admin
 
 
 class Test_models(unittest.TestCase):
@@ -54,13 +55,15 @@ class Test_models(unittest.TestCase):
 
 	def test_01_user_creation(self):
 		"""test of creation new user and data of users"""
-		user_data = {'full_name': 'moaz', 'email': 'moaz_amgad@yahoo.com', 'password': '343432'}
+		user_data = {'full_name': 'moaz amgad', 'email': 'moaz_amgad@yahoo.com', 'password': '343432',
+			'user_name': 'maoz@22'}
 		new_user = User(**user_data)
 		self.session.add(new_user)
 		self.session.commit()
 		result = self.session.query(User).filter_by(full_name=user_data['full_name']).first()
 		self.assertIsNotNone(result)
 		self.assertEqual(result.full_name, user_data['full_name'])
+		self.assertEqual(result.user_name, user_data['user_name'])
 		self.assertEqual(result.email, user_data['email'])
 		self.assertEqual(result.password, user_data['password'])
 
@@ -219,6 +222,20 @@ class Test_models(unittest.TestCase):
 		doctor.all_times.append(time)
 		self.assertEqual(doctor.all_times[0], time)
 		self.assertEqual(time.all_doctors[0], doctor)
+
+	def test_17_admin_creation(self):
+		"""test of creation new admin and data of admin"""
+		admin_data = {'admin_name': 'moaz', 'email': 'moaz_amgad@yahoo.com', 'password': '343432',
+			'user_name': 'admin'}
+		new_admin = Admin(**admin_data)
+		self.session.add(new_admin)
+		self.session.commit()
+		result = self.session.query(Admin).filter_by(admin_name=admin_data['admin_name']).first()
+		self.assertIsNotNone(result)
+		self.assertEqual(result.admin_name, admin_data['admin_name'])
+		self.assertEqual(result.user_name, admin_data['user_name'])
+		self.assertEqual(result.email, admin_data['email'])
+		self.assertEqual(result.password, admin_data['password'])
 
 
 if __name__ == '__main__':
