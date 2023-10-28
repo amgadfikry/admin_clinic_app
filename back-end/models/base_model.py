@@ -64,6 +64,8 @@ class BaseModel:
 		new_dict.update(self.__dict__)
 		if new_dict.get('password'):
 			del new_dict['password']
+		if '_sa_instance_state' in new_dict:
+			del new_dict['_sa_instance_state']
 		new_dict['table_name'] = self.__tablename__
 		return new_dict
 
