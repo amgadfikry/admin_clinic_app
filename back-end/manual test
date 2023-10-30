@@ -1,0 +1,19 @@
+- admin token
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY5ODYwNzgxMSwianRpIjoiN2Q1Mjg5NWMtMjNiOC00NzM1LThmYTctMzY0MjkyZTNiMjdlIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjU3NjUxN2YxLTJhMGUtNDdiNi04MDY0LTdiYTkxNjJmYTBmMyIsIm5iZiI6MTY5ODYwNzgxMSwiZXhwIjoxNjk4NjE4NjExfQ.uF9XOcBNfDiwIp3lOnrv-kdGznQJJFbYtqYmJ0X9DZI
+
+-admin sign in
+curl -X POST -H "Content-Type: application/json" -d '{"user_name": "admin", "password": "admin124"}' http://127.0.0.1:5000/api/admin/signin
+
+- admin state
+curl -X GET -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY5ODYwNzgxMSwianRpIjoiN2Q1Mjg5NWMtMjNiOC00NzM1LThmYTctMzY0MjkyZTNiMjdlIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjU3NjUxN2YxLTJhMGUtNDdiNi04MDY0LTdiYTkxNjJmYTBmMyIsIm5iZiI6MTY5ODYwNzgxMSwiZXhwIjoxNjk4NjE4NjExfQ.uF9XOcBNfDiwIp3lOnrv-kdGznQJJFbYtqYmJ0X9DZI" -H "Content-Type: application/json" http://127.0.0.1:5000/api/admin/state
+
+- create speciality
+curl -X POST -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY5ODYwNzgxMSwianRpIjoiN2Q1Mjg5NWMtMjNiOC00NzM1LThmYTctMzY0MjkyZTNiMjdlIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjU3NjUxN2YxLTJhMGUtNDdiNi04MDY0LTdiYTkxNjJmYTBmMyIsIm5iZiI6MTY5ODYwNzgxMSwiZXhwIjoxNjk4NjE4NjExfQ.uF9XOcBNfDiwIp3lOnrv-kdGznQJJFbYtqYmJ0X9DZI" -H "Content-Type: application/json" -d '{"name": "orthopedic", "price": 300}' http://127.0.0.1:5000/api/admin/speciality
+
+- update speciality
+curl -X PUT -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY5ODYwNzgxMSwianRpIjoiN2Q1Mjg5NWMtMjNiOC00NzM1LThmYTctMzY0MjkyZTNiMjdlIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjU3NjUxN2YxLTJhMGUtNDdiNi04MDY0LTdiYTkxNjJmYTBmMyIsIm5iZiI6MTY5ODYwNzgxMSwiZXhwIjoxNjk4NjE4NjExfQ.uF9XOcBNfDiwIp3lOnrv-kdGznQJJFbYtqYmJ0X9DZI" -H "Content-Type: application/json" -d '{"price": 400}' http://127.0.0.1:5000/api/admin/speciality/a71cda56-ca15-4951-9b1a-a4255b1be518
+
+- delete speciality
+curl -X DELETE -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY5ODYwNzgxMSwianRpIjoiN2Q1Mjg5NWMtMjNiOC00NzM1LThmYTctMzY0MjkyZTNiMjdlIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjU3NjUxN2YxLTJhMGUtNDdiNi04MDY0LTdiYTkxNjJmYTBmMyIsIm5iZiI6MTY5ODYwNzgxMSwiZXhwIjoxNjk4NjE4NjExfQ.uF9XOcBNfDiwIp3lOnrv-kdGznQJJFbYtqYmJ0X9DZI" -H "Content-Type: application/json" http://127.0.0.1:5000/api/admin/speciality/a71cda56-ca15-4951-9b1a-a4255b1be518
+
+- get specialities

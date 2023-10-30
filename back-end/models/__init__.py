@@ -24,7 +24,7 @@ from models.admin import Admin
 
 
 # create engine with mysql database, user is api, host is local, and clinic_db database
-engine = create_engine('mysql+mysqldb://api@localhost/clinic_db', pool_pre_ping=True)
+engine = create_engine('mysql+mysqldb://api@localhost/clinic_db')
 
 # create all table by add it to metadata of Base class of sqlalchemy
 Base.metadata.create_all(engine)

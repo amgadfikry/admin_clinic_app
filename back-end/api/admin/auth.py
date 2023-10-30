@@ -5,7 +5,7 @@
 from models import Session
 
 # import admin_routes that represent routes for all api of admins
-from api.admin import admin_routes
+from api.admin import admin_routes, admin_required
 
 # import neccessary parts from flask library
 from flask import jsonify, request
@@ -34,13 +34,14 @@ def signin():
 	admin = Session.query(Admin).filter_by(user_name=user_name).first()
 	if admin and check_password_hash(admin.password, password):
 		access_token = create_access_token(identity=admin.id)
-		return jsonify({'access_token': access_token})
+		return jsonify({'access_token': access_token}), 201
 	else:
-		return jsonify({'msg': 'Invalid user name or password'})
+		return jsonify({'msg': 'Invalid user name or password'}), 401
 
 
 @admin_routes.route('/state', methods=['GET'], strict_slashes=False)
 @jwt_required()
+@admin_required
 def admin_state():
 	""" route function that check state of admin user
 			Return:
@@ -48,4 +49,4 @@ def admin_state():
 				or return False
 	"""
 	admin = Session.query(Admin).filter_by(id=get_jwt_identity()).first()
-	return jsonify(admin.to_dict())
+	return jsonify(admin.to_dict()), 200

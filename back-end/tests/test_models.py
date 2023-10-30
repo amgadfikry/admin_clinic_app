@@ -78,6 +78,7 @@ class Test_models(unittest.TestCase):
 		self.assertIsNotNone(result)
 		self.assertEqual(result.stars, testimonial_data['stars'])
 		self.assertEqual(result.details, testimonial_data['details'])
+		self.assertEqual(result.live, False)
 
 	def test_03_user_testimonial_relation(self):
 		""" test of relationship between testimonial and users """
@@ -101,7 +102,7 @@ class Test_models(unittest.TestCase):
 		""" test creation of new offer andot's data """
 		speciality = self.session.query(Speciality).first()
 		offer_data = {'title': 'surgery', 'old_price': 300, 'new_price': 150, 'description': 'pla pla pla',
-			'speciality_id': speciality.id, 'expire_date': datetime(2024, 12, 30)}
+			'speciality_id': speciality.id, 'expire_date': '2023-10-29 15:30:00'}
 		new_offer = Offer(**offer_data)
 		self.session.add(new_offer)
 		self.session.commit()
@@ -149,7 +150,7 @@ class Test_models(unittest.TestCase):
 		""" test of creation new appointment and data of it"""
 		user = self.session.query(User).first()
 		doctor = self.session.query(Doctor).first()
-		appointment_data = {'user_id': user.id, 'doctor_id': doctor.id, 'date': datetime(2023, 10, 30)}
+		appointment_data = {'user_id': user.id, 'doctor_id': doctor.id, 'date': '2023-10-29 15:30:00'}
 		new_appointment = Appointment(**appointment_data)
 		self.session.add(new_appointment)
 		self.session.commit()

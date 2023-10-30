@@ -35,6 +35,6 @@ class User(BaseModel, Base):
 	email = Column(String(128), nullable=False)
 	image = Column(LargeBinary, nullable=True)
 	reviews = relationship("Review", backref="user")
-	appointments = relationship("Appointment", backref='user')
-	testimonials = relationship('Testimonial', backref='user')
+	appointments = relationship("Appointment", backref='user', cascade='all, delete-orphan')
+	testimonials = relationship('Testimonial', backref='user', cascade='all, delete-orphan')
 	

@@ -26,5 +26,5 @@ class Speciality(BaseModel, Base):
 	__tablename__ = 'specialities'
 	name = Column(String(128), nullable=False)
 	price = Column(Integer, nullable=False)
-	doctors = relationship('Doctor', backref='speciality')
-	offers = relationship('Offer', backref='speciality')
+	doctors = relationship('Doctor', backref='speciality', cascade='all, delete-orphan')
+	offers = relationship('Offer', backref='speciality', cascade='all, delete-orphan')

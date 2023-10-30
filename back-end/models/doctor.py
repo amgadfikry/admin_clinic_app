@@ -57,9 +57,8 @@ class Doctor(BaseModel, Base):
 	image = Column(LargeBinary, nullable=True)
 	price = Column(Integer, nullable=True)
 	details = Column(String(1024), nullable=False)
-	reviews = relationship("Review", backref="doctor")
-	appointments = relationship("Appointment", backref='doctor')
+	reviews = relationship("Review", backref="doctor", cascade='all, delete-orphan')
+	appointments = relationship("Appointment", backref='doctor', cascade='all, delete-orphan')
 	all_times = relationship('Time', secondary='doctor_time', 
-												viewonly=False, backref='all_doctors'
-											)
+												viewonly=False, backref='all_doctors')
 	

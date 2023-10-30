@@ -10,7 +10,7 @@ from uuid import uuid4
 from datetime import datetime
 
 # import rquired properties for creating databases columns in class
-from sqlalchemy import Column, String, DateTime
+from sqlalchemy import Column, String
 
 # import rquired object to create base class
 from sqlalchemy.ext.declarative import declarative_base
@@ -28,8 +28,8 @@ class BaseModel:
 				updated_at: represend updated date when update row in table using datetime library
 	"""
 	id = Column(String(60), primary_key=True, nullable=False, unique=True)
-	created_at = Column(DateTime, nullable=False)
-	updated_at = Column(DateTime, nullable=False)
+	created_at = Column(String(60), nullable=False)
+	updated_at = Column(String(60), nullable=False)
 
 	def __init__(self, *args, **kwargs):
 		""" init magic method that initate the new value in start of class
@@ -46,7 +46,7 @@ class BaseModel:
 		if kwargs.get('created_at'):
 			self.created_at = kwargs['created_at']
 		else:
-			self.created_at = datetime.now()
+			self.created_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 		if kwargs.get('updated_at'):
 			self.updated_at = kwargs['updated_at']
 		else:
@@ -69,12 +69,13 @@ class BaseModel:
 		new_dict['table_name'] = self.__tablename__
 		return new_dict
 
-	def update(self, key, value):
+	def update(self, *args, **kwargs):
 		""" public instance method that update value in model
 				and update updated_at value
 				Params:
 					key: represent key or column name in table
 					value: represent new value to update it
 		"""
-		self.updated_at = datetime.now()
-		setattr(self, key, value) 
+		self.updated_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+		for key, value in kwargs.items():
+			setattr(self, key, value) 

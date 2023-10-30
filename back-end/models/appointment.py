@@ -7,7 +7,7 @@
 from models.base_model import BaseModel, Base
 
 # import rquired properties for creating databases columns in class
-from sqlalchemy import Column, String, DateTime, ForeignKey
+from sqlalchemy import Column, String, ForeignKey
 
 
 class Appointment(BaseModel, Base):
@@ -20,5 +20,5 @@ class Appointment(BaseModel, Base):
 	__tablename__ = 'appointments'
 	user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
 	doctor_id = Column(String(60), ForeignKey('doctors.id'), nullable=False)
-	date = Column(DateTime, nullable=False)
+	date = Column(String(60), nullable=False)
 	

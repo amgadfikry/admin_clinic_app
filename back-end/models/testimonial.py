@@ -7,7 +7,7 @@
 from models.base_model import Base, BaseModel
 
 # import rquired properties for creating databases columns in class
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
 
 
 class Testimonial(BaseModel, Base):
@@ -21,3 +21,4 @@ class Testimonial(BaseModel, Base):
 	user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
 	stars = Column(Integer, nullable=False)
 	details = Column(String(1024), nullable=False)
+	live = Column(Boolean, nullable=False, default=False)

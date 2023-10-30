@@ -10,6 +10,11 @@ from models import Session
 # import admin_routes that represent routes for all api of admins
 from api.admin import admin_routes
 
+# import user_routes that represent routes for all api of users
+from api.user import user_routes
+
+from api.public import public_routes
+
 # import jwtmanger from it's library
 from flask_jwt_extended import JWTManager
 
@@ -34,6 +39,11 @@ jwt = JWTManager(app)
 
 # add new blue prints of admin_routes
 app.register_blueprint(admin_routes)
+
+# add new blue prints of user_routes
+app.register_blueprint(user_routes)
+
+app.register_blueprint(public_routes)
 
 
 @app.teardown_appcontext

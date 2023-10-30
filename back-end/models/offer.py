@@ -7,7 +7,7 @@
 from models.base_model import BaseModel, Base
 
 # import rquired properties for creating databases columns in class
-from sqlalchemy import Column, Integer, String, LargeBinary, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, String, LargeBinary, ForeignKey
 
 # import column property to use it to get column based on other columns values
 from sqlalchemy.orm import column_property
@@ -35,5 +35,5 @@ class Offer(BaseModel, Base):
 	new_price = Column(Integer, nullable=False)
 	description = Column(String(1024), nullable=False)
 	speciality_id = Column(String(60), ForeignKey('specialities.id'), nullable=False)
-	expire_date = Column(DateTime, nullable=False)
+	expire_date = Column(String(60), nullable=False)
 	percentage = column_property((old_price - new_price) / old_price * 100)
