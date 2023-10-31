@@ -2,11 +2,7 @@
 """ module that create table of testimonials inherite from Base
 		of sqlalchemy and from Basemodel
 """
-
-# import Base and BaseModel provide ingeritance to table or model
 from models.base_model import Base, BaseModel
-
-# import rquired properties for creating databases columns in class
 from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
 
 

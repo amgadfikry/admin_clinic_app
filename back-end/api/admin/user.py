@@ -1,19 +1,10 @@
 #!/usr/bin/env python3
-""" module for route of manipulate with user table """
-
-# import database starting session from models
+""" module for route of manipulate with user table
+"""
 from models import Session
-
-# import admin_routes that represent routes for all api of admins
 from api.admin import admin_routes, admin_required
-
-# import neccessary parts from flask library
 from flask import jsonify, request
-
-# import create access token from jwt
 from flask_jwt_extended import jwt_required
-
-# import testimonial table
 from models.user import User
 from models.appointment import Appointment
 from models.review import Review
@@ -24,7 +15,10 @@ from models.testimonial import Testimonial
 @jwt_required()
 @admin_required
 def get_user(user_id):
-	"""text"""
+	""" get user with id
+			Return:
+				- json of user information with code 200
+	"""
 	user = Session.query(User).filter_by(id=user_id).first()
 	user_dict = user.to_dict()
 	reviews_dict = []

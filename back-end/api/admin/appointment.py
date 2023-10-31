@@ -1,19 +1,10 @@
 #!/usr/bin/env python3
-""" module for route of manipulate with appointment table """
-
-# import database starting session from models
+""" module for route of manipulate with appointment table
+"""
 from models import Session
-
-# import admin_routes that represent routes for all api of admins
 from api.admin import admin_routes, admin_required
-
-# import neccessary parts from flask library
 from flask import jsonify, request
-
-# import create access token from jwt
 from flask_jwt_extended import jwt_required
-
-# import appointment table
 from models.appointment import Appointment
 
 
@@ -21,7 +12,11 @@ from models.appointment import Appointment
 @jwt_required()
 @admin_required
 def manipulate_appointment(appointment_id):
-	""" text """
+	""" update and delete appointment by it's id
+			Return:
+				- empty json with code 200 if delete request
+				- json of new appoinment with code 200 if put request
+	"""
 	appointment = Session.query(Appointment).filter_by(id=appointment_id).first()
 	if request.method == 'DELETE':
 		Session.delete(appointment)
@@ -38,7 +33,10 @@ def manipulate_appointment(appointment_id):
 @jwt_required()
 @admin_required
 def get_all_appointment():
-	"""text"""
+	""" get all appointemnts in tables
+			Return:
+				- json list of all appointements with code 200
+	"""
 	appointments = Session.query(Appointment).all()
 	appointment_dict = []
 	for appoint in appointments:

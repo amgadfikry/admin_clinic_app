@@ -1,19 +1,10 @@
 #!/usr/bin/env python3
-""" module for route of manipulate with testimonial table """
-
-# import database starting session from models
+""" module for route of manipulate with testimonial table
+"""
 from models import Session
-
-# import admin_routes that represent routes for all api of admins
 from api.admin import admin_routes, admin_required
-
-# import neccessary parts from flask library
 from flask import jsonify, request
-
-# import create access token from jwt
 from flask_jwt_extended import jwt_required
-
-# import testimonial table
 from models.testimonial import Testimonial
 
 
@@ -21,7 +12,11 @@ from models.testimonial import Testimonial
 @jwt_required()
 @admin_required
 def manipulate_testimonial(testimonial_id):
-	""" text """
+	""" update and delete testimonial by it's id
+			Return:
+				- empty json with code 200 if delete request
+				- json of new testimonial with code 200 if put request
+	"""
 	testimonial = Session.query(Testimonial).filter_by(id=testimonial_id).first()
 	if request.method == 'DELETE':
 		Session.delete(testimonial)
@@ -38,7 +33,10 @@ def manipulate_testimonial(testimonial_id):
 @jwt_required()
 @admin_required
 def get_all_testimonials():
-	"""text"""
+	""" get all testimonials in tables
+			Return:
+				- json list of all testimonials with code 200
+	"""
 	testimonials = Session.query(Testimonial).all()
 	testimonial_dict = []
 	for testi in testimonials:

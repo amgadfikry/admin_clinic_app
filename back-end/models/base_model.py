@@ -2,20 +2,10 @@
 """ module of base_model class that hold all common features in all
 		others models of sqlalchemy as created at, updated at, id
 """
-
-# import uuid library to use for generate id
 from uuid import uuid4
-
-# import datetime library to get and set current time
 from datetime import datetime
-
-# import rquired properties for creating databases columns in class
 from sqlalchemy import Column, String
-
-# import rquired object to create base class
 from sqlalchemy.ext.declarative import declarative_base
-
-# initiate Base class of sqlalchemy
 Base = declarative_base()
 
 
@@ -30,6 +20,7 @@ class BaseModel:
 	id = Column(String(60), primary_key=True, nullable=False, unique=True)
 	created_at = Column(String(60), nullable=False)
 	updated_at = Column(String(60), nullable=False)
+
 
 	def __init__(self, *args, **kwargs):
 		""" init magic method that initate the new value in start of class
@@ -56,6 +47,7 @@ class BaseModel:
 		else:
 			self.id = str(uuid4())
 
+
 	def to_dict(self):
 		""" instance public method that convert class to dictionary with
 				add new dict key and value represent table name
@@ -68,6 +60,7 @@ class BaseModel:
 			del new_dict['_sa_instance_state']
 		new_dict['table_name'] = self.__tablename__
 		return new_dict
+
 
 	def update(self, *args, **kwargs):
 		""" public instance method that update value in model

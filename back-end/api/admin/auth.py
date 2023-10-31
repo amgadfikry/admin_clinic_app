@@ -1,33 +1,20 @@
 #!/usr/bin/env python3
-""" module for route of authentication of admin to dashboard """
-
-# import database starting session from models
+""" module for route of authentication of admin to dashboard
+"""
 from models import Session
-
-# import admin_routes that represent routes for all api of admins
 from api.admin import admin_routes, admin_required
-
-# import neccessary parts from flask library
 from flask import jsonify, request
-
-# import security library which hash and de-hash passwords
 from werkzeug.security import check_password_hash
-
-# import create access token from jwt
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
-
-# import Admin table
 from models.admin import Admin
 
 
 @admin_routes.route('/signin', methods=['POST'], strict_slashes=False)
 def signin():
-	""" function route that resposible for sign in to admin dashboard
-			by check if admin user name asn password is correct or not
-			and provide access token during session
+	""" sign in admin and create access token
 			Return:
-				access token if correct user name and password
-				or msg if inavlid user or password
+				- json of new access token with code 201 if successfull signin
+				- json with msg if faild signin with code 401 if failed signin
 	"""
 	user_name = request.json.get('user_name', None)
 	password = request.json.get('password', None)
@@ -43,10 +30,9 @@ def signin():
 @jwt_required()
 @admin_required
 def admin_state():
-	""" route function that check state of admin user
+	""" get state of current admin
 			Return:
-				admin data if logged in 
-				or return False
+				- json of admin dictionary information with code 200
 	"""
 	admin = Session.query(Admin).filter_by(id=get_jwt_identity()).first()
 	return jsonify(admin.to_dict()), 200

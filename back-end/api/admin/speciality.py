@@ -1,21 +1,11 @@
 #!/usr/bin/env python3
-""" module for route of manipulate with speciality table """
-
-# import database starting session from models
+""" module for route of manipulate with speciality table
+"""
 from models import Session
-
 from sqlalchemy import func
-
-# import admin_routes that represent routes for all api of admins
 from api.admin import admin_routes, admin_required
-
-# import neccessary parts from flask library
 from flask import jsonify, request
-
-# import create access token from jwt
 from flask_jwt_extended import jwt_required
-
-# import speciality table
 from models.speciality import Speciality
 
 
@@ -23,7 +13,11 @@ from models.speciality import Speciality
 @jwt_required()
 @admin_required
 def create_speciality():
-	"""text"""
+	""" create new speciality
+			Return:
+				- json of created speciality with code 201 if not exist
+				- json of msg with failed if speciality is already exist with code 403
+	"""
 	data = request.get_json()
 	exist = Session.query(Speciality).filter(func.lower(Speciality.name) == func.lower(data['name'])).first()
 	if exist:
@@ -38,7 +32,11 @@ def create_speciality():
 @jwt_required()
 @admin_required
 def manipulate_speciality(speciality_id):
-	""" text """
+	""" update and delete doctor by it's id
+			Return:
+				- empty json with code 200 if delete request
+				- json of new speciality with code 200 if put request
+	"""
 	speciality = Session.query(Speciality).filter_by(id=speciality_id).first()
 	if request.method == 'DELETE':
 		Session.delete(speciality)

@@ -1,19 +1,10 @@
 #!/usr/bin/env python3
-""" module for route of manipulate with offers table """
-
-# import database starting session from models
+""" module for route of manipulate with offers table
+"""
 from models import Session
-
-# import admin_routes that represent routes for all api of admins
 from api.admin import admin_routes, admin_required
-
-# import neccessary parts from flask library
 from flask import jsonify, request
-
-# import create access token from jwt
 from flask_jwt_extended import jwt_required
-
-# import and offers table
 from models.offer import Offer
 
 
@@ -21,7 +12,10 @@ from models.offer import Offer
 @jwt_required()
 @admin_required
 def create_offer():
-	"""text"""
+	""" create new offer
+			Return:
+				- json of created offer with code 201
+	"""
 	data = request.get_json()
 	new_offer = Offer(**data)
 	Session.add(new_offer)
@@ -33,7 +27,11 @@ def create_offer():
 @jwt_required()
 @admin_required
 def manipulate_offer(offer_id):
-	""" text """
+	""" update and delete offer by it's id
+			Return:
+				- empty json with code 200 if delete request
+				- json of new doctor with code 200 if put request
+	"""
 	offer = Session.query(Offer).filter_by(id=offer_id).first()
 	if request.method == 'DELETE':
 		Session.delete(offer)

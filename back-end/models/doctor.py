@@ -2,14 +2,8 @@
 """ module that create table of doctors inherite from Base
 		of sqlalchemy and from Basemodel
 """
-
-# import Base and BaseModel provide ingeritance to table or model
 from models.base_model import BaseModel, Base
-
-# import rquired properties for creating databases columns in class
 from sqlalchemy import Column, String, Integer, ForeignKey, LargeBinary, Table
-
-# import propety to create relationship with other tables
 from sqlalchemy.orm import relationship
 
 
@@ -61,4 +55,3 @@ class Doctor(BaseModel, Base):
 	appointments = relationship("Appointment", backref='doctor', cascade='all, delete-orphan')
 	all_times = relationship('Time', secondary='doctor_time', 
 												viewonly=False, backref='all_doctors')
-	

@@ -1,24 +1,13 @@
 #!/usr/bin/env python3
-""" main module that start flask app and configuartion of it """
-
-# import neccessary parts from flask library
+""" main module that start flask app and configuartion of it's
+		blueprints and JWTManger
+"""
 from flask import Flask, jsonify
-
-# import database starting session from models
 from models import Session
-
-# import admin_routes that represent routes for all api of admins
 from api.admin import admin_routes
-
-# import user_routes that represent routes for all api of users
 from api.user import user_routes
-
 from api.public import public_routes
-
-# import jwtmanger from it's library
 from flask_jwt_extended import JWTManager
-
-# import timedelta for change time
 from datetime import timedelta
 
 
@@ -43,14 +32,16 @@ app.register_blueprint(admin_routes)
 # add new blue prints of user_routes
 app.register_blueprint(user_routes)
 
+# add new blue prints of public_routes
 app.register_blueprint(public_routes)
 
 
 @app.teardown_appcontext
 def close(self):
-	""" function close session """
+	""" function close session after end of it"""
 	Session.close()
 
 
 if __name__ == '__main__':
+	""" run flask app on localhost """
 	app.run(host='localhost')

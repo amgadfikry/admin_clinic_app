@@ -1,19 +1,10 @@
 #!/usr/bin/env python3
-""" module for route of manipulate with reviews table """
-
-# import database starting session from models
+""" module for route of manipulate with reviews table
+"""
 from models import Session
-
-# import admin_routes that represent routes for all api of admins
 from api.admin import admin_routes, admin_required
-
-# import neccessary parts from flask library
 from flask import jsonify
-
-# import create access token from jwt
 from flask_jwt_extended import jwt_required
-
-# import reviews table
 from models.review import Review
 
 
@@ -21,7 +12,10 @@ from models.review import Review
 @jwt_required()
 @admin_required
 def delete_review(review_id):
-	""" text """
+	""" delete review by it's id
+			Return:
+				- empty json with code 200
+	"""
 	review = Session.query(Review).filter_by(id=review_id).first()
 	Session.delete(review)
 	Session.commit()

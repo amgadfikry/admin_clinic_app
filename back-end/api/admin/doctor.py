@@ -1,19 +1,10 @@
 #!/usr/bin/env python3
-""" module for route of manipulate with doctor table """
-
-# import database starting session from models
+""" module for route of manipulate with doctor table
+"""
 from models import Session
-
-# import admin_routes that represent routes for all api of admins
 from api.admin import admin_routes, admin_required
-
-# import neccessary parts from flask library
 from flask import jsonify, request
-
-# import create access token from jwt
 from flask_jwt_extended import jwt_required
-
-# import doctors table
 from models.doctor import Doctor
 from models.time import Time
 from models.appointment import Appointment
@@ -25,7 +16,10 @@ from models.speciality import Speciality
 @jwt_required()
 @admin_required
 def create_doctor():
-	"""text"""
+	""" create new doctor record
+			Return:
+				- json of created doctor with code 201
+	"""
 	data = request.get_json()
 	new_doctor = Doctor(**data)
 	Session.add(new_doctor)
@@ -37,7 +31,11 @@ def create_doctor():
 @jwt_required()
 @admin_required
 def manipulate_doctor(doctor_id):
-	""" text """
+	""" update and delete doctor by it's id
+			Return:
+				- empty json with code 200 if delete request
+				- json of new doctor with code 200 if put request
+	"""
 	doctor = Session.query(Doctor).filter_by(id=doctor_id).first()
 	if request.method == 'DELETE':
 		Session.delete(doctor)
@@ -54,13 +52,17 @@ def manipulate_doctor(doctor_id):
 @jwt_required()
 @admin_required
 def add_times(doctor_id, time_id):
-	"""text"""
+	""" add new time record to record or remove it
+			Return:
+				- empty json with code 200 if delete request
+				- json of time added with code 200 if patch request
+	"""
 	doctor = Session.query(Doctor).filter_by(id=doctor_id).first()
 	time = Session.query(Time).filter_by(id=time_id).first()
 	if request.method == 'PATCH':
 		doctor.all_times.append(time)
 		Session.commit()
-		return jsonify({}), 200
+		return jsonify(time.to_dict()), 200
 	else:
 		doctor.all_times.remove(time)
 		Session.commit()
@@ -71,7 +73,10 @@ def add_times(doctor_id, time_id):
 @jwt_required()
 @admin_required
 def get_all_doctors():
-	"""text"""
+	""" get all doctors in tables with all details
+			Return:
+				- json list of all doctors with code 200
+	"""
 	doctors = Session.query(Doctor).all()
 	doctors_dict = []
 	for doc in doctors:
@@ -104,7 +109,10 @@ def get_all_doctors():
 @jwt_required()
 @admin_required
 def get_doctors_by_time(time_id):
-	"""text"""
+	""" get all doctor by specific time id
+			Return:
+				- json list of all doctors with code 200
+	"""
 	time = Session.query(Time).filter_by(id=time_id).first()
 	doctors_dict = []
 	for doc in time.all_doctors:

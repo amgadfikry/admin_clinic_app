@@ -1,19 +1,10 @@
 #!/usr/bin/env python3
-""" module for route of manipulate with times table """
-
-# import database starting session from models
+""" module for route of manipulate with times table
+"""
 from models import Session
-
-# import admin_routes that represent routes for all api of admins
 from api.admin import admin_routes, admin_required
-
-# import neccessary parts from flask library
 from flask import jsonify, request
-
-# import create access token from jwt
 from flask_jwt_extended import jwt_required
-
-# import time table
 from models.time import Time
 
 
@@ -21,7 +12,10 @@ from models.time import Time
 @jwt_required()
 @admin_required
 def create_time():
-	"""text"""
+	""" create new time record
+			Return:
+				- json of created time with code 201
+	"""
 	data = request.get_json()
 	new_time = Time(**data)
 	Session.add(new_time)
@@ -33,7 +27,11 @@ def create_time():
 @jwt_required()
 @admin_required
 def manipulate_time(time_id):
-	""" text """
+	""" update and delete time by it's id
+			Return:
+				- empty json with code 200 if delete request
+				- json of new time with code 200 if put request
+	"""
 	time = Session.query(Time).filter_by(id=time_id).first()
 	if request.method == 'DELETE':
 		Session.delete(time)
@@ -50,7 +48,10 @@ def manipulate_time(time_id):
 @jwt_required()
 @admin_required
 def get_times():
-	"""text"""
+	""" get all times in tables with all details
+			Return:
+				- json list of all times with code 200
+	"""
 	times = Session.query(Time).all()
 	time_dict = []
 	for time in times:

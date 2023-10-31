@@ -1,18 +1,11 @@
 #!/usr/bin/env python3
-"""starting admin_routes blueprint module """
-
-# import blueprint from flask library
+""" starting admin_routes and add admin required function
+		and create blueprint of admin routes
+"""
 from flask import Blueprint
-
-# import create access token from jwt
 from flask_jwt_extended import get_jwt_identity
-
-# import database starting session from models
 from models import Session
-
-# import Admin table
 from models.admin import Admin
-
 from functools import wraps
 
 # create new blueprint for admin_routes of api
@@ -20,6 +13,7 @@ admin_routes = Blueprint('admin_routes', __name__, url_prefix='/api/admin')
 
 
 def admin_required(fn):
+	""" create function wapper that provide admin required decroator """
 	@wraps(fn)
 	def wrapper(*args, **kwargs):
 		admin = Session.query(Admin).filter_by(id=get_jwt_identity()).first()
@@ -41,4 +35,3 @@ if __name__ == 'api.admin':
 	from api.admin.testimonial import *
 	from api.admin.time import *
 	from api.admin.user import *
-

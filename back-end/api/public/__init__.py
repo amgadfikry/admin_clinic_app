@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
-"""starting public_routes blueprint module """
-
-# import blueprint from flask library
+""" starting admin_routes and add public required function
+		and create blueprint of public routes
+"""
 from flask import Blueprint
-
-# import database starting session from models
 from models import Session
 
-# create new blueprint for admin_routes of api
+# create new blueprint for public route of api
 public_routes = Blueprint('public_routes', __name__, url_prefix='/api/public')
 
 

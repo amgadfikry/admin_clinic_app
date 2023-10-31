@@ -1,19 +1,10 @@
 #!/usr/bin/env python3
-""" module for route of authentication of user to dashboard """
-
-# import database starting session from models
+""" module for route of manipulate with reviews table
+"""
 from models import Session
-
-# import user_routes that represent routes for all api of admins
 from api.user import user_routes, user_required
-
-# import neccessary parts from flask library
 from flask import jsonify, request
-
-# import create access token from jwt
 from flask_jwt_extended import jwt_required, get_jwt_identity
-
-# import user table
 from models.review import Review
 
 
@@ -21,7 +12,10 @@ from models.review import Review
 @jwt_required()
 @user_required
 def create_review():
-	"""text"""
+	""" create new review record
+			Return:
+				- json of created review with code 201
+	"""
 	data = request.get_json()
 	data['user_id'] = get_jwt_identity()
 	new_review = Review(**data)
@@ -34,7 +28,10 @@ def create_review():
 @jwt_required()
 @user_required
 def delete_review(review_id):
-	""" text """
+	""" delete review by it's id
+			Return:
+				- empty json with code 200
+	"""
 	review = Session.query(Review).filter_by(id=review_id).first()
 	Session.delete(review)
 	Session.commit()
@@ -45,7 +42,10 @@ def delete_review(review_id):
 @jwt_required()
 @user_required
 def get_review():
-	""" text """
+	""" get all reviews related to user now in tables
+			Return:
+				- json list of all reviews with code 200
+	"""
 	reviews = Session.query(Review).filter_by(user_id=get_jwt_identity()).all()
 	review_dict = []
 	for rev in reviews:

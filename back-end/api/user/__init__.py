@@ -1,25 +1,19 @@
 #!/usr/bin/env python3
-"""starting user_routes blueprint module """
-
-# import blueprint from flask library
+""" starting admin_routes and add user required function
+		and create blueprint of user routes
+"""
 from flask import Blueprint
-
-# import create access token from jwt
 from flask_jwt_extended import get_jwt_identity
-
-# import database starting session from models
 from models import Session
-
-# import User table
 from models.user import User
-
 from functools import wraps
 
-# create new blueprint for admin_routes of api
+# create new blueprint for user_routes of api
 user_routes = Blueprint('user_routes', __name__, url_prefix='/api/user')
 
 
 def user_required(fn):
+	""" create function wapper that provide user required decroator """
 	@wraps(fn)
 	def wrapper(*args, **kwargs):
 		user = Session.query(User).filter_by(id=get_jwt_identity()).first()

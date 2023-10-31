@@ -1,19 +1,10 @@
 #!/usr/bin/env python3
-""" module for route of authentication of user to dashboard """
-
-# import database starting session from models
+""" module for route of manipulate with appointment table
+"""
 from models import Session
-
-# import user_routes that represent routes for all api of admins
 from api.user import user_routes, user_required
-
-# import neccessary parts from flask library
 from flask import jsonify, request
-
-# import create access token from jwt
 from flask_jwt_extended import jwt_required, get_jwt_identity
-
-# import user table
 from models.appointment import Appointment
 
 
@@ -21,7 +12,10 @@ from models.appointment import Appointment
 @jwt_required()
 @user_required
 def create_appointment():
-	"""text"""
+	""" create new appointment record
+			Return:
+				- json of created appointment with code 201
+	"""
 	data = request.get_json()
 	data['user_id'] = get_jwt_identity()
 	new_appointment = Appointment(**data)
@@ -34,7 +28,10 @@ def create_appointment():
 @jwt_required()
 @user_required
 def delete_appointment(appointment_id):
-	""" text """
+	""" delete appointment by it's id
+			Return:
+				- empty json with code 200
+	"""
 	appointment = Session.query(Appointment).filter_by(id=appointment_id).first()
 	Session.delete(appointment)
 	Session.commit()
@@ -45,7 +42,10 @@ def delete_appointment(appointment_id):
 @jwt_required()
 @user_required
 def get_appointment():
-	""" text """
+	""" get all appointemnts related to user now in tables
+			Return:
+				- json list of all appointments with code 200
+	"""
 	appointments = Session.query(Appointment).filter_by(user_id=get_jwt_identity()).all()
 	appointment_dict = []
 	for app in appointments:

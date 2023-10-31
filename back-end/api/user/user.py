@@ -1,22 +1,11 @@
 #!/usr/bin/env python3
-""" module for route of authentication of user to dashboard """
-
-# import database starting session from models
+""" module for route of manipulate with user table
+"""
 from models import Session
-
-# import user_routes that represent routes for all api of admins
 from api.user import user_routes, user_required
-
-# import neccessary parts from flask library
 from flask import jsonify, request
-
-# import security library which hash and de-hash passwords
 from werkzeug.security import generate_password_hash
-
-# import create access token from jwt
 from flask_jwt_extended import jwt_required, get_jwt_identity
-
-# import user table
 from models.user import User
 
 
@@ -24,7 +13,10 @@ from models.user import User
 @jwt_required()
 @user_required
 def edit_user():
-	""" text """
+	""" update user information
+			Return:
+				- json of new user updated onfo with code 200
+	"""
 	user = Session.query(User).filter_by(id=get_jwt_identity()).first()
 	data = request.get_json()
 	if data.get('password', None):

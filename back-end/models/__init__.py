@@ -3,15 +3,9 @@
 		to connect with mysql database
 		contain engine and session of all databases
 """
-
-# import require objects to start sqlalchemy session and engine
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
-
-# import Base object of sqlalchemy from base_model class
 from models.base_model import Base
-
-# import all models that represents tables of database before create them
 from models.user import User
 from models.appointment import Appointment
 from models.doctor import Doctor

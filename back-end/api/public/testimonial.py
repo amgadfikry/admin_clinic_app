@@ -1,21 +1,18 @@
 #!/usr/bin/env python3
-""" module for route of manipulate with testimonial table """
-
-# import database starting session from models
+""" module for route of manipulate with testimonial table
+"""
 from models import Session
-
-# import neccessary parts from flask library
 from flask import jsonify, request
-
 from api.public import public_routes
-
-# import testimonial table
 from models.testimonial import Testimonial
 
 
 @public_routes.route('/testimonial', methods=['GET'], strict_slashes=False)
 def get_all_testimonials():
-	"""text"""
+	""" get all testimonials which is live in tables with all details
+			Return:
+				- json list of all testimonials with code 200
+	"""
 	testimonials = Session.query(Testimonial).filter_by(live=True).all()
 	testimonial_dict = []
 	for testi in testimonials:

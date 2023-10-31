@@ -2,22 +2,12 @@
 """module to test all models of sqlalchemy columns, relationships
 	 and secondary tables
 """
-
-# import unittest libraty
 import unittest
-
-# import datetime library to get and set current time
 from datetime import datetime
-
-# import require objects to start sqlalchemy session and engine
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
-
-# import Base object of sqlalchemy from base_model class and import BaseModel which
 # is main model for others models
 from models.base_model import Base, BaseModel
-
-# import all models that represents tables of database before create them
 from models.user import User
 from models.appointment import Appointment
 from models.doctor import Doctor

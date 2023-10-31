@@ -1,15 +1,9 @@
 #!/usr/bin/env python3
-""" module for route of manipulate with doctor table """
-
-# import database starting session from models
+""" module for route of manipulate with doctor table
+"""
 from models import Session
-
-# import neccessary parts from flask library
 from flask import jsonify, request
-
 from api.public import public_routes
-
-# import doctors table
 from models.doctor import Doctor
 from models.time import Time
 from models.appointment import Appointment
@@ -19,7 +13,10 @@ from models.speciality import Speciality
 
 @public_routes.route('/doctor', methods=['GET'], strict_slashes=False)
 def get_all_doctors():
-	"""text"""
+	""" get all doctors in tables with all details
+			Return:
+				- json list of all doctors with code 200
+	"""
 	doctors = Session.query(Doctor).all()
 	doctors_dict = []
 	for doc in doctors:
@@ -46,7 +43,10 @@ def get_all_doctors():
 
 @public_routes.route('/doctor/<speciality_id>', methods=['GET'], strict_slashes=False)
 def get_doctors_by_speciality(speciality_id):
-	"""text"""
+	""" get all doctors in tables with all details with speciality id
+			Return:
+				- json list of all doctors with code 200
+	"""
 	doctors = Session.query(Doctor).filter_by(speciality_id=speciality_id).all()
 	doctors_dict = []
 	for doc in doctors:

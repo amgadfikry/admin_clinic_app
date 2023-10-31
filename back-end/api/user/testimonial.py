@@ -1,19 +1,10 @@
 #!/usr/bin/env python3
-""" module for route of authentication of user to dashboard """
-
-# import database starting session from models
+""" module for route of manipulate with testimonial table
+"""
 from models import Session
-
-# import user_routes that represent routes for all api of admins
 from api.user import user_routes, user_required
-
-# import neccessary parts from flask library
 from flask import jsonify, request
-
-# import create access token from jwt
 from flask_jwt_extended import jwt_required, get_jwt_identity
-
-# import user table
 from models.testimonial import Testimonial
 
 
@@ -21,7 +12,10 @@ from models.testimonial import Testimonial
 @jwt_required()
 @user_required
 def create_testimonial():
-	"""text"""
+	""" create new testimonial record
+			Return:
+				- json of created testimonial with code 201
+	"""
 	data = request.get_json()
 	data['user_id'] = get_jwt_identity()
 	new_testimonial = Testimonial(**data)
@@ -34,7 +28,10 @@ def create_testimonial():
 @jwt_required()
 @user_required
 def delete_testimonial(testimonial_id):
-	""" text """
+	""" delete testimonial by it's id
+			Return:
+				- empty json with code 200
+	"""
 	testimonial = Session.query(Testimonial).filter_by(id=testimonial_id).first()
 	Session.delete(testimonial)
 	Session.commit()
@@ -45,7 +42,10 @@ def delete_testimonial(testimonial_id):
 @jwt_required()
 @user_required
 def get_testimonial():
-	""" text """
+	""" get all testimonials related to user now in tables
+			Return:
+				- json list of all testimonials with code 200
+	"""
 	testimonials = Session.query(Testimonial).filter_by(user_id=get_jwt_identity()).all()
 	testimonial_dict = []
 	for test in testimonials:

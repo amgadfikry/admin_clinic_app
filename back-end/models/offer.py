@@ -2,17 +2,9 @@
 """ module that create table of offers inherite from Base
 		of sqlalchemy and from Basemodel
 """
-
-# import Base and BaseModel provide ingeritance to table or model
 from models.base_model import BaseModel, Base
-
-# import rquired properties for creating databases columns in class
 from sqlalchemy import Column, Integer, String, LargeBinary, ForeignKey
-
-# import column property to use it to get column based on other columns values
 from sqlalchemy.orm import column_property
-
-# import datetime library to get and set current time
 from datetime import datetime
 
 

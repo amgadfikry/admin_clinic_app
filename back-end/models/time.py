@@ -2,14 +2,8 @@
 """ module that create table of times inherite from Base
 		of sqlalchemy and from Basemodel
 """
-
-# import Base and BaseModel provide ingeritance to table or model
 from models.base_model import Base, BaseModel
-
-# import rquired properties for creating databases columns in class
 from sqlalchemy import Column, String, Integer
-
-# import column property to use it to get column based on other columns values
 from sqlalchemy.orm import column_property
 
 
