@@ -5,7 +5,7 @@ from models import Session
 from models.admin import Admin
 
 admin_data = {'admin_name': 'admin', 'email': 'dr.amgad_sh92@yahoo.com',
-	'password': generate_password_hash('admin1234', 'sha256'), 'user_name': 'admin'}
+	'password': generate_password_hash('admin1234', method='pbkdf2:sha256'), 'user_name': 'admin'}
 
 new_admin = Admin(**admin_data)
 Session.add(new_admin)

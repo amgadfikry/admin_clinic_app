@@ -18,7 +18,7 @@ def signup():
 				- json of msg successfull signup
 	"""
 	data = request.get_json()
-	data['password'] = generate_password_hash(data.get('password'), 'sha256')
+	data['password'] = generate_password_hash(data.get('password'), method='pbkdf2:sha256')
 	new_user = User(**data)
 	Session.add(new_user)
 	Session.commit()

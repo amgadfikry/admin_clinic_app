@@ -20,7 +20,7 @@ def edit_user():
 	user = Session.query(User).filter_by(id=get_jwt_identity()).first()
 	data = request.get_json()
 	if data.get('password', None):
-		data['password'] = generate_password_hash(data.get('password'), 'sha256')
+		data['password'] = generate_password_hash(data.get('password'), method='pbkdf2:sha256')
 	user.update(**data)
 	Session.commit()
 	return jsonify(user.to_dict()), 200
