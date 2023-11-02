@@ -18,7 +18,7 @@ class Admin(BaseModel, Base):
 	__tablename__ = 'admins'
 	admin_name = Column(String(256), nullable=False)
 	user_name = Column(String(256), nullable=False)
-	password = Column(String(128), nullable=False)
+	password = Column(String(256), nullable=False)
 	email = Column(String(128), nullable=False)
 	image = Column(LargeBinary, nullable=True)
 	
