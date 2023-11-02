@@ -1,23 +1,23 @@
-import Navbar from "./layout/navbar"
-import Head from "./sections/head"
-import Insurance from "./sections/insurance"
-import Offers from "./sections/offers"
-import Search from "./sections/search"
-import Services from "./sections/services"
-import Testimonial from "./sections/testimonials"
+import Signin from "./pages/signin"
+import Dashboard from "./pages/dashboard"
+import AuthChecker from "./components/authChecker";
+import { CookiesProvider } from 'react-cookie';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 
 function App() {
 
   return (
     <>
-      <Navbar />
-      <Head />
-      <Search />
-      <Services />
-      <Testimonial />
-      <Offers />
-      <Insurance />
+      <CookiesProvider defaultSetOptions={{ path: '/' }}>
+        <Router>
+          <Routes>
+            <Route exact path='/' element={<AuthChecker />} ></Route>
+            <Route exact path='/signin' element={<Signin />} ></Route>
+            <Route exact path='/dashboard' element={<Dashboard />} ></Route>
+          </Routes>
+        </Router>
+      </CookiesProvider>
     </>
   )
 }
