@@ -24,7 +24,7 @@ function Signin() {
 
   const handlesubmit = (e) => {
     e.preventDefault()
-    const data = formState
+    const formData = formState
     e.target.reset()
     setLoginError('')
     fetch(`${baseUrl}/api/admin/signin`, {
@@ -32,13 +32,17 @@ function Signin() {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(formData),
       mode: 'cors'
     }).then(response => response.json())
       .then(data => {
         if ('access_token' in data) {
-          setCookie('token', data.access_token, { path: '/', expires: new Date(Date.now() + 604800000) })
-          navigate('/dashboard')
+          if (formData.remember) {
+            setCookie('token', data.access_token, { path: '/', expires: new Date(Date.now() + 604800000) })
+          } else {
+            setCookie('token', data.access_token, { path: '/' })
+          }
+          navigate('/')
         } else {
           setLoginError(data.msg)
         }
@@ -64,10 +68,11 @@ function Signin() {
               className="bg-gray-200 rounded-lg outline-none px-9 py-2 md:px-12 text-lg"></input>
           </div>
           <div className="flex flex-row items-center mb-6 px-1">
-            <input type="checkbox" id="remember" name="remember" className="accent-teal-color outline-dark-color"></input>
+            <input type="checkbox" id="remember" name="remember" className="accent-teal-color outline-dark-color"
+              onChange={handlechange}></input>
             <label htmlFor="remember" className="font-medium ml-2">Remember me</label>
           </div>
-          <input type="submit" value="Submit" onChange={handlechange}
+          <input type="submit" value="Submit"
             className='bg-teal-color rounded-3xl w-[50%] px-6 py-2 text-white font-medium text-lg cursor-pointer
             hover:bg-dark-color transition-all duration-300'></input>
           <div className="text-red-500 text-sm mt-2 h-2">{loginError}</div>

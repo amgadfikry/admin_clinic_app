@@ -12,9 +12,8 @@ function App() {
       <CookiesProvider defaultSetOptions={{ path: '/' }}>
         <Router>
           <Routes>
-            <Route exact path='/' element={<AuthChecker />} ></Route>
-            <Route exact path='/signin' element={<Signin />} ></Route>
-            <Route exact path='/dashboard' element={<Dashboard />} ></Route>
+            <Route exact path='/signin' element={<AuthChecker> <Signin /> </AuthChecker>} ></Route>
+            <Route exact path='/' element={<AuthChecker> <Dashboard /> </AuthChecker>} ></Route>
           </Routes>
         </Router>
       </CookiesProvider>

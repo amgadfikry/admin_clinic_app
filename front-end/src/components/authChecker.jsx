@@ -1,12 +1,15 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { baseUrl } from '../../constant'
 import { useCookies } from 'react-cookie';
 import { useNavigate } from "react-router-dom";
+import LoadingComponent from './loading';
 
-function AuthChecker() {
+// eslint-disable-next-line react/prop-types
+function AuthChecker({ children }) {
   // eslint-disable-next-line no-unused-vars
   const [cookies, setCookie] = useCookies(['token']);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if ('token' in cookies) {
@@ -19,16 +22,22 @@ function AuthChecker() {
       }).then(response => response.json())
         .then(data => {
           if (data.type === 'admin') {
-            navigate('/dashboard')
+            setLoading(false)
+            navigate('/')
           } else {
+            setLoading(false)
             navigate('/signin')
           }
         })
     } else {
+      setLoading(false)
       navigate('/signin')
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [cookies, navigate])
+  if (loading) {
+    return <LoadingComponent />
+  }
+  return children
 }
 
 export default AuthChecker
