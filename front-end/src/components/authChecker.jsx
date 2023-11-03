@@ -1,12 +1,13 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react'
 import { baseUrl } from '../../constant'
 import { useCookies } from 'react-cookie';
 import { useNavigate } from "react-router-dom";
 import LoadingComponent from './loading';
 
-// eslint-disable-next-line react/prop-types
+
 function AuthChecker({ children }) {
-  // eslint-disable-next-line no-unused-vars
   const [cookies, setCookie] = useCookies(['token']);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);

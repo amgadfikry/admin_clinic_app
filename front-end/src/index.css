@@ -48,6 +48,21 @@
     before:origin-left before:scale-x-0 hover:before:scale-x-100 lg:before:scale-x-100 before:z-[-1]
     lg:hover:before:scale-y-100 before:transition-all duration-300 hover:text-white before:left-2/4
   }
+  .sidebar-li{
+    @apply pl-2 pr-3 py-3 cursor-pointer flex items-center hover:bg-teal-color transition-all duration-300
+  }
+  .sidebar-icon{
+    @apply text-[25px] text-teal-color font-bold mr-2 group-hover:text-white transition-all duration-300 shrink-0
+  }
+  .sidebar-text{
+    @apply flex-1 group-hover:text-white transition-all duration-500 origin-left ease-in-out
+  }
+  .sidebar-active{
+    @apply bg-teal-color text-white first:text-white
+  }
+  .sidebar-icon-active{
+    @apply text-white
+  }
 }
 
 @layer utilities {
