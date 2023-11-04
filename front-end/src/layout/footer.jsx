@@ -1,5 +1,6 @@
-import { MdOutlineCopyright } from 'react-icons/md'
-import { FaXTwitter, FaGithub, FaLinkedinIn } from 'react-icons/fa6'
+import {
+  FaLinkedinIn, FaGithub, FaXTwitter, MdOutlineCopyright
+} from '../import'
 
 function Footer() {
   return (

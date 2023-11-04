@@ -1,16 +1,15 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { useEffect, useState } from 'react'
-import { baseUrl } from '../../constant'
-import { useCookies } from 'react-cookie';
-import { useNavigate } from "react-router-dom";
-import LoadingComponent from './loading';
-
+import {
+  useCookies, useNavigate, useState, useEffect, baseUrl, ServerError, LoadingComponent
+} from '../import.js'
 
 function AuthChecker({ children }) {
   const [cookies, setCookie] = useCookies(['token']);
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+  const [serverError, setServerError] = useState(false)
+  const navigate = useNavigate();
 
   useEffect(() => {
     if ('token' in cookies) {
@@ -30,15 +29,23 @@ function AuthChecker({ children }) {
             navigate('/signin')
           }
         })
+        .catch((error) => {
+          setLoading(false)
+          setServerError(true)
+        });
     } else {
       setLoading(false)
       navigate('/signin')
     }
-  }, [cookies, navigate])
-  if (loading) {
+  }, [])
+
+  if (serverError) {
+    return <ServerError />
+  } else if (loading) {
     return <LoadingComponent />
+  } else {
+    return children
   }
-  return children
 }
 
 export default AuthChecker

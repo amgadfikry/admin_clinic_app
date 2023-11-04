@@ -1,17 +1,12 @@
 /* eslint-disable no-unused-vars */
-import { BiSolidDashboard, BiSolidOffer } from 'react-icons/bi'
-import { FaUserDoctor, FaKitMedical, FaChartLine } from 'react-icons/fa6'
-import { MdSchedule, MdReviews, MdManageAccounts, MdSettings } from 'react-icons/md'
-import { BsCalendar3 } from 'react-icons/bs'
-import { VscSignOut } from 'react-icons/vsc'
-import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io'
-import { useState } from 'react'
-import SidebarNavLink from '../components/sidebarNavLink'
-import { useCookies } from "react-cookie"
-import { useNavigate } from "react-router-dom"
+import {
+  BiSolidDashboard, FaChartLine, FaUserDoctor, MdSchedule, BsCalendar3, FaKitMedical, BiSolidOffer, MdReviews,
+  MdManageAccounts, MdSettings, VscSignOut, IoIosArrowForward, IoIosArrowBack, useState, useCookies, useNavigate,
+  SidebarNavLink
+} from '../import'
 
 function Sidebar() {
-  const [sidebar, setSidebar] = useState(false)
+  const [sidebar, setSidebar] = useState(true)
   const [cookies, setCookie, removeCookie] = useCookies(['token'])
   const navigate = useNavigate()
 

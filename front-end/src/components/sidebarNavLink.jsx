@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { NavLink } from "react-router-dom";
+import { NavLink } from '../import';
 
 function SidebarNavLink({ icon, name, route, sidebar }) {
   return (
