@@ -9,10 +9,14 @@ from api.user import user_routes
 from api.public import public_routes
 from flask_jwt_extended import JWTManager
 from datetime import timedelta
+from flask_cors import CORS
 
 
 # start Flask class
 app = Flask('__name__')
+
+# allow cors for api
+CORS(app, resources={r'/api/*': {'origins': 'http://localhost:5173'}})
 
 # add secret key to flask app
 app.config['secret_key'] = 'da9bf1fe5f672ddcea2f3d9634c31ce4d67d8b2d1fb61eac6f0ab29b81919f6f'
@@ -44,4 +48,4 @@ def close(self):
 
 if __name__ == '__main__':
 	""" run flask app on localhost """
-	app.run(host='localhost')
+	app.run(host='0.0.0.0', port=5000)
