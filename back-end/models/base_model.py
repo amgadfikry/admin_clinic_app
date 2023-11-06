@@ -69,6 +69,9 @@ class BaseModel:
 					key: represent key or column name in table
 					value: represent new value to update it
 		"""
-		self.updated_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 		for key, value in kwargs.items():
-			setattr(self, key, value) 
+			if key in ['updated_at']:
+				time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+				setattr(self, key, time)
+			else:
+				setattr(self, key, value) 

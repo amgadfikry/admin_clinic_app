@@ -4,7 +4,7 @@
 from models import Session
 from api.admin import admin_routes, admin_required
 from flask import jsonify, request
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from models.admin import Admin
 
@@ -36,3 +36,35 @@ def admin_state():
 	"""
 	admin = Session.query(Admin).filter_by(id=get_jwt_identity()).first()
 	return jsonify(admin.to_dict()), 200
+
+@admin_routes.route('/update', methods=['POSt'], strict_slashes=False)
+@jwt_required()
+@admin_required
+def update_info():
+	""" change admin info in database
+			Return:
+			json of new data of admin
+	"""
+	admin = Session.query(Admin).filter_by(id=get_jwt_identity()).first()
+	data = request.get_json()
+	admin.update(**data)
+	Session.commit()
+	return jsonify(admin.to_dict()), 200
+
+@admin_routes.route('/password', methods=['POSt'], strict_slashes=False)
+@jwt_required()
+@admin_required
+def password():
+	""" change admin info in database
+			Return:
+			json of new data of admin
+	"""
+	admin = Session.query(Admin).filter_by(id=get_jwt_identity()).first()
+	old_password = request.json.get('current_password', None)
+	new_password = request.json.get('new_password', None)
+	if admin and check_password_hash(admin.password, old_password):
+		setattr(admin, 'password', generate_password_hash(new_password, method='scrypt'))
+		Session.commit()
+		return jsonify(admin.to_dict()), 200
+	else:
+		return jsonify({'msg': 'Incorrect Password'}), 200
