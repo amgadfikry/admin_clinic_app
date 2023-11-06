@@ -55,7 +55,7 @@
     @apply text-[25px] text-teal-color font-bold mr-2 group-hover:text-white transition-all duration-300 shrink-0
   }
   .sidebar-text{
-    @apply flex-1 group-hover:text-white transition-all duration-500 origin-left ease-in-out
+    @apply flex-1 group-hover:text-white transition-all duration-300 origin-left ease-in-out
   }
   .sidebar-active{
     @apply bg-teal-color text-white first:text-white

@@ -1,6 +1,6 @@
 function ComingSoon() {
   return (
-    <div className="relative h-[calc(100vh-89px)] w-full flex items-center justify-center bg-cover bg-center text-center px-5">
+    <div className="relative h-[calc(100vh-89px)] w-full flex items-center justify-center bg-cover bg-center text-center px-5 z-[-5]">
       <div className="absolute top-0 right-0 bottom-0 left-0  opacity-75"></div>
       <div className="z-50 flex flex-col justify-center text-teal-color">
         <h1 className="text-5xl mb-1">We are <b>Almost</b> there!</h1>

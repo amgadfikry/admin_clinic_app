@@ -3,7 +3,7 @@
 import {
   Navbar, Sidebar, Footer, ServerError, LoadingComponent, ComingSoon, Doctors, setAdminData,
   setDoctorsData, setTestimonialsData, setAppointmentsData, useDispatch, useCookies, useEffect,
-  useState, Routes, Route, baseUrl, Settings
+  useState, Routes, Route, baseUrl, Settings, Specialities
 } from '../import'
 
 function Dashboard() {
@@ -57,7 +57,7 @@ function Dashboard() {
             <Route exact path='doctors' element={<Doctors />} ></Route>
             <Route exact path='appointments' element={<ComingSoon />} ></Route>
             <Route exact path='calendar' element={<ComingSoon />} ></Route>
-            <Route exact path='specialities' element={<ComingSoon />} ></Route>
+            <Route exact path='specialities/*' element={<Specialities />} ></Route>
             <Route exact path='offers' element={<ComingSoon />} ></Route>
             <Route exact path='testimonials' element={<ComingSoon />} ></Route>
             <Route exact path='roles' element={<ComingSoon />} ></Route>

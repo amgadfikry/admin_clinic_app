@@ -3,6 +3,7 @@ import profileStateReducer from './profile'
 import doctorsStateReducer from './doctors'
 import testimonialStateReducer from './testimonial'
 import appointmentStateReducer from './appointment'
+import specialitiesStateReducer from './specialities'
 
 export const store = configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export const store = configureStore({
     doctors: doctorsStateReducer,
     testomonial: testimonialStateReducer,
     appointments: appointmentStateReducer,
+    specialities: specialitiesStateReducer,
   },
 })

@@ -16,11 +16,16 @@ import TextInput from './components/textInput';
 import SubmitBtn from './components/submitBtn';
 import ChangeInfo from './sections/settings/changeInfo';
 import ChangePassword from './sections/settings/changePassword';
+import Specialities from './sections/specialities/specialities';
+import CreateSpeciality from './sections/specialities/createSpeciality';
+import ContentSpeciality from './sections/specialities/contentSpeciality';
+import EditSpeciality from './sections/specialities/editSpeciality';
 // redux
 import { setAdminData, adminDataState } from './redux/profile';
-import { setDoctorsData } from './redux/doctors';
-import { setTestimonialsData } from './redux/testimonial';
-import { setAppointmentsData } from './redux/appointment';
+import { setDoctorsData, doctorsDataState } from './redux/doctors';
+import { setTestimonialsData, testimonialDataState } from './redux/testimonial';
+import { setAppointmentsData, appointmentsDataState } from './redux/appointment';
+import { setspecialitiesData, specialitiesDataState } from './redux/specialities';
 import { useDispatch, useSelector } from 'react-redux';
 // react-router-dom
 import { BrowserRouter as Router, Routes, Route, useNavigate, NavLink, Link } from 'react-router-dom';
@@ -43,9 +48,10 @@ import { VscSignOut } from 'react-icons/vsc'
 export {
   // react components and pages
   Navbar, Sidebar, Footer, ServerError, LoadingComponent, ComingSoon, Doctors, SidebarNavLink, Signin, Dashboard, NotFound, AuthChecker,
-  Settings, TextInput, SubmitBtn, ChangeInfo, ChangePassword,
+  Settings, TextInput, SubmitBtn, ChangeInfo, ChangePassword, Specialities, CreateSpeciality, ContentSpeciality, EditSpeciality,
   // redux
   setAdminData, setDoctorsData, setTestimonialsData, setAppointmentsData, adminDataState, useSelector, useDispatch,
+  testimonialDataState, appointmentsDataState, doctorsDataState, setspecialitiesData, specialitiesDataState,
   // cookies
   useCookies, CookiesProvider,
   // react-hooks
