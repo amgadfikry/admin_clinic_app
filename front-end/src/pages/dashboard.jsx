@@ -3,7 +3,7 @@
 import {
   Navbar, Sidebar, Footer, ServerError, LoadingComponent, ComingSoon, Doctors, setAdminData,
   setDoctorsData, setTestimonialsData, setAppointmentsData, useDispatch, useCookies, useEffect,
-  useState, Routes, Route, baseUrl
+  useState, Routes, Route, baseUrl, Settings
 } from '../import'
 
 function Dashboard() {
@@ -49,8 +49,8 @@ function Dashboard() {
     return (
       <div className="flex flex-col h-[100vh]">
         <Navbar className='flex-1' />
-        <Sidebar />
-        <div className='pt-[56px] pl-[50px]  relative z-[-1]'>
+        <Sidebar className="" />
+        <div className='pt-[56px] pl-[50px] pb-[33px]'>
           <Routes>
             <Route exact path='/' element={<div>amgad</div>} ></Route>
             <Route exact path="analysis" element={<ComingSoon />} />
@@ -61,7 +61,7 @@ function Dashboard() {
             <Route exact path='offers' element={<ComingSoon />} ></Route>
             <Route exact path='testimonials' element={<ComingSoon />} ></Route>
             <Route exact path='roles' element={<ComingSoon />} ></Route>
-            <Route exact path='settings' element={<ComingSoon />} ></Route>
+            <Route exact path='settings' element={<Settings />} ></Route>
           </Routes>
         </div>
         <Footer />

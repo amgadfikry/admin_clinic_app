@@ -63,6 +63,13 @@
   .sidebar-icon-active{
     @apply text-white
   }
+  .filedset{
+    @apply flex flex-col border bg-gray-color drop-shadow-md px-4 rounded-lg space-y-4 
+    md:flex-row md:flex-wrap py-5 mb-16 
+  }
+  .legend{
+    @apply text-xl font-bold text-teal-color px-2 
+  }
 }
 
 @layer utilities {

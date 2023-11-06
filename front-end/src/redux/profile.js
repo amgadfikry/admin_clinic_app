@@ -7,7 +7,9 @@ const profileState = createSlice({
   },
   reducers: {
     setAdminData: (state, action) => {
-      state.data = action.payload;
+      for (const key in action.payload) {
+        state.data[key] = action.payload[key];
+      }
     }
   }
 })
