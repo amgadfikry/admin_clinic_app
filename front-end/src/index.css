@@ -64,7 +64,7 @@
     @apply text-white
   }
   .filedset{
-    @apply flex flex-col border bg-gray-color drop-shadow-md px-4 rounded-lg space-y-4 
+    @apply flex flex-col border bg-gray-color drop-shadow-md px-4 rounded-lg space-y-5 
     md:flex-row md:flex-wrap py-5 mb-16 
   }
   .legend{
@@ -84,5 +84,8 @@
         -ms-overflow-style: none;  /* IE and Edge */
         scrollbar-width: none;  /* Firefox */
     }
+  }
+  input[type="date"]{
+    @apply text-dark-color 
   }
 }

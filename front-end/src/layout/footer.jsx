@@ -4,7 +4,7 @@ import {
 
 function Footer() {
   return (
-    <footer className="fixed w-full bottom-0 drop-shadow-md px-2 py-2 justify-center flex items-center border-t bg-white">
+    <footer className="fixed z-50 w-full bottom-0 drop-shadow-md px-2 py-2 justify-center flex items-center border-t bg-white">
       <p className='text-dark-color mr-5 text-xs'>
         <MdOutlineCopyright className='inline-block' /> {new Date().getFullYear()} Amgad Fikry Mohamed, All rights reserved.
       </p>

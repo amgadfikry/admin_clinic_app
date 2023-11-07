@@ -1,6 +1,6 @@
 function Doctors() {
   return (
-    <div>Doctors</div>
+    <div className="text-dark-color pt-[56px] pl-[50px] pb-[33px] min-h-screen">Doctors</div>
   )
 }
 

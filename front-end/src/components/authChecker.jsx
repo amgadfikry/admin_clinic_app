@@ -12,6 +12,7 @@ function AuthChecker({ children }) {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const path = window.location.pathname
     if ('token' in cookies) {
       fetch(`${baseUrl}/api/public/state`, {
         headers: {
@@ -23,7 +24,7 @@ function AuthChecker({ children }) {
         .then(data => {
           if (data.type === 'admin') {
             setLoading(false)
-            navigate('/')
+            navigate(path)
           } else {
             setLoading(false)
             navigate('/signin')
