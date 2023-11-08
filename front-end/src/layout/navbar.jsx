@@ -22,7 +22,7 @@ function Navbar() {
       </div>
       <IoMdNotifications className="text-2xl text-teal-color font-bold cursor-pointer mr-3" />
       <div className='flex flex-row items-center space-x-2'>
-        <p>{adminData.admin_name.split(" ")[0]}</p>
+        <p>{adminData.user_name}</p>
         {adminData.image
           ? <img src={adminData.image} alt="admin" className='w-[40px] h-[40px] rounded-full border' />
           : <BsFillPersonFill className='w-[40px] h-[40px] text-gray-600 bg-gray-200 p-1 rounded-full' />

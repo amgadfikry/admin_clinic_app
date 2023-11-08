@@ -1,81 +1,62 @@
 /* eslint-disable no-unused-vars */
 import {
   useState, useCookies, Link, baseUrl, SubmitBtn, TextInput, useNavigate,
-  useLocation
+  useLocation, checkDataError, samilarData
 } from '../../import'
 
 function EditSpeciality() {
   const location = useLocation()
-  const data = location.state
-  const [editSpeciality, setEditSpeciality] = useState({ ...data })
-  const [errorMsg, setErrorMsg] = useState({ 'name': '', 'price': '', 'all': '' })
+  const specialityData = location.state
+  delete specialityData.offers
+  delete specialityData.doctors
+  const [changeSpeciality, setChangeSpeciality] = useState({ ...specialityData })
+  const [errorMsg, setErrorMsg] = useState({})
   const [cookies] = useCookies(['token'])
   const navigate = useNavigate()
 
   const handleChangeSpeciality = (e) => {
-    setEditSpeciality({ ...editSpeciality, [e.target.name]: e.target.value })
+    setChangeSpeciality({ ...changeSpeciality, [e.target.name]: e.target.value })
   }
+
   const handleCancel = (e) => {
     e.preventDefault()
-    setEditSpeciality({ ...data })
-    setErrorMsg({ 'name': '', 'price': '', 'all': '' })
+    setChangeSpeciality({ ...specialityData })
+    setErrorMsg({})
   }
+
   const handleSubmit = (e) => {
     e.preventDefault()
-    setErrorMsg((prevErrorMsg) => ({
-      'name': '', 'price': '', 'all': ''
-    }));
-    let allFilled = true
-    let same = 0
-    for (let key in editSpeciality) {
-      if (editSpeciality[key] === '') {
-        allFilled = false
-        setErrorMsg((prevErrorMsg) => ({
-          ...prevErrorMsg,
-          [key]: 'This field is required',
-        }));
-      }
-      if (editSpeciality[key] === data[key]) {
-        same++
-      }
+    setErrorMsg({});
+    const errors = checkDataError(changeSpeciality, [])
+    if (Object.keys(errors).length > 0) {
+      setErrorMsg({...errors})
+      return;
     }
-    if (!allFilled) {
-      setErrorMsg((prevErrorMsg) => ({
-        ...prevErrorMsg,
-        'all': 'Fill in all required',
-      }));
-      return
+    const errorSame = samilarData(changeSpeciality, specialityData)
+    if (Object.keys(errorSame).length > 0) {
+      setErrorMsg({...errorSame})
+      return;
     }
-    if (same === Object.keys(editSpeciality).length) {
-      setErrorMsg((prevErrorMsg) => ({
-        'name': '', 'price': '', 'all': 'The Same input'
-      }));
-      return
-    }
-
-    fetch(`${baseUrl}/api/admin/speciality/${editSpeciality.id}`, {
+    fetch(`${baseUrl}/api/admin/speciality/${specialityData.id}`, {
       method: 'PUT',
       headers: {
         'Authorization': 'Bearer ' + cookies.token,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(editSpeciality),
+      body: JSON.stringify(changeSpeciality),
       mode: 'cors'
     }).then(response => response.json())
       .then(data => {
-        setErrorMsg((prevErrorMsg) => ({
-          'name': '', 'price': '', 'all': ''
-        }));
-        setEditSpeciality({ ...data })
+        setErrorMsg({});
+        setChangeSpeciality({ ...data })
         navigate('/specialities')
       })
-    console.log(editSpeciality)
   }
 
   return (
     <section className="">
       <header className="flex justify-between items-center pb-3 border-b mb-8">
-        <h1 className="text-3xl text-teal-color font-bold">Edit {data.name}</h1>
+        <h1 className="text-3xl text-teal-color font-bold">Edit {specialityData.name}</h1>
         <Link to='/specialities'>
           <button className="py-1 px-3 text-medium bg-teal-color rounded-lg transition-all duration-300 cursor-pointer
           hover:bg-dark-color text-white">Back</button>
@@ -84,16 +65,12 @@ function EditSpeciality() {
       <form onSubmit={handleSubmit}>
         <fieldset className='filedset'>
           <legend className='legend'>Speciality Info</legend>
-          <TextInput type='text' label='Speciality Name' placeholder='Enter Speciality name' id='name' value={editSpeciality.name}
+          <TextInput type='text' label='Speciality Name' placeholder='Enter Speciality name' id='name' value={changeSpeciality.name}
             changeFunc={handleChangeSpeciality} error={errorMsg.name} className='' />
-          <TextInput type='number' label='Price' placeholder='Enter default price' id='price' value={editSpeciality.price}
+          <TextInput type='number' label='Price' placeholder='Enter default price' id='price' value={changeSpeciality.price}
             changeFunc={handleChangeSpeciality} error={errorMsg.price} />
-          <div className='w-full flex justify-end items-start pr-2 pt-5 relative '>
-            <input type="submit" value='Cancel' onClick={handleCancel}
-              className='border border-teal-color rounded-3xl px-4 py-1 text-teal-color font-medium cursor-pointer ml-auto
-            hover:bg-dark-color hover:border-dark-color hover:text-white transition-all duration-300 mr-2'></input>
-            <SubmitBtn value='Save Changes' error={errorMsg.all} />
-          </div>
+          <SubmitBtn value='Update' error={errorMsg.all} cancel={handleCancel}
+            success={false} successMsg=''/>
         </fieldset>
       </form>
     </section>

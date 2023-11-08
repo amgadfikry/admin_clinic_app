@@ -1,23 +1,21 @@
 /* eslint-disable no-unused-vars */
 // Desc: Signin page for admin
 import {
-  useState, useNavigate, useCookies, ServerError, FaUserAlt, FaLock, baseUrl
+  useState, useNavigate, useCookies, ServerError, FaUserAlt, FaLock, baseUrl, MdEmail
 } from '../import'
 
 function Signin() {
-  const [formState, setFormState] = useState({ 'user_name': '', 'password': '', 'remember': false })
+  const [formState, setFormState] = useState({ 'email': '', 'password': '', 'remember': false })
   const [loginError, setLoginError] = useState('')
   const [cookies, setCookie] = useCookies(['token']);
   const [serverError, setServerError] = useState(false)
   const navigate = useNavigate();
 
   const handlechange = (e) => {
-    const name = e.target.name
-    const value = e.target.value
-    if (name === 'remember') {
-      setFormState({ ...formState, [name]: !formState.remember })
+    if (e.target.name === 'remember') {
+      setFormState({ ...formState, [e.target.name]: !formState.remember })
     } else {
-      setFormState({ ...formState, [name]: value })
+      setFormState({ ...formState, [e.target.name]: e.target.value })
     }
   }
 
@@ -40,16 +38,14 @@ function Signin() {
           } else {
             setCookie('token', data.access_token, { path: '/' })
           }
-          e.target.reset()
           navigate('/')
         } else {
-          setLoginError(data.msg)
+          setLoginError(data.error)
         }
       })
       .catch((error) => {
         setServerError(true)
       });
-    setFormState({ 'user_name': '', 'password': '', 'remember': false })
   }
 
   if (serverError) {
@@ -63,8 +59,8 @@ function Signin() {
           <h2 className="text-teal-color font-[900] text-4xl mb-12 text-center mt-3 md:mt-0">Admin Login</h2>
           <form className='text-dark-color text-center' onSubmit={handlesubmit}>
             <div className="flex flex-col relative mb-2 w-full">
-              <FaUserAlt className='absolute text-teal-color text-base md:text-lg left-3 top-[30%]' />
-              <input type="text" id="user_name" name="user_name" placeholder='User Name' onChange={handlechange}
+              <MdEmail className='absolute text-teal-color text-base md:text-lg left-3 top-[30%]' />
+              <input type="text" id="email" name="email" placeholder='Email address' onChange={handlechange}
                 className="bg-gray-200 rounded-lg outline-none px-9 py-2 md:px-12 text-lg"></input>
             </div>
             <div className="flex flex-col relative mb-2 w-full">

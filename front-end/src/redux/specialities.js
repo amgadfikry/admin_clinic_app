@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const specialitiesState = createSlice({
   name: "specialities",
   initialState: {
-    "data": []
+    "data": [],
   },
   reducers: {
     setspecialitiesData: (state, action) => {
@@ -11,7 +11,7 @@ const specialitiesState = createSlice({
     },
     deleteSpeciality: (state, action) => {
       state.data = state.data.filter(speciality => speciality.id !== action.payload);
-    }
+    },
   }
 })
 

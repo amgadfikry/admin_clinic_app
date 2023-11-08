@@ -19,7 +19,7 @@ function Sidebar() {
     navigate('/signin')
   };
   return (
-    <ul className={`z-50 bg-white drop-shadow-lg w-[200px] py-4 h-[calc(100vh-89px)] top-[56px] border-t text-dark-color font font-medium
+    <ul className={`z-50 scroll-x-auto bg-white drop-shadow-lg w-[200px] py-4 h-[calc(100vh-89px)] top-[56px] border-t text-dark-color font font-medium
     flex flex-col fixed transition-all duration-500 linear ${sidebar && 'w-[50px]'}`}>
       <button onClick={handleSidebar} className='z-50 absolute top-1/2 right-0 translate-x-[25px] translate-y-[-50%] bg-white
       w-[25px] h-[50px] rounded-tr-[50%] rounded-br-[50%] py-1 border-t border-r border-b  scale '>

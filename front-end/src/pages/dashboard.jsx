@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import {
-  Navbar, Sidebar, Footer, ServerError, LoadingComponent, ComingSoon, Doctors, setAdminData,
+  Navbar, Sidebar, Footer, ServerError, LoadingComponent, ComingSoon, Doctors,
   setDoctorsData, setTestimonialsData, setAppointmentsData, useDispatch, useCookies, useEffect,
   useState, Routes, Route, baseUrl, Settings, Specialities, Offers
 } from '../import'
@@ -14,7 +14,6 @@ function Dashboard() {
 
 
   const fetchLibrary = [
-    { 'url': '/api/admin/state', 'action': setAdminData },
     { 'url': '/api/admin/doctor', 'action': setDoctorsData },
     { 'url': '/api/admin/testimonial', 'action': setTestimonialsData },
     { 'url': '/api/admin/appointment', 'action': setAppointmentsData },

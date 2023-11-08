@@ -7,7 +7,7 @@ function Settings() {
 
   return (
     <section className=" text-dark-color pt-[56px] pl-[50px] pb-[33px] min-h-screen">
-      <div className='w-full h-[200px] bg-gradient-to-r from-teal-400 via-teal-color to-teal-500 '></div>
+      <div className='w-full h-[100px] sm:h-[150px] md:h-[200px] bg-gradient-to-r from-teal-400 via-teal-color to-teal-500 '></div>
       <div className='flex flex-col px-7 pt-[60px] md:pt-[130px] pb-3 relative sm:pt-[100px] '>
         <div className='absolute top-0 left-5 translate-y-[-20%] flex items-center'>
           {adminData.image

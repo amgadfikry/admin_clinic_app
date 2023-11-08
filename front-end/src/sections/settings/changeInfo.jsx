@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import {
   useState, useSelector, adminDataState, TextInput, SubmitBtn, baseUrl, useCookies, setAdminData, useDispatch,
-  BiSolidCloudUpload
+  BiSolidCloudUpload, checkDataError, samilarData
 } from '../../import.js'
 
 function ChangeInfo() {
@@ -11,7 +11,7 @@ function ChangeInfo() {
   const dispatch = useDispatch()
   const [changeProfile, setChangeProfile] = useState({ ...adminData })
   const [successChanges, setSuccessChanges] = useState(false)
-  const [errorMsg, setErrorMsg] = useState({ 'admin_name': '', 'email': '', 'user_name': '', 'all': '' })
+  const [errorMsg, setErrorMsg] = useState({})
 
   const handleChangeProfile = (e) => {
     setChangeProfile({ ...changeProfile, [e.target.name]: e.target.value });
@@ -20,42 +20,24 @@ function ChangeInfo() {
   const handleCancel = (e) => {
     e.preventDefault()
     setChangeProfile({ ...adminData })
-    setErrorMsg({ 'admin_name': '', 'email': '', 'user_name': '', 'all': '' })
+    setErrorMsg({})
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    setErrorMsg((prevErrorMsg) => ({
-      'admin_name': '', 'email': '', 'user_name': '', 'all': ''
-    }));
-    let allFilled = true
-    let same = 0
-    for (let key in changeProfile) {
-      if (changeProfile[key] === '') {
-        allFilled = false
-        setErrorMsg((prevErrorMsg) => ({
-          ...prevErrorMsg,
-          [key]: 'This field is required',
-          all: 'Fill in all required',
-        }));
-      }
-      if (changeProfile[key] === adminData[key]) {
-        same++
-      }
+    setErrorMsg({})
+    const errors = checkDataError(changeProfile, ['image'])
+    if (Object.keys(errors).length > 0) {
+      setErrorMsg({...errors})
+      return;
     }
-    if (!allFilled) {
-      setErrorMsg((prevErrorMsg) => ({
-        ...prevErrorMsg,
-        'all': 'Fill in all required',
-      }));
-      return
-    }
-    if (same === Object.keys(changeProfile).length) {
-      setErrorMsg({ 'admin_name': '', 'email': '', 'user_name': '', 'all': '' })
-      return
+    const errorSame = samilarData(changeProfile, adminData)
+    if (Object.keys(errorSame).length > 0) {
+      setErrorMsg({...errorSame})
+      return;
     }
     fetch(`${baseUrl}/api/admin/update`, {
-      method: 'POST',
+      method: 'PUT',
       headers: {
         'Authorization': 'Bearer ' + cookies.token,
         'Content-Type': 'application/json'
@@ -64,21 +46,12 @@ function ChangeInfo() {
       mode: 'cors'
     }).then(response => response.json())
       .then(data => {
-        if ('msg' in data) {
-          setErrorMsg((prevErrorMsg) => ({
-            'admin_name': '', 'email': '', 'user_name': '', 'all': ''
-          }));
-        } else {
-          setErrorMsg((prevErrorMsg) => ({
-            'admin_name': '', 'email': '', 'user_name': '', 'all': ''
-          }));
-          dispatch(setAdminData(data))
-          setChangeProfile({ ...data })
-          setSuccessChanges(true)
-          setTimeout(() => {
-            setSuccessChanges(false)
-          }, 3000)
-        }
+        dispatch(setAdminData(data))
+        setChangeProfile({ ...data })
+        setSuccessChanges(true)
+        setTimeout(() => {
+          setSuccessChanges(false)
+        }, 2000)
       })
   }
 
@@ -100,13 +73,8 @@ function ChangeInfo() {
             <p>Choose a profile picture</p>
           </label>
         </div>
-        <div className='w-full flex justify-end items-start pr-2 pt-5 relative '>
-          {successChanges && <p className='text-green-500 text-sm absolute left-0 bottom-[-10%] '>Changes saved successfully</p>}
-          <input type="submit" value='Cancel' onClick={handleCancel}
-            className='border border-teal-color rounded-3xl px-4 py-1 text-teal-color font-medium cursor-pointer ml-auto
-            hover:bg-dark-color hover:border-dark-color hover:text-white transition-all duration-300 mr-2'></input>
-          <SubmitBtn value='Save Changes' error={errorMsg.all} />
-        </div>
+        <SubmitBtn value='Save Changes' error={errorMsg.all} cancel={handleCancel}
+          success={successChanges} successMsg='Change successfully'/>
       </fieldset>
     </form>
   )

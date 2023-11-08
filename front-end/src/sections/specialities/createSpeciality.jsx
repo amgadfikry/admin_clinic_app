@@ -1,11 +1,12 @@
 /* eslint-disable no-unused-vars */
 import {
-  Link, useState, TextInput, SubmitBtn, baseUrl, useCookies
+  Link, useState, TextInput, SubmitBtn, baseUrl, useCookies, checkDataError
 } from '../../import'
 
 function CreateSpeciality() {
   const [newSpeciality, setNewSpeciality] = useState({ 'name': '', 'price': '' })
-  const [errorMsg, setErrorMsg] = useState({ 'name': '', 'price': '', 'all': '' })
+  const [errorMsg, setErrorMsg] = useState({})
+  const [successChanges, setSuccessChanges] = useState(false)
   const [cookies] = useCookies(['token'])
 
   const handleChangeSpeciality = (e) => {
@@ -15,30 +16,16 @@ function CreateSpeciality() {
   const handleCancel = (e) => {
     e.preventDefault()
     setNewSpeciality({ 'name': '', 'price': '' })
-    setErrorMsg({ 'name': '', 'price': '', 'all': '' })
+    setErrorMsg({})
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    setErrorMsg((prevErrorMsg) => ({
-      'name': '', 'price': '', 'all': ''
-    }));
-    let allFilled = true
-    for (let key in newSpeciality) {
-      if (newSpeciality[key] === '') {
-        allFilled = false
-        setErrorMsg((prevErrorMsg) => ({
-          ...prevErrorMsg,
-          [key]: 'This field is required',
-        }));
-      }
-    }
-    if (!allFilled) {
-      setErrorMsg((prevErrorMsg) => ({
-        ...prevErrorMsg,
-        'all': 'Fill in all required',
-      }));
-      return
+    setErrorMsg({});
+    const errors = checkDataError(newSpeciality, [])
+    if (Object.keys(errors).length > 0) {
+      setErrorMsg({...errors})
+      return;
     }
     fetch(`${baseUrl}/api/admin/speciality`, {
       method: 'POST',
@@ -50,16 +37,15 @@ function CreateSpeciality() {
       mode: 'cors'
     }).then(response => response.json())
       .then(data => {
-        if ('msg' in data) {
-          setErrorMsg((prevErrorMsg) => ({
-            ...prevErrorMsg,
-            'all': data.msg,
-          }));
+        if ('error' in data) {
+          setErrorMsg({...data.error})
         } else {
-          setErrorMsg((prevErrorMsg) => ({
-            'name': '', 'price': '', 'all': ''
-          }));
+          setSuccessChanges(true)
+          setErrorMsg({});
           setNewSpeciality({ 'name': '', 'price': '' })
+          setTimeout(() => {
+            setSuccessChanges(false)
+          }, 2000)
         }
       })
   }
@@ -80,12 +66,8 @@ function CreateSpeciality() {
             changeFunc={handleChangeSpeciality} error={errorMsg.name} className='' />
           <TextInput type='number' label='Price' placeholder='Enter default price' id='price' value={newSpeciality.price}
             changeFunc={handleChangeSpeciality} error={errorMsg.price} />
-          <div className='w-full flex justify-end items-start pr-2 pt-5 relative '>
-            <input type="submit" value='Cancel' onClick={handleCancel}
-              className='border border-teal-color rounded-3xl px-4 py-1 text-teal-color font-medium cursor-pointer ml-auto
-            hover:bg-dark-color hover:border-dark-color hover:text-white transition-all duration-300 mr-2'></input>
-            <SubmitBtn value='Create' error={errorMsg.all} />
-          </div>
+          <SubmitBtn value='Save Changes' error={errorMsg.all} cancel={handleCancel} success={successChanges}
+            successMsg='Created successfully'/>
         </fieldset>
       </form>
     </section>

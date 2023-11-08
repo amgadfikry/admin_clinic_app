@@ -39,12 +39,13 @@ import { BrowserRouter as Router, Routes, Route, useNavigate, NavLink, Link, use
 // react-cookie
 import { useCookies, CookiesProvider } from 'react-cookie';
 // constant
-import { baseUrl } from '../constant'
+import { baseUrl, checkDataError, samilarData, checkPassword } from '../constant'
 // react hooks
 import { useEffect, useState, useRef } from 'react'
 //icons
 import {
   MdOutlineCopyright, MdDarkMode, MdLightMode, MdSchedule, MdReviews, MdManageAccounts, MdSettings,
+  MdEmail
 } from 'react-icons/md'
 import { FaXTwitter, FaGithub, FaLinkedinIn, FaUserDoctor, FaKitMedical, FaChartLine } from 'react-icons/fa6'
 import { FaUserAlt, FaLock } from 'react-icons/fa'
@@ -72,11 +73,11 @@ export {
   // react-router-dom
   Router, Routes, Route, useNavigate, NavLink, Link, useLocation,
   // constant
-  baseUrl,
+  baseUrl, checkDataError, samilarData, checkPassword,
   // icons
   MdOutlineCopyright, FaXTwitter, FaGithub, FaLinkedinIn, IoMdNotifications, CgProfile, MdDarkMode, MdLightMode,
   MdSchedule, MdReviews, MdManageAccounts, MdSettings, FaUserDoctor, FaKitMedical, FaChartLine, IoIosArrowForward,
   IoIosArrowBack, BiSolidDashboard, BiSolidOffer, BsCalendar3, VscSignOut, FaUserAlt, FaLock, BsFillPersonFill,
-  BiSolidCloudUpload, AiOutlineDelete, AiOutlineEdit, PiStethoscopeBold
+  BiSolidCloudUpload, AiOutlineDelete, AiOutlineEdit, PiStethoscopeBold, MdEmail
 }
 
