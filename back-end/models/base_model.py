@@ -31,6 +31,7 @@ class BaseModel:
 					*args: list of arguments of function
 					**kwargs: dictionary of values that add to rows
 		"""
+		#			if hasattr(self, key):
 		for key, value in kwargs.items():
 			if key not in ['table_name']:
 				setattr(self, key, value)

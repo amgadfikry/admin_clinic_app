@@ -1,6 +1,6 @@
 import process from 'process'
 
-export const baseUrl = process.env.NODE_ENV === 'development' ? 'http://127.0.0.1:5000' : 'http://localhost:5000'
+export const baseUrl = process.env.NODE_ENV === 'development' ? 'http://41.44.161.123:5000' : 'http://localhost:5000'
 
 const searchPattern = (pattern, string) => {
 	return (pattern.test(string))

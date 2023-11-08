@@ -1,66 +1,38 @@
 /* eslint-disable no-unused-vars */
 import {
   Link, useState, TextInput, SubmitBtn, baseUrl, useCookies, Selectspeciality, BiSolidCloudUpload,
-  specialitiesDataState, useSelector
+  useEffect, checkDataError
 } from '../../import'
 
 function CreateOffer() {
-  const specialitiesData = useSelector(specialitiesDataState)
-  const [newOffer, setNewOffer] = useState({
-    'title': '', 'old_price': '', 'new_price': '', 'description': '',
-    'speciality': '', 'expire_date': ''
-  })
-  const [errorMsg, setErrorMsg] = useState({
-    'title': '', 'old_price': '', 'new_price': '', 'description': '',
-    'speciality': '', 'expire_date': '', 'all': ''
-  })
+  const emptyOffer = {'title': '', 'old_price': '', 'new_price': '', 'description': '',
+  'expire_date': '', 'speciality_id': ''}
+  const [newOffer, setNewOffer] = useState({...emptyOffer})
+  const [errorMsg, setErrorMsg] = useState({})
+  const [successChanges, setSuccessChanges] = useState(false)
+  const [speciality, setSpeciality] = useState('')
   const [cookies] = useCookies(['token'])
 
   const handleChangeOffers = (e) => {
-    if (e.target.name === 'old_price' || e.target.name === 'new_price') {
-      setNewOffer({ ...newOffer, [e.target.name]: parseInt(e.target.value) })
-      return
-    }
-    setNewOffer({ ...newOffer, [e.target.name]: e.target.value })
+    e.preventDefault()
+    setNewOffer({...newOffer, [e.target.name]: e.target.value })
   }
 
   const handleCancel = (e) => {
     e.preventDefault()
-    setNewOffer({
-      'title': '', 'old_price': '', 'new_price': '', 'description': '',
-      'speciality': '', 'expire_date': ''
-    })
-    setErrorMsg({
-      'title': '', 'old_price': '', 'new_price': '', 'description': '',
-      'speciality': '', 'expire_date': '', 'all': ''
-    })
+    setNewOffer({...emptyOffer})
+    setSpeciality("")
+    setErrorMsg({})
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    setErrorMsg((prevErrorMsg) => ({
-      'title': '', 'old_price': '', 'new_price': '', 'description': '',
-      'speciality': '', 'expire_date': '', 'all': ''
-    }));
-    let allFilled = true
-    for (let key in newOffer) {
-      if (newOffer[key] === '') {
-        allFilled = false
-        setErrorMsg((prevErrorMsg) => ({
-          ...prevErrorMsg,
-          [key]: 'This field is required',
-        }));
-      }
+    setErrorMsg({});
+    const errors = checkDataError(newOffer, [])
+    if (Object.keys(errors).length > 0) {
+      setErrorMsg({...errors})
+      return;
     }
-    if (!allFilled) {
-      setErrorMsg((prevErrorMsg) => ({
-        ...prevErrorMsg,
-        'all': 'Fill in all required',
-      }));
-      return
-    }
-    const id = specialitiesData.find(speciality => speciality.name === newOffer.speciality).id
-    newOffer.speciality = id
     fetch(`${baseUrl}/api/admin/offer`, {
       method: 'POST',
       headers: {
@@ -71,15 +43,13 @@ function CreateOffer() {
       mode: 'cors'
     }).then(response => response.json())
       .then(data => {
-        console.log(data)
-        setErrorMsg((prevErrorMsg) => ({
-          'title': '', 'old_price': '', 'new_price': '', 'description': '',
-          'speciality': '', 'expire_date': '', 'all': ''
-        }));
-        setNewOffer({
-          'title': '', 'old_price': '', 'new_price': '', 'description': '',
-          'speciality': '', 'expire_date': ''
-        })
+        setSuccessChanges(true)
+        setErrorMsg({});
+        setNewOffer({...emptyOffer})
+        setSpeciality("")
+        setTimeout(() => {
+          setSuccessChanges(false)
+        }, 2000)
       })
   }
 
@@ -105,7 +75,8 @@ function CreateOffer() {
             changeFunc={handleChangeOffers} error={errorMsg.expire_date} />
           <TextInput type='text' label='Brief description' placeholder='Enter brief description' id='description' value={newOffer.description}
             changeFunc={handleChangeOffers} error={errorMsg.description} />
-          <Selectspeciality specialityValue={newOffer} setSpecialityValue={setNewOffer} error={errorMsg} />
+          <Selectspeciality specialityValue={newOffer} setSpecialityValue={setNewOffer} error={errorMsg} 
+            speciality={speciality} setSpeciality={setSpeciality}/>
           <div className='w-full shrink-0 py-4 px-3 text-center border rounded-lg bg-white'>
             <input type='file' name='image' id='image' className='hidden' disabled />
             <label htmlFor='image' className='flex justify-center items-center border w-fit mx-auto py-2 px-4
@@ -114,12 +85,8 @@ function CreateOffer() {
               <p>Choose a offer photo</p>
             </label>
           </div>
-          <div className='w-full flex justify-end items-start pr-2 pt-5 relative '>
-            <input type="submit" value='Cancel' onClick={handleCancel}
-              className='border border-teal-color rounded-3xl px-4 py-1 text-teal-color font-medium cursor-pointer ml-auto
-            hover:bg-dark-color hover:border-dark-color hover:text-white transition-all duration-300 mr-2'></input>
-            <SubmitBtn value='Create' error={errorMsg.all} />
-          </div>
+          <SubmitBtn value='Create' error={errorMsg.all} cancel={handleCancel} success={successChanges}
+            successMsg='Created successfully'/>
         </fieldset>
       </form>
     </section>

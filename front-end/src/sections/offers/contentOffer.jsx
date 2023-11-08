@@ -1,16 +1,15 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
-  useEffect, setOffersData, offersDataState, useSelector, useDispatch, useState, Link, baseUrl, useCookies,
-  AiOutlineDelete, AiOutlineEdit, LoadingComponent, ConfirmMsg, deleteOffer
+  useEffect, useState, Link, baseUrl, useCookies,
+  AiOutlineDelete, AiOutlineEdit, LoadingComponent, ConfirmMsg
 } from '../../import' 
 
 function ContentOffer() {
   const [loading, setLoading] = useState(true)
   const [confirmDelete, setConfirmDelete] = useState("")
-  const offersData = useSelector(offersDataState)
+  const [offersData, setOffersData] = useState([])
   const [cookies] = useCookies(['token'])
-  const dispatch = useDispatch()
 
   const handleDelete = (e) => {
     setConfirmDelete(e.target.id)
@@ -25,8 +24,9 @@ function ContentOffer() {
       mode: 'cors'
     }).then(response => response.json())
       .then(data => {
-        dispatch(deleteOffer(confirmDelete))
+        const filterList = offersData.filter( el => el.id !== confirmDelete)
         setConfirmDelete("")
+        setOffersData(filterList)
       })
   }
 
@@ -39,7 +39,7 @@ function ContentOffer() {
       mode: 'cors'
     }).then(response => response.json())
       .then(data => {
-        dispatch(setOffersData(data))
+        setOffersData(data)
         setLoading(false)
       })
   }, [])
@@ -56,8 +56,8 @@ function ContentOffer() {
           hover:bg-dark-color text-white">Create new</button>
           </Link>
         </header>
-        <div className="rounded-lg overflow-hidden ">
-          <div className="overflow-x-auto ">
+        <div className="rounded-lg  overflow-hidden">
+          <div className="overflow-x-auto">
             <table className="w-full border-collapse bg-gray-color text-left text-sm text-dark-color ">
               <thead className="bg-teal-color text-white">
                 <tr className='even:bg-yellow-color whitespace-nowrap'>
@@ -81,18 +81,18 @@ function ContentOffer() {
                       </td>
                     </tr>)
                   : (offersData.map((offer, index) => (
-                      <tr key={offer.id} className=" even:bg-gray-200 relative">
+                      <tr key={offer.id} className=" even:bg-gray-200 relative whitespace-nowrap">
                         {confirmDelete == offer.id && <ConfirmMsg state={setConfirmDelete} func={functionDelete} />}
-                        <th className="flex gap-3 px-6 py-4 font-norma">{index + 1}</th>
-                        <td className="px-6 py-4 ">{offer.title}</td>
-                        <td className="px-6 py-4">{offer.speciality.name}</td>
-                        <td className="px-6 py-4">{offer.old_price}</td>
-                        <td className="px-6 py-4" >{offer.new_price}</td>
-                        <td className="px-6 py-4" >{offer.percentage}</td>
-                        <td className="px-6 py-4" >{offer.expire_date}</td>
-                        <td className="px-6 py-4" >{offer.descrition}</td>
-                        <td className="px-6 py-4">
-                          <Link to={`/offers/edit/${offer.name}`} state={offer}>
+                        <th className="flex gap-3 px-2 py-4 font-norma">{index + 1}</th>
+                        <td className="px-2 py-4 ">{offer.title}</td>
+                        <td className="px-2 py-4">{offer.speciality.name}</td>
+                        <td className="px-2 py-4">{offer.old_price}</td>
+                        <td className="px-2 py-4" >{offer.new_price}</td>
+                        <td className="px-2 py-4" >{parseInt(offer.percentage)+"%"}</td>
+                        <td className="px-2 py-4" >{offer.expire_date}</td>
+                        <td className="px-2 py-4 whitespace-wrap" >{offer.description}</td>
+                        <td className="px-2 py-4">
+                          <Link to={`/offers/edit/${offer.title}`} state={offer}>
                             <AiOutlineEdit className='text-[24px] text-teal-color cursor-pointer' />
                           </Link>
                         </td>

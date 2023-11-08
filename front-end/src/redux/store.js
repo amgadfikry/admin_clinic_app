@@ -4,7 +4,6 @@ import doctorsStateReducer from './doctors'
 import testimonialStateReducer from './testimonial'
 import appointmentStateReducer from './appointment'
 import specialitiesStateReducer from './specialities'
-import offersStateReducer from './offers'
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +12,5 @@ export const store = configureStore({
     testomonial: testimonialStateReducer,
     appointments: appointmentStateReducer,
     specialities: specialitiesStateReducer,
-    offers: offersStateReducer,
   },
 })

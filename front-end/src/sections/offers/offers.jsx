@@ -4,7 +4,7 @@ import {
 
 function Offers() {
   return (
-    <div className='pt-[100px] pl-[70px] pb-[100px] pr-[20px] min-h-screen'>
+    <div className='pt-[100px] pl-[70px] pb-[50px] pr-[20px] min-h-screen'>
       <Routes>
         <Route exact path='/' element={<ContentOffer />} ></Route>
         <Route exact path='create' element={<CreateOffer />} ></Route>

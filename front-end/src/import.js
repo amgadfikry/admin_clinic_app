@@ -32,7 +32,6 @@ import { setDoctorsData, doctorsDataState } from './redux/doctors';
 import { setTestimonialsData, testimonialDataState } from './redux/testimonial';
 import { setAppointmentsData, appointmentsDataState } from './redux/appointment';
 import { setspecialitiesData, specialitiesDataState, deleteSpeciality } from './redux/specialities';
-import { setOffersData, offersDataState, deleteOffer } from './redux/offers';
 import { useDispatch, useSelector } from 'react-redux';
 // react-router-dom
 import { BrowserRouter as Router, Routes, Route, useNavigate, NavLink, Link, useLocation } from 'react-router-dom';
@@ -65,7 +64,6 @@ export {
   // redux
   setAdminData, setDoctorsData, setTestimonialsData, setAppointmentsData, adminDataState, useSelector, useDispatch,
   testimonialDataState, appointmentsDataState, doctorsDataState, setspecialitiesData, specialitiesDataState, deleteSpeciality,
-  setOffersData, offersDataState, deleteOffer,
   // cookies
   useCookies, CookiesProvider,
   // react-hooks

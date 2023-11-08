@@ -39,6 +39,10 @@ def manipulate_offer(offer_id):
 		return jsonify({}), 200
 	else:
 		data = request.get_json()
+		if data.get('speciality'):
+			del data['speciality']
+		if data.get('percentage'):
+			del data['percentage']
 		offer.update(**data)
 		Session.commit()
 		return jsonify(offer.to_dict()), 200
