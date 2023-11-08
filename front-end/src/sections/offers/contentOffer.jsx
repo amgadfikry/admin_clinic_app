@@ -3,14 +3,14 @@
 import {
   useEffect, setOffersData, offersDataState, useSelector, useDispatch, useState, Link, baseUrl, useCookies,
   AiOutlineDelete, AiOutlineEdit, LoadingComponent, ConfirmMsg, deleteOffer
-} from '../../import'
+} from '../../import' 
 
 function ContentOffer() {
-  const dispatch = useDispatch()
-  const offersData = useSelector(offersDataState)
   const [loading, setLoading] = useState(true)
-  const [cookies] = useCookies(['token'])
   const [confirmDelete, setConfirmDelete] = useState("")
+  const offersData = useSelector(offersDataState)
+  const [cookies] = useCookies(['token'])
+  const dispatch = useDispatch()
 
   const handleDelete = (e) => {
     setConfirmDelete(e.target.id)
@@ -48,8 +48,7 @@ function ContentOffer() {
     return <LoadingComponent />
   } else {
     return (
-      <section className="relative">
-        {confirmDelete && <ConfirmMsg state={setConfirmDelete} func={functionDelete} />}
+      <section className="">
         <header className="flex justify-between items-center pb-3 border-b mb-8">
           <h1 className="text-3xl text-teal-color font-bold">Offers</h1>
           <Link to='/offers/create'>
@@ -57,9 +56,9 @@ function ContentOffer() {
           hover:bg-dark-color text-white">Create new</button>
           </Link>
         </header>
-        <div className="rounded-lg overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full border-collapse bg-gray-color drop-shadow-lg text-left text-sm text-dark-color ">
+        <div className="rounded-lg overflow-hidden ">
+          <div className="overflow-x-auto ">
+            <table className="w-full border-collapse bg-gray-color text-left text-sm text-dark-color ">
               <thead className="bg-teal-color text-white">
                 <tr className='even:bg-yellow-color whitespace-nowrap'>
                   <th scope="col" className="px-2 py-4 font-medium">#</th>
@@ -75,10 +74,15 @@ function ContentOffer() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100 border-t border-gray-100 text-dark-color ">
-                {
-                  offersData.map((offer, index) => {
-                    return (
-                      <tr key={offer.id} className=" even:bg-gray-200">
+                {offersData.length === 0
+                  ? (<tr> 
+                      <td colSpan="10" className='text-2xl text-gray-400 whitespace-nowrap py-[125px] text-center'>
+                        No current offers
+                      </td>
+                    </tr>)
+                  : (offersData.map((offer, index) => (
+                      <tr key={offer.id} className=" even:bg-gray-200 relative">
+                        {confirmDelete == offer.id && <ConfirmMsg state={setConfirmDelete} func={functionDelete} />}
                         <th className="flex gap-3 px-6 py-4 font-norma">{index + 1}</th>
                         <td className="px-6 py-4 ">{offer.title}</td>
                         <td className="px-6 py-4">{offer.speciality.name}</td>
@@ -97,8 +101,7 @@ function ContentOffer() {
                             onClick={handleDelete} id={offer.id} />
                         </td>
                       </tr>
-                    )
-                  })
+                    )))
                 }
               </tbody>
             </table>

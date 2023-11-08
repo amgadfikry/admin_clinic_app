@@ -72,9 +72,13 @@ if (loading) {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100 border-t border-gray-100 text-dark-color ">
-              {
-                specialitiesData.map((speciality, index) => {
-                  return (
+              {specialitiesData.length === 0
+                  ? (<tr> 
+                      <td colSpan="7" className='text-2xl text-gray-400 whitespace-nowrap py-[125px] text-center'>
+                        No current specialities
+                      </td>
+                    </tr>)
+                  : (specialitiesData.map((speciality, index) => (
                     <tr key={speciality.id} className=" even:bg-gray-200 relative">
                       {confirmDelete == speciality.id && <ConfirmMsg state={setConfirmDelete} func={functionDelete} />}
                       <th className="flex gap-3 px-6 py-4 font-norma">{index + 1}</th>
@@ -93,7 +97,7 @@ if (loading) {
                       </td>
                     </tr>
                   )
-                })
+                ))
               }
             </tbody>
           </table>

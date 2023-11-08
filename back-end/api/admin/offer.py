@@ -43,6 +43,7 @@ def manipulate_offer(offer_id):
 		Session.commit()
 		return jsonify(offer.to_dict()), 200
 
+
 @admin_routes.route('/offer', methods=['GET'], strict_slashes=False)
 @jwt_required()
 @admin_required
