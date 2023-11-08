@@ -8,7 +8,6 @@ from flask import jsonify, request
 from flask_jwt_extended import jwt_required
 from models.speciality import Speciality
 
-
 @admin_routes.route('/speciality', methods=['POST'], strict_slashes=False)
 @jwt_required()
 @admin_required
@@ -21,7 +20,7 @@ def create_speciality():
 	data = request.get_json()
 	exist = Session.query(Speciality).filter(func.lower(Speciality.name) == func.lower(data['name'])).first()
 	if exist:
-		return jsonify({'msg': 'already exist speciality'}), 403
+		return jsonify({'error': {'name': "Exist speciality"}}), 200
 	new_speciality = Speciality(**data)
 	Session.add(new_speciality)
 	Session.commit()
@@ -32,7 +31,7 @@ def create_speciality():
 @jwt_required()
 @admin_required
 def manipulate_speciality(speciality_id):
-	""" update and delete doctor by it's id
+	""" update and delete speciality by it's id
 			Return:
 				- empty json with code 200 if delete request
 				- json of new speciality with code 200 if put request
@@ -47,3 +46,21 @@ def manipulate_speciality(speciality_id):
 		speciality.update(**data)
 		Session.commit()
 		return jsonify(speciality.to_dict()), 200
+
+
+@admin_routes.route('/speciality', methods=['GET'], strict_slashes=False)
+@jwt_required()
+@admin_required
+def get_all_specialities():
+	""" get list of all specialities
+			Return:
+				- list of dictionaries if specialities
+	"""
+	speciality = Session.query(Speciality).order_by(Speciality.name).all()
+	speciality_list =[]
+	for spec in speciality:
+		dic = spec.to_dict()
+		dic['offers'] = len(spec.offers)
+		dic['doctors'] = len(spec.doctors)
+		speciality_list.append(dic)
+	return jsonify(speciality_list)

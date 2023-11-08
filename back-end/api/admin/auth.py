@@ -7,6 +7,7 @@ from flask import jsonify, request
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from models.admin import Admin
+from api import check_change_password
 
 
 @admin_routes.route('/signin', methods=['POST'], strict_slashes=False)
@@ -16,14 +17,14 @@ def signin():
 				- json of new access token with code 201 if successfull signin
 				- json with msg if faild signin with code 401 if failed signin
 	"""
-	user_name = request.json.get('user_name', None)
+	email = request.json.get('email', None)
 	password = request.json.get('password', None)
-	admin = Session.query(Admin).filter_by(user_name=user_name).first()
+	admin = Session.query(Admin).filter_by(email=email).first()
 	if admin and check_password_hash(admin.password, password):
 		access_token = create_access_token(identity=admin.id)
 		return jsonify({'access_token': access_token}), 201
 	else:
-		return jsonify({'msg': 'Invalid user name or password'}), 401
+		return jsonify({'error': 'Invalid user name or password'}), 401
 
 
 @admin_routes.route('/state', methods=['GET'], strict_slashes=False)
@@ -37,7 +38,8 @@ def admin_state():
 	admin = Session.query(Admin).filter_by(id=get_jwt_identity()).first()
 	return jsonify(admin.to_dict()), 200
 
-@admin_routes.route('/update', methods=['POSt'], strict_slashes=False)
+
+@admin_routes.route('/update', methods=['PUT'], strict_slashes=False)
 @jwt_required()
 @admin_required
 def update_info():
@@ -51,7 +53,8 @@ def update_info():
 	Session.commit()
 	return jsonify(admin.to_dict()), 200
 
-@admin_routes.route('/password', methods=['POSt'], strict_slashes=False)
+
+@admin_routes.route('/password', methods=['PUT'], strict_slashes=False)
 @jwt_required()
 @admin_required
 def password():
@@ -60,11 +63,11 @@ def password():
 			json of new data of admin
 	"""
 	admin = Session.query(Admin).filter_by(id=get_jwt_identity()).first()
-	old_password = request.json.get('current_password', None)
-	new_password = request.json.get('new_password', None)
-	if admin and check_password_hash(admin.password, old_password):
-		setattr(admin, 'password', generate_password_hash(new_password, method='scrypt'))
-		Session.commit()
-		return jsonify(admin.to_dict()), 200
-	else:
-		return jsonify({'msg': 'Incorrect Password'}), 200
+	data = request.get_json()
+	errors = check_change_password(data, admin.password)
+	if errors:
+		return jsonify({'error': errors}), 200
+	correct_data = {"password": generate_password_hash(data.get('new_password'), method='scrypt')}
+	admin.update(**correct_data)
+	Session.commit()
+	return jsonify(admin.to_dict()), 200

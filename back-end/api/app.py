@@ -25,7 +25,7 @@ app.config['secret_key'] = 'da9bf1fe5f672ddcea2f3d9634c31ce4d67d8b2d1fb61eac6f0a
 app.config['JWT_SECRET_KEY'] = 'f5f57a3d68f6b5d5891285bf0b99f58874e76ade5cf8adc418ff2873ab136b53'
 
 # add expire time to access token of jwt
-app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=3)
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(days=7)
 
 # add flask app to JWTmanger class
 jwt = JWTManager(app)

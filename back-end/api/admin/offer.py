@@ -42,3 +42,20 @@ def manipulate_offer(offer_id):
 		offer.update(**data)
 		Session.commit()
 		return jsonify(offer.to_dict()), 200
+
+@admin_routes.route('/offer', methods=['GET'], strict_slashes=False)
+@jwt_required()
+@admin_required
+def get_all_offers():
+	""" get list of all offers
+			Return:
+				list of dictionaries if offers
+	"""
+	offers = Session.query(Offer).order_by(Offer.title).all()
+	offer_list =[]
+	for offer in offers:
+		dic = offer.to_dict()
+		dic['speciality'] = offer.speciality.to_dict()
+		dic['percentage'] = offer.percentage
+		offer_list.append(dic)
+	return jsonify(offer_list)

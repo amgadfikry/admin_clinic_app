@@ -70,8 +70,8 @@ class BaseModel:
 					value: represent new value to update it
 		"""
 		for key, value in kwargs.items():
-			if key in ['updated_at']:
+			if key == 'updated_at':
 				time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-				setattr(self, key, time)
+				setattr(self, 'updated_at', time)
 			else:
 				setattr(self, key, value) 
