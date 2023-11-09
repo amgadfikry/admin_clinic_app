@@ -1,54 +1,54 @@
 /* eslint-disable no-unused-vars */
 import {
   Link, useState, TextInput, SubmitBtn, baseUrl, useCookies, Selectspeciality, BiSolidCloudUpload,
-  useEffect, checkDataError
+  checkDataError
 } from '../../import'
 
-function CreateOffer() {
-  const emptyOffer = {
-    'title': '', 'old_price': '', 'new_price': '', 'description': '',
-    'expire_date': '', 'speciality_id': ''
-  }
-  const [newOffer, setNewOffer] = useState({ ...emptyOffer })
+function CreateDoctor() {
+  const emptyDoctor = { 'full_name': '', 'title': '', 'price': null, 'details': '', 'speciality_id': '' }
+  const [newDoctor, setNewDoctor] = useState({ ...emptyDoctor })
   const [errorMsg, setErrorMsg] = useState({})
   const [successChanges, setSuccessChanges] = useState(false)
   const [speciality, setSpeciality] = useState('')
+  const [specialityPrice, setSpecialityPrice] = useState('Default speciality price')
   const [cookies] = useCookies(['token'])
 
-  const handleChangeOffers = (e) => {
+  const handleChangeDoctors = (e) => {
     e.preventDefault()
-    setNewOffer({ ...newOffer, [e.target.name]: e.target.value })
+    setNewDoctor({ ...newDoctor, [e.target.name]: e.target.value })
   }
 
   const handleCancel = (e) => {
     e.preventDefault()
-    setNewOffer({ ...emptyOffer })
+    setNewDoctor({ ...emptyDoctor })
     setSpeciality("")
     setErrorMsg({})
+    setSpecialityPrice('Default speciality price')
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
     setErrorMsg({});
-    const errors = checkDataError(newOffer, [])
+    const errors = checkDataError(newDoctor, ['price'])
     if (Object.keys(errors).length > 0) {
       setErrorMsg({ ...errors })
       return;
     }
-    fetch(`${baseUrl}/api/admin/offer`, {
+    fetch(`${baseUrl}/api/admin/doctor`, {
       method: 'POST',
       headers: {
         'Authorization': 'Bearer ' + cookies.token,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(newOffer),
+      body: JSON.stringify(newDoctor),
       mode: 'cors'
     }).then(response => response.json())
       .then(data => {
         setSuccessChanges(true)
         setErrorMsg({});
-        setNewOffer({ ...emptyOffer })
+        setNewDoctor({ ...emptyDoctor })
         setSpeciality("")
+        setSpecialityPrice('Default speciality price')
         setTimeout(() => {
           setSuccessChanges(false)
         }, 2000)
@@ -58,27 +58,29 @@ function CreateOffer() {
   return (
     <section className="">
       <header className="flex justify-between items-center pb-3 border-b mb-8">
-        <h1 className="text-3xl text-teal-color font-bold">New Offer</h1>
-        <Link to='/offers'>
+        <h1 className="text-3xl text-teal-color font-bold">New Doctor</h1>
+        <Link to='/doctors'>
           <button className="py-1 px-3 text-medium bg-teal-color rounded-lg transition-all duration-300 cursor-pointer
           hover:bg-dark-color text-white">Back</button>
         </Link>
       </header>
       <form onSubmit={handleSubmit}>
         <fieldset className='filedset'>
-          <legend className='legend'>Offer Info</legend>
-          <TextInput type='text' label='Offer title' placeholder='Enter offer title' id='title' value={newOffer.title}
-            changeFunc={handleChangeOffers} error={errorMsg.title} />
-          <TextInput type='number' label='Old price' placeholder='Enter old price' id='old_price' value={newOffer.old_price}
-            changeFunc={handleChangeOffers} error={errorMsg.old_price} />
-          <TextInput type='number' label='New price' placeholder='Enter new price' id='new_price' value={newOffer.new_price}
-            changeFunc={handleChangeOffers} error={errorMsg.new_price} />
-          <TextInput type='date' label='Expire date' placeholder='Enter expire date' id='expire_date' value={newOffer.expire_date}
-            changeFunc={handleChangeOffers} error={errorMsg.expire_date} />
-          <TextInput type='text' label='Brief description' placeholder='Enter brief description' id='description' value={newOffer.description}
-            changeFunc={handleChangeOffers} error={errorMsg.description} />
-          <Selectspeciality specialityValue={newOffer} setSpecialityValue={setNewOffer} error={errorMsg}
-            speciality={speciality} setSpeciality={setSpeciality} setSpecialityPrice='' />
+          <legend className='legend'>Doctor Info</legend>
+          <TextInput type='text' label='Doctor name' placeholder='Enter Doctor full name' id='full_name' value={newDoctor.full_name}
+            changeFunc={handleChangeDoctors} error={errorMsg.full_name} />
+          <TextInput type='text' label='Title' placeholder='Enter doctor title' id='title' value={newDoctor.title}
+            changeFunc={handleChangeDoctors} error={errorMsg.title} />
+          <TextInput type='number' label='Price' placeholder={specialityPrice}
+            id='price' value={newDoctor.price} changeFunc={handleChangeDoctors} error={errorMsg.price} />
+          <Selectspeciality specialityValue={newDoctor} setSpecialityValue={setNewDoctor} error={errorMsg}
+            speciality={speciality} setSpeciality={setSpeciality} setSpecialityPrice={setSpecialityPrice} />
+          <p className='flex flex-col space-y-1 w-full shrink-0'>
+            <textarea className='outline-none resize-none border rounded-lg p-3'
+              placeholder='Enter more details about doctor' rows={5} name='details' id='details' value={newDoctor.details}
+              onChange={handleChangeDoctors}></textarea>
+            <span className='text-xs text-red-500 pl-1 h-2'>{errorMsg.details}</span>
+          </p>
           <div className='w-full shrink-0 py-4 px-3 text-center border rounded-lg bg-white'>
             <input type='file' name='image' id='image' className='hidden' disabled />
             <label htmlFor='image' className='flex justify-center items-center border w-fit mx-auto py-2 px-4
@@ -95,4 +97,4 @@ function CreateOffer() {
   )
 }
 
-export default CreateOffer
+export default CreateDoctor

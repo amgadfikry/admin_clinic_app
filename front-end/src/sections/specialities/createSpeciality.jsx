@@ -24,7 +24,7 @@ function CreateSpeciality() {
     setErrorMsg({});
     const errors = checkDataError(newSpeciality, [])
     if (Object.keys(errors).length > 0) {
-      setErrorMsg({...errors})
+      setErrorMsg({ ...errors })
       return;
     }
     fetch(`${baseUrl}/api/admin/speciality`, {
@@ -38,7 +38,7 @@ function CreateSpeciality() {
     }).then(response => response.json())
       .then(data => {
         if ('error' in data) {
-          setErrorMsg({...data.error})
+          setErrorMsg({ ...data.error })
         } else {
           setSuccessChanges(true)
           setErrorMsg({});
@@ -67,7 +67,7 @@ function CreateSpeciality() {
           <TextInput type='number' label='Price' placeholder='Enter default price' id='price' value={newSpeciality.price}
             changeFunc={handleChangeSpeciality} error={errorMsg.price} />
           <SubmitBtn value='Save Changes' error={errorMsg.all} cancel={handleCancel} success={successChanges}
-            successMsg='Created successfully'/>
+            successMsg='Created successfully' />
         </fieldset>
       </form>
     </section>

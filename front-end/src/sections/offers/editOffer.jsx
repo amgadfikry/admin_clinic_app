@@ -30,12 +30,12 @@ function EditOffer() {
     setErrorMsg({});
     const errors = checkDataError(changeOffer, ['image'])
     if (Object.keys(errors).length > 0) {
-      setErrorMsg({...errors})
+      setErrorMsg({ ...errors })
       return;
     }
     const errorSame = samilarData(changeOffer, offersData)
     if (Object.keys(errorSame).length > 0) {
-      setErrorMsg({...errorSame})
+      setErrorMsg({ ...errorSame })
       return;
     }
     fetch(`${baseUrl}/api/admin/offer/${offersData.id}`, {
@@ -76,8 +76,8 @@ function EditOffer() {
             changeFunc={handleChangeOffers} error={errorMsg.expire_date} />
           <TextInput type='text' label='Brief description' placeholder='Enter brief description' id='description' value={changeOffer.description}
             changeFunc={handleChangeOffers} error={errorMsg.description} />
-          <Selectspeciality specialityValue={changeOffer} setSpecialityValue={setChangeOffer} error={errorMsg} 
-            speciality={speciality} setSpeciality={setSpeciality}/>
+          <Selectspeciality specialityValue={changeOffer} setSpecialityValue={setChangeOffer} error={errorMsg}
+            speciality={speciality} setSpeciality={setSpeciality} setSpecialityPrice='' />
           <div className='w-full shrink-0 py-4 px-3 text-center border rounded-lg bg-white'>
             <input type='file' name='image' id='image' className='hidden' disabled />
             <label htmlFor='image' className='flex justify-center items-center border w-fit mx-auto py-2 px-4
@@ -87,7 +87,7 @@ function EditOffer() {
             </label>
           </div>
           <SubmitBtn value='Update' error={errorMsg.all} cancel={handleCancel} success={false}
-            successMsg=''/>
+            successMsg='' />
         </fieldset>
       </form>
     </section>

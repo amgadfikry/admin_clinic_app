@@ -70,6 +70,18 @@
   .legend{
     @apply text-xl font-bold text-teal-color px-2 
   }
+  .review-btn{
+    @apply px-2 py-1 bg-gray-500 text-white rounded-lg cursor-pointer text-center drop-shadow-md
+  }
+  .details-btn{
+    @apply px-2 py-1 bg-gray-500 text-white rounded-lg cursor-pointer text-center drop-shadow-md
+  }
+  .edit-btn{
+    @apply px-2 py-1 bg-teal-color text-white rounded-lg cursor-pointer text-center drop-shadow-md
+  }
+  .delete-btn{
+    @apply px-2 py-1 bg-red-500 text-white rounded-lg cursor-pointer text-center drop-shadow-md
+  }
 }
 
 @layer utilities {

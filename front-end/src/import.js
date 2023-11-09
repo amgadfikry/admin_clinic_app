@@ -25,13 +25,15 @@ import CreateOffer from './sections/offers/createOffer';
 import EditOffer from './sections/offers/editOffer';
 import Offers from './sections/offers/offers';
 import ContentOffer from './sections/offers/contentOffer';
-import Selectspeciality from './sections/offers/selectSpecialitySelect'
+import Selectspeciality from './components/selectSpecialitySelect';
+import CreateDoctor from './sections/doctors/createDoctor';
+import EditDoctor from './sections/doctors/editDoctor';
+import ContentDoctor from './sections/doctors/contentDoctor';
+import Stars from './components/stars';
+import CreateTime from './sections/doctors/createTime';
+import Details from './components/details';
 // redux
 import { setAdminData, adminDataState } from './redux/profile';
-import { setDoctorsData, doctorsDataState } from './redux/doctors';
-import { setTestimonialsData, testimonialDataState } from './redux/testimonial';
-import { setAppointmentsData, appointmentsDataState } from './redux/appointment';
-import { setspecialitiesData, specialitiesDataState, deleteSpeciality } from './redux/specialities';
 import { useDispatch, useSelector } from 'react-redux';
 // react-router-dom
 import { BrowserRouter as Router, Routes, Route, useNavigate, NavLink, Link, useLocation } from 'react-router-dom';
@@ -51,7 +53,7 @@ import { FaUserAlt, FaLock } from 'react-icons/fa'
 import { IoMdNotifications, IoIosArrowForward, IoIosArrowBack } from 'react-icons/io'
 import { CgProfile } from 'react-icons/cg'
 import { BiSolidDashboard, BiSolidOffer, BiSolidCloudUpload } from 'react-icons/bi'
-import { BsCalendar3, BsFillPersonFill } from 'react-icons/bs'
+import { BsCalendar3, BsFillPersonFill, BsStarFill, BsStarHalf, BsStar } from 'react-icons/bs'
 import { VscSignOut } from 'react-icons/vsc'
 import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai'
 import { PiStethoscopeBold } from 'react-icons/pi'
@@ -60,10 +62,10 @@ export {
   // react components and pages
   Navbar, Sidebar, Footer, ServerError, LoadingComponent, ComingSoon, Doctors, SidebarNavLink, Signin, Dashboard, NotFound, AuthChecker,
   Settings, TextInput, SubmitBtn, ChangeInfo, ChangePassword, Specialities, CreateSpeciality, ContentSpeciality, EditSpeciality,
-  ConfirmMsg, CreateOffer, EditOffer, Offers, ContentOffer, Selectspeciality,
+  ConfirmMsg, CreateOffer, EditOffer, Offers, ContentOffer, Selectspeciality, CreateDoctor, EditDoctor, ContentDoctor, Stars,
+  CreateTime, Details,
   // redux
-  setAdminData, setDoctorsData, setTestimonialsData, setAppointmentsData, adminDataState, useSelector, useDispatch,
-  testimonialDataState, appointmentsDataState, doctorsDataState, setspecialitiesData, specialitiesDataState, deleteSpeciality,
+  setAdminData, adminDataState, useSelector, useDispatch,
   // cookies
   useCookies, CookiesProvider,
   // react-hooks
@@ -76,6 +78,6 @@ export {
   MdOutlineCopyright, FaXTwitter, FaGithub, FaLinkedinIn, IoMdNotifications, CgProfile, MdDarkMode, MdLightMode,
   MdSchedule, MdReviews, MdManageAccounts, MdSettings, FaUserDoctor, FaKitMedical, FaChartLine, IoIosArrowForward,
   IoIosArrowBack, BiSolidDashboard, BiSolidOffer, BsCalendar3, VscSignOut, FaUserAlt, FaLock, BsFillPersonFill,
-  BiSolidCloudUpload, AiOutlineDelete, AiOutlineEdit, PiStethoscopeBold, MdEmail
+  BiSolidCloudUpload, AiOutlineDelete, AiOutlineEdit, PiStethoscopeBold, MdEmail, BsStarFill, BsStarHalf, BsStar
 }
 

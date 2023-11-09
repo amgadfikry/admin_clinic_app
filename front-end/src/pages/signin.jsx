@@ -53,7 +53,7 @@ function Signin() {
   } else {
     return (
       <div className="w-[100vw] h-[100vh] flex items-center justify-center bg-teal-color">
-        <div className="rounded-xl drop-shadow-xl bg-white px-6 py-8 md:px-12 md:py-16 relative">
+        <div className="rounded-xl drop-shadow-xl bg-white px-6 py-8 md:px-12 md:py-16 relative min-w-[350px] md:min-w-[450px]">
           <div className="text-xl mr-10 font-black text-teal-color cursor-pointer whitespace-nowrap
           absolute top-1 left-2">Clinic App</div>
           <h2 className="text-teal-color font-[900] text-4xl mb-12 text-center mt-3 md:mt-0">Admin Login</h2>
@@ -61,7 +61,7 @@ function Signin() {
             <div className="flex flex-col relative mb-2 w-full">
               <MdEmail className='absolute text-teal-color text-base md:text-lg left-3 top-[30%]' />
               <input type="text" id="email" name="email" placeholder='Email address' onChange={handlechange}
-                className="bg-gray-200 rounded-lg outline-none px-9 py-2 md:px-12 text-lg"></input>
+                className="bg-gray-200 rounded-lg outline-none px-9 py-2 md:px-12 text-lg "></input>
             </div>
             <div className="flex flex-col relative mb-2 w-full">
               <FaLock className='absolute text-teal-color text-base md:text-lg left-3 top-[30%]' />

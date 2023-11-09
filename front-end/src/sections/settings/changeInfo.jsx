@@ -28,12 +28,12 @@ function ChangeInfo() {
     setErrorMsg({})
     const errors = checkDataError(changeProfile, ['image'])
     if (Object.keys(errors).length > 0) {
-      setErrorMsg({...errors})
+      setErrorMsg({ ...errors })
       return;
     }
     const errorSame = samilarData(changeProfile, adminData)
     if (Object.keys(errorSame).length > 0) {
-      setErrorMsg({...errorSame})
+      setErrorMsg({ ...errorSame })
       return;
     }
     fetch(`${baseUrl}/api/admin/update`, {
@@ -74,7 +74,7 @@ function ChangeInfo() {
           </label>
         </div>
         <SubmitBtn value='Save Changes' error={errorMsg.all} cancel={handleCancel}
-          success={successChanges} successMsg='Change successfully'/>
+          success={successChanges} successMsg='Change successfully' />
       </fieldset>
     </form>
   )

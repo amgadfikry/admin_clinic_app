@@ -3,7 +3,7 @@
 import {
   useEffect, useState, Link, baseUrl, useCookies,
   AiOutlineDelete, AiOutlineEdit, LoadingComponent, ConfirmMsg
-} from '../../import' 
+} from '../../import'
 
 function ContentOffer() {
   const [loading, setLoading] = useState(true)
@@ -24,7 +24,7 @@ function ContentOffer() {
       mode: 'cors'
     }).then(response => response.json())
       .then(data => {
-        const filterList = offersData.filter( el => el.id !== confirmDelete)
+        const filterList = offersData.filter(el => el.id !== confirmDelete)
         setConfirmDelete("")
         setOffersData(filterList)
       })
@@ -75,33 +75,33 @@ function ContentOffer() {
               </thead>
               <tbody className="divide-y divide-gray-100 border-t border-gray-100 text-dark-color ">
                 {offersData.length === 0
-                  ? (<tr> 
-                      <td colSpan="10" className='text-2xl text-gray-400 whitespace-nowrap py-[125px] text-center'>
-                        No current offers
-                      </td>
-                    </tr>)
+                  ? (<tr>
+                    <td colSpan="10" className='text-2xl text-gray-400 whitespace-nowrap py-[125px] text-center'>
+                      No current offers
+                    </td>
+                  </tr>)
                   : (offersData.map((offer, index) => (
-                      <tr key={offer.id} className=" even:bg-gray-200 relative whitespace-nowrap">
-                        {confirmDelete == offer.id && <ConfirmMsg state={setConfirmDelete} func={functionDelete} />}
-                        <th className="flex gap-3 px-2 py-4 font-norma">{index + 1}</th>
-                        <td className="px-2 py-4 ">{offer.title}</td>
-                        <td className="px-2 py-4">{offer.speciality.name}</td>
-                        <td className="px-2 py-4">{offer.old_price}</td>
-                        <td className="px-2 py-4" >{offer.new_price}</td>
-                        <td className="px-2 py-4" >{parseInt(offer.percentage)+"%"}</td>
-                        <td className="px-2 py-4" >{offer.expire_date}</td>
-                        <td className="px-2 py-4 whitespace-wrap" >{offer.description}</td>
-                        <td className="px-2 py-4">
-                          <Link to={`/offers/edit/${offer.title}`} state={offer}>
-                            <AiOutlineEdit className='text-[24px] text-teal-color cursor-pointer' />
-                          </Link>
-                        </td>
-                        <td className="px-2 py-4">
-                          <AiOutlineDelete className='text-[24px] text-dark-color cursor-pointer'
-                            onClick={handleDelete} id={offer.id} />
-                        </td>
-                      </tr>
-                    )))
+                    <tr key={offer.id} className=" even:bg-gray-200 relative whitespace-nowrap">
+                      {confirmDelete == offer.id && <ConfirmMsg state={setConfirmDelete} func={functionDelete} />}
+                      <th className="flex gap-3 px-2 py-4 font-norma">{index + 1}</th>
+                      <td className="px-2 py-4 ">{offer.title}</td>
+                      <td className="px-2 py-4">{offer.speciality.name}</td>
+                      <td className="px-2 py-4">{offer.old_price}</td>
+                      <td className="px-2 py-4" >{offer.new_price}</td>
+                      <td className="px-2 py-4" >{parseInt(offer.percentage) + "%"}</td>
+                      <td className="px-2 py-4" >{offer.expire_date}</td>
+                      <td className="px-2 py-4 whitespace-wrap" >{offer.description}</td>
+                      <td className="px-2 py-4">
+                        <Link to={`/offers/edit/${offer.title}`} state={offer}>
+                          <AiOutlineEdit className='text-[24px] text-teal-color cursor-pointer' />
+                        </Link>
+                      </td>
+                      <td className="px-2 py-4">
+                        <AiOutlineDelete className='text-[24px] text-dark-color cursor-pointer'
+                          onClick={handleDelete} id={offer.id} />
+                      </td>
+                    </tr>
+                  )))
                 }
               </tbody>
             </table>

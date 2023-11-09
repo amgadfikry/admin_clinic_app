@@ -12,7 +12,7 @@ function Navbar() {
   }
 
   return (
-    <nav className='fixed z-50 top-0 w-full flex flex-row px-5 py-2 items-center h-[56px] bg-white drop-shadow-md select-none'>
+    <nav className='fixed z-50 top-0 w-full flex flex-row px-3 py-2 items-center h-[56px] bg-white drop-shadow-md select-none'>
       <div className='text-2xl font-black text-teal-color cursor-pointer mr-auto'>Clinic App</div>
       <div className='mr-3' onClick={handleTheme}>
         {darkMode

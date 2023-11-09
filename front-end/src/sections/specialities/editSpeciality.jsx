@@ -29,12 +29,12 @@ function EditSpeciality() {
     setErrorMsg({});
     const errors = checkDataError(changeSpeciality, [])
     if (Object.keys(errors).length > 0) {
-      setErrorMsg({...errors})
+      setErrorMsg({ ...errors })
       return;
     }
     const errorSame = samilarData(changeSpeciality, specialityData)
     if (Object.keys(errorSame).length > 0) {
-      setErrorMsg({...errorSame})
+      setErrorMsg({ ...errorSame })
       return;
     }
     fetch(`${baseUrl}/api/admin/speciality/${specialityData.id}`, {
@@ -70,7 +70,7 @@ function EditSpeciality() {
           <TextInput type='number' label='Price' placeholder='Enter default price' id='price' value={changeSpeciality.price}
             changeFunc={handleChangeSpeciality} error={errorMsg.price} />
           <SubmitBtn value='Update' error={errorMsg.all} cancel={handleCancel}
-            success={false} successMsg=''/>
+            success={false} successMsg='' />
         </fieldset>
       </form>
     </section>

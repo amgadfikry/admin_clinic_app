@@ -6,7 +6,7 @@ import {
 function ChangePassword() {
   const [errorMsg, setErrorMsg] = useState({})
   const [changePassword, setChangePassword] = useState({
-   'current_password': '', 'new_password': '', 'confirm_password': ''
+    'current_password': '', 'new_password': '', 'confirm_password': ''
   })
   const [successChanges, setSuccessChanges] = useState(false)
   const [cookies, setCookie, removeCookie] = useCookies(['token'])
@@ -27,7 +27,7 @@ function ChangePassword() {
     setErrorMsg({})
     const errors = checkPassword(changePassword)
     if (Object.keys(errors).length > 0) {
-      setErrorMsg({...errors})
+      setErrorMsg({ ...errors })
       return;
     }
     fetch(`${baseUrl}/api/admin/password`, {
@@ -41,7 +41,7 @@ function ChangePassword() {
     }).then(response => response.json())
       .then(data => {
         if ('error' in data) {
-          setErrorMsg({...data.error})
+          setErrorMsg({ ...data.error })
         } else {
           setErrorMsg({})
           setChangePassword({ 'current_password': '', 'new_password': '', 'confirm_password': '' })
@@ -65,7 +65,7 @@ function ChangePassword() {
         <TextInput type='password' label='Confirm Password' placeholder='confirm new password' id='confirm_password'
           value={changePassword.confirm_password} changeFunc={handleChangePassword} error={errorMsg.confirm_password} />
         <SubmitBtn value='Save Changes' error={errorMsg.all} cancel={handleCancel}
-          success={successChanges} successMsg='Change password successfully'/>
+          success={successChanges} successMsg='Change password successfully' />
       </fieldset>
     </form>
   )

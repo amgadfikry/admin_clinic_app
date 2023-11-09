@@ -3,7 +3,6 @@
 /* eslint-disable react/prop-types */
 import {
   useCookies, useNavigate, useState, useEffect, baseUrl, ServerError, LoadingComponent,
-  setAdminData, useDispatch,
 } from '../import.js'
 
 function AuthChecker({ children }) {
@@ -11,9 +10,8 @@ function AuthChecker({ children }) {
   const [loading, setLoading] = useState(true);
   const [serverError, setServerError] = useState(false)
   const navigate = useNavigate();
-  const dispatch = useDispatch()
 
-  useEffect(() => { 
+  useEffect(() => {
     const path = window.location.pathname
     if ('token' in cookies) {
       fetch(`${baseUrl}/api/public/state`, {
@@ -25,7 +23,6 @@ function AuthChecker({ children }) {
       }).then(response => response.json())
         .then(data => {
           if (data.type === 'admin') {
-            dispatch(setAdminData(data.data))
             setLoading(false)
             navigate(path)
           } else {

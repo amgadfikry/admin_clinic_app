@@ -1,9 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import {
-  Navbar, Sidebar, Footer, ServerError, LoadingComponent, ComingSoon, Doctors,
-  setDoctorsData, setTestimonialsData, setAppointmentsData, useDispatch, useCookies, useEffect,
-  useState, Routes, Route, baseUrl, Settings, Specialities, Offers
+  Navbar, Sidebar, Footer, ServerError, LoadingComponent, ComingSoon, Doctors, useEffect, useState,
+  useDispatch, useCookies, Routes, Route, baseUrl, Settings, Specialities, Offers, setAdminData
 } from '../import'
 
 function Dashboard() {
@@ -14,9 +13,7 @@ function Dashboard() {
 
 
   const fetchLibrary = [
-    { 'url': '/api/admin/doctor', 'action': setDoctorsData },
-    { 'url': '/api/admin/testimonial', 'action': setTestimonialsData },
-    { 'url': '/api/admin/appointment', 'action': setAppointmentsData },
+    { 'url': '/api/admin/state', 'action': setAdminData },
   ]
 
   useEffect(() => {
@@ -53,7 +50,7 @@ function Dashboard() {
           <Routes>
             <Route exact path='/' element={<div>amgad</div>} ></Route>
             <Route exact path="analysis" element={<ComingSoon />} />
-            <Route exact path='doctors' element={<Doctors />} ></Route>
+            <Route exact path='doctors/*' element={<Doctors />} ></Route>
             <Route exact path='appointments' element={<ComingSoon />} ></Route>
             <Route exact path='calendar' element={<ComingSoon />} ></Route>
             <Route exact path='specialities/*' element={<Specialities />} ></Route>
