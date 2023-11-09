@@ -23,9 +23,9 @@ def state_of_token():
 			return jsonify({'type': None}), 200
 		user = Session.query(User).filter_by(id=token_id).first()
 		if user:
-			return jsonify({'type': 'user', 'data': user.to_dict()}), 200
+			return jsonify({'type': 'user'}), 200
 		admin = Session.query(Admin).filter_by(id=token_id).first()
 		if admin:
-			return jsonify({'type': 'admin', 'data': admin.to_dict()}), 200
+			return jsonify({'type': 'admin'}), 200
 	except Exception:
 		return jsonify({'type': None}), 200

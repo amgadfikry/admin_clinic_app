@@ -81,22 +81,20 @@ def get_all_doctors():
 	doctors_dict = []
 	for doc in doctors:
 		doc_dict = doc.to_dict()
-		doc_dict['speciality_id'] = Session.query(Speciality).filter_by(id=doc.speciality_id).first().to_dict()
-		reviews_dict = []
+		speciality = Session.query(Speciality).filter_by(id=doc.speciality_id).first()
+		doc_dict['speciality_id'] = speciality.name
+		if not doc_dict['price']:
+			doc_dict['price'] = speciality.price
 		stars = 0
 		for review in doc.reviews:
 			stars = stars + review.stars
-			reviews_dict.append(review.to_dict())
 		if len(doc.reviews):
 			stars_result = stars / len(doc.reviews)
 		else:
-			stars_result = 'Not rated yet'
+			stars_result = 'New doctor'
 		doc_dict['stars'] = stars_result
-		doc_dict['reviews'] = reviews_dict
-		appointments_dict = []
-		for appointment in doc.appointments:
-			appointments_dict.append(appointment.to_dict())
-		doc_dict['appointments'] = appointments_dict
+		doc_dict['reviews'] = len(doc.reviews)
+		doc_dict['appointments'] = len(doc.appointments)
 		times_dict = []
 		for time in doc.all_times:
 			times_dict.append(time.to_dict())

@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import {
   useState, useSelector, adminDataState, TextInput, SubmitBtn, baseUrl, useCookies, setAdminData, useDispatch,
-  BiSolidCloudUpload, checkDataError, samilarData
+  BiSolidCloudUpload, checkDataError, samilarData, ImageSelect
 } from '../../import.js'
 
 function ChangeInfo() {
@@ -65,14 +65,7 @@ function ChangeInfo() {
           changeFunc={handleChangeProfile} error={errorMsg.user_name} />
         <TextInput type='text' label='Email' placeholder='Enter your email address' id='email' value={changeProfile.email}
           changeFunc={handleChangeProfile} error={errorMsg.email} />
-        <div className='w-full shrink-0 py-4 px-3 text-center border rounded-lg border-gray-300 bg-white'>
-          <input type='file' name='image' id='image' className='hidden' disabled />
-          <label htmlFor='image' className='flex justify-center items-center border w-fit mx-auto py-2 px-4
-          bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200'>
-            <BiSolidCloudUpload className='text-2xl text-teal-color mr-3' />
-            <p>Choose a profile picture</p>
-          </label>
-        </div>
+        <ImageSelect label="Choose profile photo" setChangeProfile={setChangeProfile} changeProfile={changeProfile}/>
         <SubmitBtn value='Save Changes' error={errorMsg.all} cancel={handleCancel}
           success={successChanges} successMsg='Change successfully' />
       </fieldset>

@@ -23,7 +23,7 @@ def create_time():
 	return jsonify(new_time.to_dict()), 201
 
 
-@admin_routes.route('/time/<time_id>', methods=['PUT', 'DELETE'], strict_slashes=False)
+@admin_routes.route('/time/<time_id>', methods=['DELETE'], strict_slashes=False)
 @jwt_required()
 @admin_required
 def manipulate_time(time_id):
@@ -33,15 +33,9 @@ def manipulate_time(time_id):
 				- json of new time with code 200 if put request
 	"""
 	time = Session.query(Time).filter_by(id=time_id).first()
-	if request.method == 'DELETE':
-		Session.delete(time)
-		Session.commit()
-		return jsonify({}), 200
-	else:
-		data = request.get_json()
-		time.update(**data)
-		Session.commit()
-		return jsonify(time.to_dict()), 200
+	Session.delete(time)
+	Session.commit()
+	return jsonify({}), 200
 
 
 @admin_routes.route('/time', methods=['GET'], strict_slashes=False)

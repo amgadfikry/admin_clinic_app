@@ -32,6 +32,7 @@ import ContentDoctor from './sections/doctors/contentDoctor';
 import Stars from './components/stars';
 import CreateTime from './sections/doctors/createTime';
 import Details from './components/details';
+import ImageSelect from './components/imageSelect';
 // redux
 import { setAdminData, adminDataState } from './redux/profile';
 import { useDispatch, useSelector } from 'react-redux';
@@ -63,7 +64,7 @@ export {
   Navbar, Sidebar, Footer, ServerError, LoadingComponent, ComingSoon, Doctors, SidebarNavLink, Signin, Dashboard, NotFound, AuthChecker,
   Settings, TextInput, SubmitBtn, ChangeInfo, ChangePassword, Specialities, CreateSpeciality, ContentSpeciality, EditSpeciality,
   ConfirmMsg, CreateOffer, EditOffer, Offers, ContentOffer, Selectspeciality, CreateDoctor, EditDoctor, ContentDoctor, Stars,
-  CreateTime, Details,
+  CreateTime, Details, ImageSelect,
   // redux
   setAdminData, adminDataState, useSelector, useDispatch,
   // cookies
