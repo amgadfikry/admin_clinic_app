@@ -1,49 +1,63 @@
-// react components and pages
-import Navbar from './layout/navbar';
-import Sidebar from './layout/sidebar';
-import Footer from './layout/footer';
-import ServerError from './pages/serverError';
-import LoadingComponent from './components/loading';
-import ComingSoon from './pages/comingSoon';
-import Doctors from './sections/doctors/doctors';
-import SidebarNavLink from './layout/sidebarNavLink';
+// react components, sections, layouts and pages
+  // pages
 import Signin from "./pages/signin"
 import Dashboard from "./pages/dashboard"
 import NotFound from "./pages/notFound";
+import ServerError from './pages/serverError';
+import ComingSoon from './pages/comingSoon';
+  // layouts
+import Navbar from './layout/navbar';
+import Sidebar from './layout/sidebar';
+import Footer from './layout/footer';
+import SidebarNavLink from './layout/sidebarNavLink';
+  // app components
+import LoadingComponent from './components/loading';
 import AuthChecker from "./components/authChecker";
+  // sections components
+import TextInput from './sections/components/textInput';
+import SubmitBtn from './sections/components/submitBtn';
+import ConfirmMsg from './sections/components/confirmMsg';
+import Stars from './sections/components/stars';
+import Details from './sections/components/details';
+import ImageSelect from './sections/components/imageSelect';
+import Selectspeciality from './sections/components/selectSpecialitySelect';
+  // settings section
 import Settings from './sections/settings/settings';
-import TextInput from './components/textInput';
-import SubmitBtn from './components/submitBtn';
 import ChangeInfo from './sections/settings/changeInfo';
 import ChangePassword from './sections/settings/changePassword';
+  // doctors section
+import Doctors from './sections/doctors/doctors';
+import CreateDoctor from './sections/doctors/createDoctor';
+import EditDoctor from './sections/doctors/editDoctor';
+import ContentDoctor from './sections/doctors/contentDoctor';
+import CreateTime from './sections/doctors/createTime';
+  // offers section
+import Offers from './sections/offers/offers';
+import CreateOffer from './sections/offers/createOffer';
+import EditOffer from './sections/offers/editOffer';
+import ContentOffer from './sections/offers/contentOffer';
+  // specialities section
 import Specialities from './sections/specialities/specialities';
 import CreateSpeciality from './sections/specialities/createSpeciality';
 import ContentSpeciality from './sections/specialities/contentSpeciality';
 import EditSpeciality from './sections/specialities/editSpeciality';
-import ConfirmMsg from './components/confirmMsg';
-import CreateOffer from './sections/offers/createOffer';
-import EditOffer from './sections/offers/editOffer';
-import Offers from './sections/offers/offers';
-import ContentOffer from './sections/offers/contentOffer';
-import Selectspeciality from './components/selectSpecialitySelect';
-import CreateDoctor from './sections/doctors/createDoctor';
-import EditDoctor from './sections/doctors/editDoctor';
-import ContentDoctor from './sections/doctors/contentDoctor';
-import Stars from './components/stars';
-import CreateTime from './sections/doctors/createTime';
-import Details from './components/details';
-import ImageSelect from './components/imageSelect';
-// redux
+
+// redux reducers and hooks
 import { setAdminData, adminDataState } from './redux/profile';
 import { useDispatch, useSelector } from 'react-redux';
-// react-router-dom
+
+// react-router-dom hooks
 import { BrowserRouter as Router, Routes, Route, useNavigate, NavLink, Link, useLocation } from 'react-router-dom';
-// react-cookie
+
+// react-cookie hook
 import { useCookies, CookiesProvider } from 'react-cookie';
-// constant
+
+// constant through all app
 import { baseUrl, checkDataError, samilarData, checkPassword } from '../constant'
+
 // react hooks
 import { useEffect, useState, useRef } from 'react'
+
 //icons
 import {
   MdOutlineCopyright, MdDarkMode, MdLightMode, MdSchedule, MdReviews, MdManageAccounts, MdSettings,

@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-unused-vars */
+/* eslint-disable no-unused-vars*/
 import {
-  Navbar, Sidebar, Footer, ServerError, LoadingComponent, ComingSoon, Doctors, useEffect, useState,
-  useDispatch, useCookies, Routes, Route, baseUrl, Settings, Specialities, Offers, setAdminData
+  Navbar, Sidebar, Footer, LoadingComponent, ComingSoon, Doctors, useEffect, useState,
+  useDispatch, useCookies, Routes, Route, baseUrl, Settings, Specialities, Offers, setAdminData, NotFound
 } from '../import'
 
 function Dashboard() {
@@ -30,6 +30,7 @@ function Dashboard() {
         })
         .catch((error) => {
           setServerError(true)
+          navigate('/server504error')
         });
     })
     setTimeout(() => {

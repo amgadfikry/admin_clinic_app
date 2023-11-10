@@ -8,6 +8,7 @@ function ContentSpeciality() {
   const [specialitiesData, setspecialitiesData] = useState([])
   const [loading, setLoading] = useState(true)
   const [confirmDelete, setConfirmDelete] = useState("")
+  const [serverError, setServerError] = useState(false)
   const [cookies] = useCookies(['token'])
 
   const handleDelete = (e) => {
@@ -27,6 +28,10 @@ function ContentSpeciality() {
         setConfirmDelete("")
         setspecialitiesData(filterList)
       })
+      .catch((error) => {
+        setServerError(true)
+        navigate('/server504error')
+      });
   }
 
   useEffect(() => {
@@ -41,6 +46,10 @@ function ContentSpeciality() {
         setspecialitiesData(data)
         setLoading(false)
       })
+      .catch((error) => {
+        setServerError(true)
+        navigate('/server504error')
+      });
   }, [])
 
   if (loading) {
@@ -50,7 +59,7 @@ function ContentSpeciality() {
       <section className="">
         <header className="flex justify-between items-center pb-3 border-b mb-8">
           <h1 className="text-3xl text-teal-color font-bold">Specialities</h1>
-          <Link to='/specialities/create'>
+          <Link to='/dashboard/specialities/create'>
             <button className="py-1 px-3 text-medium bg-teal-color rounded-lg transition-all duration-300 cursor-pointer
         hover:bg-dark-color text-white">Create new</button>
           </Link>
@@ -85,7 +94,7 @@ function ContentSpeciality() {
                       <td className="px-6 py-4">{speciality.doctors}</td>
                       <td className="px-6 py-4" >{speciality.offers}</td>
                       <td className="px-6 py-4">
-                        <Link to={`/specialities/edit/${speciality.name}`} state={speciality}>
+                        <Link to={`/dashboard/specialities/edit/${speciality.name}`} state={speciality}>
                           <AiOutlineEdit className='text-[24px] text-teal-color cursor-pointer' />
                         </Link>
                       </td>

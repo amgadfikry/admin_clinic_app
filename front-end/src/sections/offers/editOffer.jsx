@@ -11,6 +11,7 @@ function EditOffer() {
   const [changeOffer, setChangeOffer] = useState({ ...offersData })
   const [speciality, setSpeciality] = useState(specialityName)
   const [errorMsg, setErrorMsg] = useState({})
+  const [serverError, setServerError] = useState(false)
   const [cookies] = useCookies(['token'])
   const navigate = useNavigate()
 
@@ -50,15 +51,19 @@ function EditOffer() {
       .then(data => {
         setErrorMsg({});
         setChangeOffer({ ...data })
-        navigate('/offers')
+        navigate('/dashboard/offers')
       })
+      .catch((error) => {
+        setServerError(true)
+        navigate('/server504error')
+      });
   }
 
   return (
     <section className="">
       <header className="flex justify-between items-center pb-3 border-b mb-8">
         <h1 className="text-3xl text-teal-color font-bold">Edit {offersData.title}</h1>
-        <Link to='/offers'>
+        <Link to='/dashboard/offers'>
           <button className="py-1 px-3 text-medium bg-teal-color rounded-lg transition-all duration-300 cursor-pointer
           hover:bg-dark-color text-white">Back</button>
         </Link>

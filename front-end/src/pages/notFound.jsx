@@ -28,7 +28,7 @@ function NotFound() {
             <p className="text-lg md:text-xl font-light mb-8">
               Sorry we could not find the page you are looking for
             </p>
-            <button className='btn-dark'><Link to='/'>Homepage</Link></button>
+            <button className='btn-dark'><Link to='/dashboard/'>Homepage</Link></button>
           </div>
           <div className="w-full lg:flex lg:justify-end lg:w-1/2 mx-5 my-12">
             <img src="https://user-images.githubusercontent.com/43953425/166269493-acd08ccb-4df3-4474-95c7-ad1034d3c070.svg"

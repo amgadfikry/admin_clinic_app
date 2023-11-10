@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import {
-  useCookies, useNavigate, useState, useEffect, baseUrl, ServerError, LoadingComponent,
+  useCookies, useNavigate, useState, useEffect, baseUrl, LoadingComponent,
 } from '../import.js'
 
 function AuthChecker({ children }) {
@@ -27,22 +27,21 @@ function AuthChecker({ children }) {
             navigate(path)
           } else {
             setLoading(false)
-            navigate('/signin')
+            navigate('/')
           }
         })
         .catch((error) => {
           setLoading(false)
           setServerError(true)
+          navigate('/server504error')
         });
     } else {
       setLoading(false)
-      navigate('/signin')
+      navigate('/')
     }
   }, [])
 
-  if (serverError) {
-    return <ServerError />
-  } else if (loading) {
+  if (loading) {
     return <LoadingComponent />
   } else {
     return children

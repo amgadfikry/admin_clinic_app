@@ -8,6 +8,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from models.admin import Admin
 from api import check_change_password
+import base64
 
 
 @admin_routes.route('/signin', methods=['POST'], strict_slashes=False)
@@ -36,7 +37,11 @@ def admin_state():
 				- json of admin dictionary information with code 200
 	"""
 	admin = Session.query(Admin).filter_by(id=get_jwt_identity()).first()
-	return jsonify(admin.to_dict()), 200
+	admin_data = admin.to_dict()
+	if admin_data.get('image'):
+		image_data = base64.b64encode(admin_data['image']).decode('utf-8')
+		admin_data['image'] = 'data:image/jpeg;base64,' + image_data
+	return jsonify(admin_data), 200
 
 
 @admin_routes.route('/update', methods=['PUT'], strict_slashes=False)
@@ -49,9 +54,16 @@ def update_info():
 	"""
 	admin = Session.query(Admin).filter_by(id=get_jwt_identity()).first()
 	data = request.get_json()
+	if data.get('image'):
+		image_data = data['image'].split(',')[1]
+		data['image'] = base64.b64decode(image_data)
 	admin.update(**data)
 	Session.commit()
-	return jsonify(admin.to_dict()), 200
+	admin_data = admin.to_dict()
+	if admin_data.get('image'):
+		image_data = base64.b64encode(admin_data['image']).decode('utf-8')
+		admin_data['image'] = 'data:image/jpeg;base64,' + image_data
+	return jsonify(admin_data), 200
 
 
 @admin_routes.route('/password', methods=['PUT'], strict_slashes=False)

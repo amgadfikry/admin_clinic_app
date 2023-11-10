@@ -11,6 +11,7 @@ function EditSpeciality() {
   delete specialityData.doctors
   const [changeSpeciality, setChangeSpeciality] = useState({ ...specialityData })
   const [errorMsg, setErrorMsg] = useState({})
+  const [serverError, setServerError] = useState(false)
   const [cookies] = useCookies(['token'])
   const navigate = useNavigate()
 
@@ -49,15 +50,19 @@ function EditSpeciality() {
       .then(data => {
         setErrorMsg({});
         setChangeSpeciality({ ...data })
-        navigate('/specialities')
+        navigate('/dashboard/specialities')
       })
+      .catch((error) => {
+        setServerError(true)
+        navigate('/server504error')
+      });
   }
 
   return (
     <section className="">
       <header className="flex justify-between items-center pb-3 border-b mb-8">
         <h1 className="text-3xl text-teal-color font-bold">Edit {specialityData.name}</h1>
-        <Link to='/specialities'>
+        <Link to='/dashboard/specialities'>
           <button className="py-1 px-3 text-medium bg-teal-color rounded-lg transition-all duration-300 cursor-pointer
           hover:bg-dark-color text-white">Back</button>
         </Link>

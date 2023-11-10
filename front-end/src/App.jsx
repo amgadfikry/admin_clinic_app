@@ -1,5 +1,5 @@
 import {
-  Router, Routes, Route, CookiesProvider, AuthChecker, Signin, Dashboard
+  Router, Routes, Route, CookiesProvider, AuthChecker, Signin, Dashboard, NotFound, ServerError
 } from './import'
 
 
@@ -10,8 +10,10 @@ function App() {
       <CookiesProvider defaultSetOptions={{ path: '/' }}>
         <Router>
           <Routes>
-            <Route exact path='/signin' element={<AuthChecker> <Signin /> </AuthChecker>} ></Route>
-            <Route exact path='/*' element={<AuthChecker> <Dashboard /> </AuthChecker>} ></Route>
+            <Route exact path='/' element={<Signin />} ></Route>
+            <Route exact path='/dashboard/*' element={<AuthChecker> <Dashboard /> </AuthChecker>} ></Route>
+            <Route exact path='/server504error' element={<ServerError />} ></Route>
+            <Route exact path='*' element={<NotFound />} ></Route>
           </Routes>
         </Router>
       </CookiesProvider>

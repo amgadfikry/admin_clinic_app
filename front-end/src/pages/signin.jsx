@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 // Desc: Signin page for admin
 import {
-  useState, useNavigate, useCookies, ServerError, FaUserAlt, FaLock, baseUrl, MdEmail
+  useState, useNavigate, useCookies, FaUserAlt, FaLock, baseUrl, MdEmail, useEffect, LoadingComponent
 } from '../import'
 
 function Signin() {
@@ -9,6 +9,7 @@ function Signin() {
   const [loginError, setLoginError] = useState('')
   const [cookies, setCookie] = useCookies(['token']);
   const [serverError, setServerError] = useState(false)
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   const handlechange = (e) => {
@@ -18,6 +19,14 @@ function Signin() {
       setFormState({ ...formState, [e.target.name]: e.target.value })
     }
   }
+
+  useEffect(() => {
+    if ('token' in cookies) {
+      setLoading(false)
+      navigate('/dashboard/')
+    }
+    setLoading(false)
+  }, [])
 
   const handlesubmit = (e) => {
     e.preventDefault()
@@ -38,18 +47,18 @@ function Signin() {
           } else {
             setCookie('token', data.access_token, { path: '/' })
           }
-          navigate('/')
+          navigate('/dashboard/')
         } else {
           setLoginError(data.error)
         }
       })
       .catch((error) => {
         setServerError(true)
+        navigate('/server504error')
       });
   }
-
-  if (serverError) {
-    return <ServerError />
+  if (loading) {
+    return <LoadingComponent />
   } else {
     return (
       <div className="w-[100vw] h-[100vh] flex items-center justify-center bg-teal-color">

@@ -11,6 +11,7 @@ function CreateDoctor() {
   const [successChanges, setSuccessChanges] = useState(false)
   const [speciality, setSpeciality] = useState('')
   const [specialityPrice, setSpecialityPrice] = useState('Default speciality price')
+  const [serverError, setServerError] = useState(false)
   const [cookies] = useCookies(['token'])
 
   const handleChangeDoctors = (e) => {
@@ -53,13 +54,17 @@ function CreateDoctor() {
           setSuccessChanges(false)
         }, 2000)
       })
+      .catch((error) => {
+        setServerError(true)
+        navigate('/server504error')
+      });
   }
 
   return (
     <section className="">
       <header className="flex justify-between items-center pb-3 border-b mb-8">
         <h1 className="text-3xl text-teal-color font-bold">New Doctor</h1>
-        <Link to='/doctors'>
+        <Link to='/dashboard/doctors'>
           <button className="py-1 px-3 text-medium bg-teal-color rounded-lg transition-all duration-300 cursor-pointer
           hover:bg-dark-color text-white">Back</button>
         </Link>

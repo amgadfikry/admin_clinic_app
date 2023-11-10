@@ -9,6 +9,7 @@ function ContentOffer() {
   const [loading, setLoading] = useState(true)
   const [confirmDelete, setConfirmDelete] = useState("")
   const [offersData, setOffersData] = useState([])
+  const [serverError, setServerError] = useState(false)
   const [cookies] = useCookies(['token'])
 
   const handleDelete = (e) => {
@@ -28,6 +29,10 @@ function ContentOffer() {
         setConfirmDelete("")
         setOffersData(filterList)
       })
+      .catch((error) => {
+        setServerError(true)
+        navigate('/server504error')
+      });
   }
 
   useEffect(() => {
@@ -42,6 +47,10 @@ function ContentOffer() {
         setOffersData(data)
         setLoading(false)
       })
+      .catch((error) => {
+        setServerError(true)
+        navigate('/server504error')
+      });
   }, [])
 
   if (loading) {
@@ -51,7 +60,7 @@ function ContentOffer() {
       <section className="">
         <header className="flex justify-between items-center pb-3 border-b mb-8">
           <h1 className="text-3xl text-teal-color font-bold">Offers</h1>
-          <Link to='/offers/create'>
+          <Link to='/dashboard/offers/create'>
             <button className="py-1 px-3 text-medium bg-teal-color rounded-lg transition-all duration-300 cursor-pointer
           hover:bg-dark-color text-white">Create new</button>
           </Link>
@@ -92,7 +101,7 @@ function ContentOffer() {
                       <td className="px-2 py-4" >{offer.expire_date}</td>
                       <td className="px-2 py-4 whitespace-wrap" >{offer.description}</td>
                       <td className="px-2 py-4">
-                        <Link to={`/offers/edit/${offer.title}`} state={offer}>
+                        <Link to={`/dashboard/offers/edit/${offer.title}`} state={offer}>
                           <AiOutlineEdit className='text-[24px] text-teal-color cursor-pointer' />
                         </Link>
                       </td>

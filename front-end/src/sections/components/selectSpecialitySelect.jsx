@@ -3,11 +3,12 @@
 /* eslint-disable no-unused-vars */
 import {
   useState, PiStethoscopeBold, useEffect, useCookies, baseUrl, useNavigate
-} from '../import'
+} from '../../import'
 
 function Selectspeciality({ specialityValue, setSpecialityValue, error, setSpeciality, speciality, setSpecialityPrice }) {
   const [toggleMenu, setToggleMenu] = useState(false)
   const [specialityList, setSpecialityList] = useState([])
+  const [serverError, setServerError] = useState(false)
   const [cookies] = useCookies(['token'])
   const navigate = useNavigate()
 
@@ -40,6 +41,10 @@ function Selectspeciality({ specialityValue, setSpecialityValue, error, setSpeci
       mode: 'cors'
     }).then(response => response.json())
       .then(data => setSpecialityList(data))
+      .catch((error) => {
+        setServerError(true)
+        navigate('/server504error')
+      });
   }, [])
 
   return (
@@ -60,7 +65,7 @@ function Selectspeciality({ specialityValue, setSpecialityValue, error, setSpeci
           ))
         }
         <li className='border-b hover:bg-teal-color hover:text-white cursor-pointer px-4 py-2'
-          onClick={() => navigate('/specialities/create')} >+ Add new Speciality</li>
+          onClick={() => navigate('/dashboard/specialities/create')} >+ Add new Speciality</li>
       </ul>
     </div>
 

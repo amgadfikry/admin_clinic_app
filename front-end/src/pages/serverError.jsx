@@ -17,7 +17,7 @@ function ServerError() {
     return <LoadingComponent />
   } else {
     return (
-      <div className="h-screen flex items-center justify-center py-5 overflow-hidden">
+      <div className="max-h-screen flex items-center justify-center py-5 overflow-hidden">
         <div className="container flex flex-col md:flex-row items-center justify-between md:px-5 text-gray-700">
           <div className="w-full lg:w-1/2 text-center md:text-left">
             <div className="text-7xl text-teal-color font-dark font-extrabold mb-8 "> 504</div>
@@ -26,9 +26,9 @@ function ServerError() {
               We are working to resolve this issue and should be back running soon.
             </p>
           </div>
-          <div className="w-full lg:flex lg:justify-end lg:w-1/2 ">
+          <div className="w-full lg:flex lg:justify-end lg:w-1/2">
             <img src={error}
-              className="max-w-[80%] md:max-w-full mx-auto h-full block" alt="Page not found" />
+              className="max-w-[50%] md:max-w-full mx-auto max-h-1/2 block" alt="Page not found" />
           </div>
         </div>
       </div>

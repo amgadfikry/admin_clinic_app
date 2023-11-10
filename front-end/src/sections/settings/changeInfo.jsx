@@ -11,6 +11,7 @@ function ChangeInfo() {
   const dispatch = useDispatch()
   const [changeProfile, setChangeProfile] = useState({ ...adminData })
   const [successChanges, setSuccessChanges] = useState(false)
+  const [serverError, setServerError] = useState(false)
   const [errorMsg, setErrorMsg] = useState({})
 
   const handleChangeProfile = (e) => {
@@ -53,6 +54,10 @@ function ChangeInfo() {
           setSuccessChanges(false)
         }, 2000)
       })
+      .catch((error) => {
+        setServerError(true)
+        navigate('/server504error')
+      });
   }
 
   return (

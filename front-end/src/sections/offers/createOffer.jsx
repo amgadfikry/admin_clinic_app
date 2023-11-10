@@ -12,6 +12,7 @@ function CreateOffer() {
   const [newOffer, setNewOffer] = useState({ ...emptyOffer })
   const [errorMsg, setErrorMsg] = useState({})
   const [successChanges, setSuccessChanges] = useState(false)
+  const [serverError, setServerError] = useState(false)
   const [speciality, setSpeciality] = useState('')
   const [cookies] = useCookies(['token'])
 
@@ -53,13 +54,17 @@ function CreateOffer() {
           setSuccessChanges(false)
         }, 2000)
       })
+      .catch((error) => {
+        setServerError(true)
+        navigate('/server504error')
+      });
   }
 
   return (
     <section className="">
       <header className="flex justify-between items-center pb-3 border-b mb-8">
         <h1 className="text-3xl text-teal-color font-bold">New Offer</h1>
-        <Link to='/offers'>
+        <Link to='/dashboard/offers'>
           <button className="py-1 px-3 text-medium bg-teal-color rounded-lg transition-all duration-300 cursor-pointer
           hover:bg-dark-color text-white">Back</button>
         </Link>

@@ -9,6 +9,7 @@ function ContentDoctor() {
   const [confirmDelete, setConfirmDelete] = useState("")
   const [doctorData, setDoctorData] = useState([])
   const [seeDetails, setSeeDetails] = useState("")
+  const [serverError, setServerError] = useState(false)
   const [cookies] = useCookies(['token'])
 
   const handleDelete = (e) => {
@@ -28,6 +29,10 @@ function ContentDoctor() {
         setConfirmDelete("")
         setDoctorData(filterList)
       })
+      .catch((error) => {
+        setServerError(true)
+        navigate('/server504error')
+      });
   }
 
   useEffect(() => {
@@ -42,6 +47,10 @@ function ContentDoctor() {
         setDoctorData(data)
         setLoading(false)
       })
+      .catch((error) => {
+        setServerError(true)
+        navigate('/server504error')
+      });
   }, [])
 
   if (loading) {
@@ -51,7 +60,7 @@ function ContentDoctor() {
       <section className="">
         <header className="flex justify-between items-center pb-3 border-b mb-8">
           <h1 className="text-3xl text-teal-color font-bold">Doctors</h1>
-          <Link to='/doctors/create'>
+          <Link to='/dashboard/doctors/create'>
             <button className="py-1 px-3 text-medium bg-teal-color rounded-lg transition-all duration-300 cursor-pointer
           hover:bg-dark-color text-white">Create new</button>
           </Link>
@@ -112,7 +121,7 @@ function ContentDoctor() {
                         <p className='details-btn' id={doctor.id} onClick={(e) => setSeeDetails(e.target.id)}>Details</p>
                       </td>
                       <td className="px-2 py-2">
-                        <Link to={`/doctors/edit/${doctor.full_name}`} state={doctor} >
+                        <Link to={`/dashboard/doctors/edit/${doctor.full_name}`} state={doctor} >
                           <p className='edit-btn'>Edit</p>
                         </Link>
                       </td>

@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import {
   BsStarFill, BsStarHalf, BsStar
-} from '../import'
+} from '../../import'
 
 function Stars({ starsNumber }) {
   const star = (number) => {

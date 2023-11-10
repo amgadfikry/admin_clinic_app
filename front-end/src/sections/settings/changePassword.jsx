@@ -9,6 +9,7 @@ function ChangePassword() {
     'current_password': '', 'new_password': '', 'confirm_password': ''
   })
   const [successChanges, setSuccessChanges] = useState(false)
+  const [serverError, setServerError] = useState(false)
   const [cookies, setCookie, removeCookie] = useCookies(['token'])
   const navigate = useNavigate()
 
@@ -52,6 +53,10 @@ function ChangePassword() {
           }, 3000)
         }
       })
+      .catch((error) => {
+        setServerError(true)
+        navigate('/server504error')
+      });
   }
 
   return (
