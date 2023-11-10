@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import {
-  useState, Link, baseUrl, useCookies, LoadingComponent, AiOutlineDelete, AiOutlineEdit, ConfirmMsg, useEffect
+  useState, Link, baseUrl, useCookies, LoadingComponent, AiOutlineDelete, AiOutlineEdit, ConfirmMsg, useEffect,
+  Header
 } from '../../import'
 
 function ContentSpeciality() {
@@ -57,13 +58,7 @@ function ContentSpeciality() {
   } else {
     return (
       <section className="">
-        <header className="flex justify-between items-center pb-3 border-b mb-8">
-          <h1 className="text-3xl text-teal-color font-bold">Specialities</h1>
-          <Link to='/dashboard/specialities/create'>
-            <button className="py-1 px-3 text-medium bg-teal-color rounded-lg transition-all duration-300 cursor-pointer
-        hover:bg-dark-color text-white">Create new</button>
-          </Link>
-        </header>
+        <Header />
         <div className="rounded-lg overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full border-collapse bg-gray-color drop-shadow-lg text-left text-sm text-dark-color ">

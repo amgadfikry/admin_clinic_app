@@ -21,6 +21,7 @@ import Stars from './sections/components/stars';
 import Details from './sections/components/details';
 import ImageSelect from './sections/components/imageSelect';
 import Selectspeciality from './sections/components/selectSpecialitySelect';
+import Header from './sections/components/header';
   // settings section
 import Settings from './sections/settings/settings';
 import ChangeInfo from './sections/settings/changeInfo';
@@ -78,7 +79,7 @@ export {
   Navbar, Sidebar, Footer, ServerError, LoadingComponent, ComingSoon, Doctors, SidebarNavLink, Signin, Dashboard, NotFound, AuthChecker,
   Settings, TextInput, SubmitBtn, ChangeInfo, ChangePassword, Specialities, CreateSpeciality, ContentSpeciality, EditSpeciality,
   ConfirmMsg, CreateOffer, EditOffer, Offers, ContentOffer, Selectspeciality, CreateDoctor, EditDoctor, ContentDoctor, Stars,
-  CreateTime, Details, ImageSelect,
+  CreateTime, Details, ImageSelect, Header,
   // redux
   setAdminData, adminDataState, useSelector, useDispatch,
   // cookies

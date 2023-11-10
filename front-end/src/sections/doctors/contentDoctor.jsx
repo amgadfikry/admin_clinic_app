@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react-hooks/exhaustive-deps*/
 import {
   useEffect, useState, Link, baseUrl, useCookies, LoadingComponent, ConfirmMsg, Stars, Details
 } from '../../import'
