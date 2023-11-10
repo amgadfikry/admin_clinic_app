@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import {
   useState, useCookies, Link, baseUrl, SubmitBtn, TextInput, useNavigate,
-  useLocation, checkDataError, samilarData
+  useLocation, checkDataError, samilarData, handleUpdate, SubHeader
 } from '../../import'
 
 function EditSpeciality() {
@@ -27,46 +27,17 @@ function EditSpeciality() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    setErrorMsg({});
-    const errors = checkDataError(changeSpeciality, [])
-    if (Object.keys(errors).length > 0) {
-      setErrorMsg({ ...errors })
-      return;
+    const options = {
+      baseUrl: baseUrl, apiUrl: 'speciality', cookies: cookies, changeSpeciality: changeSpeciality,
+      setChangeSpeciality: setChangeSpeciality, setErrorMsg: setErrorMsg, specialityData: specialityData, navigate: navigate,
+      setServerError: setServerError, checkDataError: checkDataError, samilarData: samilarData
     }
-    const errorSame = samilarData(changeSpeciality, specialityData)
-    if (Object.keys(errorSame).length > 0) {
-      setErrorMsg({ ...errorSame })
-      return;
-    }
-    fetch(`${baseUrl}/api/admin/speciality/${specialityData.id}`, {
-      method: 'PUT',
-      headers: {
-        'Authorization': 'Bearer ' + cookies.token,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(changeSpeciality),
-      mode: 'cors'
-    }).then(response => response.json())
-      .then(data => {
-        setErrorMsg({});
-        setChangeSpeciality({ ...data })
-        navigate('/dashboard/specialities')
-      })
-      .catch((error) => {
-        setServerError(true)
-        navigate('/server504error')
-      });
+    return (handleUpdate(options))
   }
 
   return (
-    <section className="">
-      <header className="flex justify-between items-center pb-3 border-b mb-8">
-        <h1 className="text-3xl text-teal-color font-bold">Edit {specialityData.name}</h1>
-        <Link to='/dashboard/specialities'>
-          <button className="py-1 px-3 text-medium bg-teal-color rounded-lg transition-all duration-300 cursor-pointer
-          hover:bg-dark-color text-white">Back</button>
-        </Link>
-      </header>
+    <section className="flex flex-col px-3 md:px-5 pb-[100px]">
+      <SubHeader subHead={`Update ${specialityData.name}`} btnName='Back' btnPath='/dashboard/specialities' image={false} />
       <form onSubmit={handleSubmit}>
         <fieldset className='filedset'>
           <legend className='legend'>Speciality Info</legend>

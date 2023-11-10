@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import {
-  Link, useState, TextInput, SubmitBtn, baseUrl, useCookies, checkDataError
+  useState, TextInput, SubmitBtn, baseUrl, useCookies, checkDataError, useNavigate, Header, SubHeader, handleCreate
 } from '../../import'
 
 function CreateSpeciality() {
@@ -9,6 +9,7 @@ function CreateSpeciality() {
   const [successChanges, setSuccessChanges] = useState(false)
   const [serverError, setServerError] = useState(false)
   const [cookies] = useCookies(['token'])
+  const navigate = useNavigate()
 
   const handleChangeSpeciality = (e) => {
     setNewSpeciality({ ...newSpeciality, [e.target.name]: e.target.value })
@@ -22,48 +23,16 @@ function CreateSpeciality() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    setErrorMsg({});
-    const errors = checkDataError(newSpeciality, [])
-    if (Object.keys(errors).length > 0) {
-      setErrorMsg({ ...errors })
-      return;
+    const options = {
+      baseUrl: baseUrl, url: 'speciality', cookies: cookies, newSpeciality: newSpeciality, setNewSpeciality: setNewSpeciality,
+      setErrorMsg: setErrorMsg, setSuccessChanges: setSuccessChanges, navigate: navigate, setServerError: setServerError, checkDataError: checkDataError
     }
-    fetch(`${baseUrl}/api/admin/speciality`, {
-      method: 'POST',
-      headers: {
-        'Authorization': 'Bearer ' + cookies.token,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(newSpeciality),
-      mode: 'cors'
-    }).then(response => response.json())
-      .then(data => {
-        if ('error' in data) {
-          setErrorMsg({ ...data.error })
-        } else {
-          setSuccessChanges(true)
-          setErrorMsg({});
-          setNewSpeciality({ 'name': '', 'price': '' })
-          setTimeout(() => {
-            setSuccessChanges(false)
-          }, 2000)
-        }
-      })
-      .catch((error) => {
-        setServerError(true)
-        navigate('/server504error')
-      });
+    return (handleCreate(options))
   }
 
   return (
-    <section className="">
-      <header className="flex justify-between items-center pb-3 border-b mb-8">
-        <h1 className="text-3xl text-teal-color font-bold">New Speciality</h1>
-        <Link to='/dashboard/specialities'>
-          <button className="py-1 px-3 text-medium bg-teal-color rounded-lg transition-all duration-300 cursor-pointer
-          hover:bg-dark-color text-white">Back</button>
-        </Link>
-      </header>
+    <section className="flex flex-col px-3 md:px-5 pb-[100px]">
+      <SubHeader subHead="Create new speciality" btnName='Back' btnPath='/dashboard/specialities' image={false} />
       <form onSubmit={handleSubmit}>
         <fieldset className='filedset'>
           <legend className='legend'>Speciality Info</legend>

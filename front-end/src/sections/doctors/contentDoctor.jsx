@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
-/* eslint-disable react-hooks/exhaustive-deps*/
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
-  useEffect, useState, Link, baseUrl, useCookies, LoadingComponent, ConfirmMsg, Stars, Details
+  useEffect, useState, Link, baseUrl, useCookies, LoadingComponent, ConfirmMsg, Stars, Details, useNavigate
 } from '../../import'
 
 function ContentDoctor() {
@@ -11,6 +11,7 @@ function ContentDoctor() {
   const [seeDetails, setSeeDetails] = useState("")
   const [serverError, setServerError] = useState(false)
   const [cookies] = useCookies(['token'])
+  const navigate = useNavigate()
 
   const handleDelete = (e) => {
     setConfirmDelete(e.target.id)

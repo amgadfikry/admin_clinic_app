@@ -6,7 +6,8 @@
   font-family: 'Roboto', sans-serif;
 }
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
@@ -71,16 +72,16 @@
     @apply text-xl font-bold text-teal-color px-2 
   }
   .review-btn{
-    @apply px-2 py-1 bg-gray-500 text-white rounded-lg cursor-pointer text-center drop-shadow-md
+    @apply px-2 py-1 bg-gray-500 text-white rounded-lg cursor-pointer text-center drop-shadow-md text-sm
   }
   .details-btn{
-    @apply px-2 py-1 bg-gray-500 text-white rounded-lg cursor-pointer text-center drop-shadow-md
+    @apply px-2 py-1 bg-gray-500 text-white rounded-lg cursor-pointer text-center drop-shadow-md text-sm
   }
   .edit-btn{
-    @apply px-2 py-1 bg-teal-color text-white rounded-lg cursor-pointer text-center drop-shadow-md
+    @apply px-2 py-1 bg-teal-color text-white rounded-lg cursor-pointer text-center drop-shadow-md text-sm
   }
   .delete-btn{
-    @apply px-2 py-1 bg-red-500 text-white rounded-lg cursor-pointer text-center drop-shadow-md
+    @apply px-2 py-1 bg-red-500 text-white rounded-lg cursor-pointer text-center drop-shadow-md text-sm
   }
 }
 

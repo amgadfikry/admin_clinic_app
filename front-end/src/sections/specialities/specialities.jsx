@@ -1,12 +1,13 @@
 /* eslint-disable no-unused-vars */
 import {
-  Routes, Route, ContentSpeciality, CreateSpeciality, EditSpeciality,
+  Routes, Route, ContentSpeciality, CreateSpeciality, EditSpeciality, Header
 } from '../../import'
 
 function Specialities() {
 
   return (
-    <div className='pt-[100px] pl-[70px] pb-[100px] pr-[20px] min-h-screen'>
+    <div className='relative min-h-full'>
+      <Header head="Specialities" />
       <Routes>
         <Route exact path='/' element={<ContentSpeciality />} ></Route>
         <Route exact path='create' element={<CreateSpeciality />} ></Route>

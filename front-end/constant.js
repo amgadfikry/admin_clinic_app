@@ -1,44 +1,38 @@
-import process from 'process'
+import process from 'process';
 
-export const baseUrl = process.env.NODE_ENV === 'development' ? 'http://127.0.0.1:5000' : 'http://localhost:5000'
+export const baseUrl = process.env.NODE_ENV === 'development' ? 'http://192.168.1.3:5000' : 'http://localhost:5000';
 //http://192.168.1.3:5000
 const searchPattern = (pattern, string) => {
-  return (pattern.test(string))
+  return (pattern.test(string));
 }
 
-/*export const convertDataToNumber = (data) => {
-  const numberItems = ['stars', 'price', 'start', 'end', 'old_price', 'new_price']
-  for (let [key , value] of Object.entries(data)) {
-    if (numberItems.includes(key) && value) {
-      data[key] = parseInt(value)
-    }
-  }
-}*/
-
 export const samilarData = (newData, oldData) => {
-  const errorDic = {}
+  const errorDic = {};
   for (const key in newData) {
     if (newData[key] !== oldData[key]) {
-      return errorDic
+      return errorDic;
     }
   }
-  errorDic['all'] = 'Same data without changes'
-  return errorDic
+  errorDic['all'] = 'Same data without changes';
+  return errorDic;
 }
 
 export const checkDataError = (data, exception) => {
   const userPattern = /^[^!\s\W]{5,}$/;
   const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  const numberItems = ['stars', 'price', 'start', 'end', 'old_price', 'new_price']
-  const errorDic = {}
+  const numberItems = ['stars', 'price', 'start', 'end', 'old_price', 'new_price'];
+  const errorDic = {};
   for (let [key, value] of Object.entries(data)) {
     if (!value && !exception.includes(key)) {
       errorDic[key] = 'Fill required field';
       continue;
     }
-    if (['full_name', 'admin_name'].includes(key) && (value.length < 8 || value.length > 20)) {
-      errorDic[key] = 'Name between 8 and 20 characters'
-      continue;
+    if (['full_name', 'admin_name'].includes(key)) {
+      const nameLength = value.length;
+      if (nameLength < 8 || nameLength > 20) {
+        errorDic[key] = 'Name between 8 and 20 characters';
+        continue;
+      }
     }
     if (key === 'user_name' && !searchPattern(userPattern, value)) {
       errorDic[key] = 'User name at least 5 characters and no space or special characters';

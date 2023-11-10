@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars*/
 import {
-  Navbar, Sidebar, Footer, LoadingComponent, ComingSoon, Doctors, useEffect, useState,
+  Navbar, Sidebar, Footer, LoadingComponent, ComingSoon, Doctors, useEffect, useState, useNavigate, ServerError,
   useDispatch, useCookies, Routes, Route, baseUrl, Settings, Specialities, Offers, setAdminData, NotFound
 } from '../import'
 
@@ -10,6 +10,7 @@ function Dashboard() {
   const [serverError, setServerError] = useState(false)
   const [loading, setLoading] = useState(true)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
 
   const fetchLibrary = [
@@ -46,8 +47,8 @@ function Dashboard() {
     return (
       <div className="flex flex-col h-[100vh]">
         <Navbar className='flex-1' />
-        <Sidebar className="" />
-        <div className=''>
+        <Sidebar />
+        <div className="min-w-[calc(100%-50px)] min-h-[calc(100%-89px)] mt-[56px] ml-[50px] ">
           <Routes>
             <Route exact path='/' element={<div>amgad</div>} ></Route>
             <Route exact path="analysis" element={<ComingSoon />} />
