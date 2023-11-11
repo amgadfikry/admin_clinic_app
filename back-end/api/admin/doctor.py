@@ -10,6 +10,7 @@ from models.time import Time
 from models.appointment import Appointment
 from models.review import Review
 from models.speciality import Speciality
+import base64
 
 
 @admin_routes.route('/doctor', methods=['POST'], strict_slashes=False)
@@ -21,10 +22,13 @@ def create_doctor():
 				- json of created doctor with code 201
 	"""
 	data = request.get_json()
+	if data.get('image'):
+		image_data = data['image'].split(',')[1]
+		data['image'] = base64.b64decode(image_data)
 	new_doctor = Doctor(**data)
 	Session.add(new_doctor)
 	Session.commit()
-	return jsonify(new_doctor.to_dict()), 201
+	return jsonify({}), 201
 
 
 @admin_routes.route('/doctor/<doctor_id>', methods=['PUT', 'DELETE'], strict_slashes=False)
@@ -48,7 +52,7 @@ def manipulate_doctor(doctor_id):
 		return jsonify(doctor.to_dict()), 200
 
 
-@admin_routes.route('/doctor/times/<doctor_id>/<time_id>', methods=['PATCH', 'DELETE'], strict_slashes=False)
+@admin_routes.route('/doctor/times/<doctor_id>/<time_id>', methods=['PUT', 'DELETE'], strict_slashes=False)
 @jwt_required()
 @admin_required
 def add_times(doctor_id, time_id):
@@ -81,6 +85,9 @@ def get_all_doctors():
 	doctors_dict = []
 	for doc in doctors:
 		doc_dict = doc.to_dict()
+		if doc_dict.get('image'):
+			image_data = base64.b64encode(doc_dict['image']).decode('utf-8')
+			doc_dict['image'] = 'data:image/jpeg;base64,' + image_data
 		speciality = Session.query(Speciality).filter_by(id=doc.speciality_id).first()
 		doc_dict['speciality_id'] = speciality.name
 		if not doc_dict['price']:

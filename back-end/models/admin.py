@@ -20,5 +20,5 @@ class Admin(BaseModel, Base):
 	user_name = Column(String(256), nullable=False)
 	password = Column(String(256), nullable=False)
 	email = Column(String(128), nullable=False)
-	image = Column(LargeBinary, nullable=True)
+	image = Column(LargeBinary(length=(2**32)-1), nullable=True)
 	

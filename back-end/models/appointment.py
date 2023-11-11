@@ -3,7 +3,7 @@
 		of sqlalchemy and from Basemodel
 """
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, String, ForeignKey
+from sqlalchemy import Column, String, ForeignKey, Integer, Boolean
 
 
 class Appointment(BaseModel, Base):
@@ -17,4 +17,5 @@ class Appointment(BaseModel, Base):
 	user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
 	doctor_id = Column(String(60), ForeignKey('doctors.id'), nullable=False)
 	date = Column(String(60), nullable=False)
-	
+	price = Column(Integer, nullable=False)
+	attend = Column(Boolean, nullable=False, default=False)

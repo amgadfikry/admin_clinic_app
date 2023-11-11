@@ -22,7 +22,7 @@ class Offer(BaseModel, Base):
 	"""
 	__tablename__ = 'offers'
 	title = Column(String(128), nullable=False)
-	image = Column(LargeBinary, nullable=True)
+	image = Column(LargeBinary(length=(2**32)-1), nullable=True)
 	old_price = Column(Integer, nullable=False)
 	new_price = Column(Integer, nullable=False)
 	description = Column(String(1024), nullable=False)

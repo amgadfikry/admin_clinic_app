@@ -27,5 +27,6 @@ def state_of_token():
 		admin = Session.query(Admin).filter_by(id=token_id).first()
 		if admin:
 			return jsonify({'type': 'admin'}), 200
+		return jsonify({'type': None}), 200	
 	except Exception:
 		return jsonify({'type': None}), 200

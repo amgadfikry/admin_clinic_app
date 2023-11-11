@@ -3,7 +3,7 @@
 		of sqlalchemy and from Basemodel
 """
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, String, Integer, ForeignKey, LargeBinary, Table
+from sqlalchemy import Column, String, Integer, ForeignKey, LargeBinary, Table, Boolean
 from sqlalchemy.orm import relationship
 
 
@@ -48,9 +48,10 @@ class Doctor(BaseModel, Base):
 	full_name = Column(String(256), nullable=False)
 	speciality_id = Column(String(60), ForeignKey('specialities.id'), nullable=False)
 	title = Column(String(128), nullable=False)
-	image = Column(LargeBinary, nullable=True)
+	image = Column(LargeBinary(length=(2**32)-1), nullable=True)
 	price = Column(Integer, nullable=True)
 	details = Column(String(1024), nullable=False)
+	stop = Column(Boolean, nullable=False, default=False)
 	reviews = relationship("Review", backref="doctor", cascade='all, delete-orphan')
 	appointments = relationship("Appointment", backref='doctor', cascade='all, delete-orphan')
 	all_times = relationship('Time', secondary='doctor_time', 

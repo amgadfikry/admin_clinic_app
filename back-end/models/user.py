@@ -27,7 +27,7 @@ class User(BaseModel, Base):
 	user_name = Column(String(128), nullable=False)
 	password = Column(String(256), nullable=False)
 	email = Column(String(128), nullable=False)
-	image = Column(LargeBinary, nullable=True)
+	image = Column(LargeBinary(length=(2**32)-1), nullable=True)
 	reviews = relationship("Review", backref="user")
 	appointments = relationship("Appointment", backref='user', cascade='all, delete-orphan')
 	testimonials = relationship('Testimonial', backref='user', cascade='all, delete-orphan')

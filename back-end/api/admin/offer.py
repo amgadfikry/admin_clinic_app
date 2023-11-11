@@ -6,6 +6,7 @@ from api.admin import admin_routes, admin_required
 from flask import jsonify, request
 from flask_jwt_extended import jwt_required
 from models.offer import Offer
+import base64
 
 
 @admin_routes.route('/offer', methods=['POST'], strict_slashes=False)
@@ -17,11 +18,13 @@ def create_offer():
 				- json of created offer with code 201
 	"""
 	data = request.get_json()
+	if data.get('image'):
+		image_data = data['image'].split(',')[1]
+		data['image'] = base64.b64decode(image_data)
 	new_offer = Offer(**data)
 	Session.add(new_offer)
 	Session.commit()
-	return jsonify(new_offer.to_dict()), 201
-
+	return jsonify({}), 200
 
 @admin_routes.route('/offer/<offer_id>', methods=['PUT', 'DELETE'], strict_slashes=False)
 @jwt_required()
@@ -39,13 +42,16 @@ def manipulate_offer(offer_id):
 		return jsonify({}), 200
 	else:
 		data = request.get_json()
+		if data.get('image'):
+			image_data = data['image'].split(',')[1]
+			data['image'] = base64.b64decode(image_data)
 		if data.get('speciality'):
 			del data['speciality']
 		if data.get('percentage'):
 			del data['percentage']
 		offer.update(**data)
 		Session.commit()
-		return jsonify(offer.to_dict()), 200
+		return jsonify({}), 200
 
 
 @admin_routes.route('/offer', methods=['GET'], strict_slashes=False)
@@ -60,6 +66,9 @@ def get_all_offers():
 	offer_list =[]
 	for offer in offers:
 		dic = offer.to_dict()
+		if dic.get('image'):
+			image_data = base64.b64encode(dic['image']).decode('utf-8')
+			dic['image'] = 'data:image/jpeg;base64,' + image_data
 		dic['speciality'] = offer.speciality.to_dict()
 		dic['percentage'] = offer.percentage
 		offer_list.append(dic)
