@@ -47,9 +47,12 @@ def manipulate_doctor(doctor_id):
 		return jsonify({}), 200
 	else:
 		data = request.get_json()
+		if data.get('image'):
+			image_data = data['image'].split(',')[1]
+			data['image'] = base64.b64decode(image_data)
 		doctor.update(**data)
 		Session.commit()
-		return jsonify(doctor.to_dict()), 200
+		return jsonify({}), 200
 
 
 @admin_routes.route('/doctor/times/<doctor_id>/<time_id>', methods=['PUT', 'DELETE'], strict_slashes=False)
@@ -81,7 +84,7 @@ def get_all_doctors():
 			Return:
 				- json list of all doctors with code 200
 	"""
-	doctors = Session.query(Doctor).all()
+	doctors = Session.query(Doctor).order_by(Doctor.full_name).all()
 	doctors_dict = []
 	for doc in doctors:
 		doc_dict = doc.to_dict()
@@ -89,9 +92,7 @@ def get_all_doctors():
 			image_data = base64.b64encode(doc_dict['image']).decode('utf-8')
 			doc_dict['image'] = 'data:image/jpeg;base64,' + image_data
 		speciality = Session.query(Speciality).filter_by(id=doc.speciality_id).first()
-		doc_dict['speciality_id'] = speciality.name
-		if not doc_dict['price']:
-			doc_dict['price'] = speciality.price
+		doc_dict['speciality'] = speciality.to_dict()
 		stars = 0
 		for review in doc.reviews:
 			stars = stars + review.stars
@@ -100,12 +101,11 @@ def get_all_doctors():
 		else:
 			stars_result = 'New doctor'
 		doc_dict['stars'] = stars_result
-		doc_dict['reviews'] = len(doc.reviews)
-		doc_dict['appointments'] = len(doc.appointments)
-		times_dict = []
-		for time in doc.all_times:
-			times_dict.append(time.to_dict())
-		doc_dict['all_times'] = times_dict
+		doc_dict['reviews'] = [ r.to_dict() for r in doc.reviews]
+		visits = [ v for v in doc.appointments if v.attend]
+		doc_dict['visits'] = len(visits)
+		doc_dict['appointments'] = [ a.to_dict() for a in doc.appointments]
+		doc_dict['all_times'] = [ t.to_dict() for t in doc.appointments]
 		doctors_dict.append(doc_dict)
 	return jsonify(doctors_dict), 200
 
