@@ -32,7 +32,7 @@ function ContentOffer() {
       headers: {
         'Authorization': 'Bearer ' + cookies.token,
       },
-      mode: 'cors'
+      mode: 'cors',
     }).then(response => response.json())
       .then(data => {
         setOffersData(data)
@@ -70,13 +70,13 @@ function ContentOffer() {
                       <td className="px-2 py-3">{parseInt(offer.percentage)}%</td>
                       <td className="px-2 py-3" >{offer.expire_date}</td>
                       <td className="px-2 py-3">
-                        <Link to={`/dashboard/offers/edit/${offer.title}`} state={offer}>
-                          <button className='edit-btn'>Edit</button>
+                        <Link to={`/dashboard/offers/preview/${offer.title}`} state={offer}>
+                          <button className='details-btn'>Preview</button>
                         </Link>
                       </td>
                       <td className="px-2 py-3">
-                        <Link to={`/dashboard/offers/preview/${offer.title}`} state={offer}>
-                          <button className='details-btn'>Preview</button>
+                        <Link to={`/dashboard/offers/edit/${offer.title}`} state={offer}>
+                          <button className='edit-btn'>Edit</button>
                         </Link>
                       </td>
                       <td className="px-2 py-3">

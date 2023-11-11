@@ -1,10 +1,11 @@
 /* eslint-disable no-unused-vars */
 import {
-  useState, TextInput, SubmitBtn, baseUrl, useCookies, checkDataError, useNavigate, Header, SubHeader, handleCreate
+  useState, TextInput, SubmitBtn, baseUrl, useCookies, checkDataError, useNavigate, SubHeader, handleCreate
 } from '../../import'
 
 function CreateSpeciality() {
-  const [newSpeciality, setNewSpeciality] = useState({ 'name': '', 'price': '' })
+  const emptySpeciality = { 'name': '', 'price': '' }
+  const [newSpeciality, setNewSpeciality] = useState({ ...emptySpeciality })
   const [errorMsg, setErrorMsg] = useState({})
   const [successChanges, setSuccessChanges] = useState(false)
   const [serverError, setServerError] = useState(false)
@@ -17,15 +18,16 @@ function CreateSpeciality() {
 
   const handleCancel = (e) => {
     e.preventDefault()
-    setNewSpeciality({ 'name': '', 'price': '' })
+    setNewSpeciality({ ...emptySpeciality })
     setErrorMsg({})
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
     const options = {
-      baseUrl: baseUrl, url: 'speciality', cookies: cookies, newSpeciality: newSpeciality, setNewSpeciality: setNewSpeciality,
-      setErrorMsg: setErrorMsg, setSuccessChanges: setSuccessChanges, navigate: navigate, setServerError: setServerError, checkDataError: checkDataError
+      baseUrl: baseUrl, url: 'speciality', cookies: cookies, newState: newSpeciality, setState: setNewSpeciality, emptyState: emptySpeciality,
+      setErrorMsg: setErrorMsg, setSuccessChanges: setSuccessChanges, navigate: navigate, setServerError: setServerError,
+      checkDataError: checkDataError, specialityList: false, exceptionList: []
     }
     return (handleCreate(options))
   }
@@ -40,7 +42,7 @@ function CreateSpeciality() {
             changeFunc={handleChangeSpeciality} error={errorMsg.name} className='' />
           <TextInput type='number' label='Price' placeholder='Enter default price' id='price' value={newSpeciality.price}
             changeFunc={handleChangeSpeciality} error={errorMsg.price} />
-          <SubmitBtn value='Save Changes' error={errorMsg.all} cancel={handleCancel} success={successChanges}
+          <SubmitBtn value='Create' error={errorMsg.all} cancel={handleCancel} success={successChanges}
             successMsg='Created successfully' />
         </fieldset>
       </form>

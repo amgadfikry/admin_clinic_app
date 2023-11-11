@@ -21,9 +21,10 @@ export const handleDeleteItem = (options) => {
 
 
 export const handleCreate = (options) => {
-  const { baseUrl, url, cookies, newSpeciality, setNewSpeciality, setErrorMsg, setSuccessChanges, navigate, setServerError, checkDataError } = options
+  const { baseUrl, url, cookies, newState, setState, emptyState, setErrorMsg, setSuccessChanges,
+    navigate, setServerError, checkDataError, specialityList, exceptionList } = options
   setErrorMsg({});
-  const errors = checkDataError(newSpeciality, [])
+  const errors = checkDataError(newState, exceptionList)
   if (Object.keys(errors).length > 0) {
     setErrorMsg({ ...errors })
     return;
@@ -34,7 +35,7 @@ export const handleCreate = (options) => {
       'Authorization': 'Bearer ' + cookies.token,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(newSpeciality),
+    body: JSON.stringify(newState),
     mode: 'cors'
   }).then(response => response.json())
     .then(data => {
@@ -43,7 +44,10 @@ export const handleCreate = (options) => {
       } else {
         setSuccessChanges(true)
         setErrorMsg({});
-        setNewSpeciality({ 'name': '', 'price': '' })
+        setState({ ...emptyState })
+        if (specialityList) {
+          specialityList("")
+        }
         setTimeout(() => {
           setSuccessChanges(false)
         }, 2000)
@@ -76,32 +80,32 @@ export const handleGet = (options) => {
 }
 
 export const handleUpdate = (options) => {
-  const { baseUrl, apiUrl, cookies, changeSpeciality, setChangeSpeciality, setErrorMsg, specialityData, navigate, setServerError,
-    checkDataError, samilarData } = options
+  const { baseUrl, apiUrl, cookies, changeState, setChangeState, setErrorMsg, state, navigate, setServerError,
+    checkDataError, samilarData, exception, path } = options
   setErrorMsg({});
-  const errors = checkDataError(changeSpeciality, [])
+  const errors = checkDataError(changeState, exception)
   if (Object.keys(errors).length > 0) {
     setErrorMsg({ ...errors })
     return;
   }
-  const errorSame = samilarData(changeSpeciality, specialityData)
+  const errorSame = samilarData(changeState, state)
   if (Object.keys(errorSame).length > 0) {
     setErrorMsg({ ...errorSame })
     return;
   }
-  fetch(`${baseUrl}/api/admin/${apiUrl}/${specialityData.id}`, {
+  fetch(`${baseUrl}/api/admin/${apiUrl}/${state.id}`, {
     method: 'PUT',
     headers: {
       'Authorization': 'Bearer ' + cookies.token,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(changeSpeciality),
+    body: JSON.stringify(changeState),
     mode: 'cors'
   }).then(response => response.json())
     .then(data => {
       setErrorMsg({});
-      setChangeSpeciality({ ...data })
-      navigate('/dashboard/specialities')
+      setChangeState({ ...data })
+      navigate(`/dashboard/${path}`)
     })
     .catch((error) => {
       setServerError(true)

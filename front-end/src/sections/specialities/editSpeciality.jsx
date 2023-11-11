@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import {
-  useState, useCookies, Link, baseUrl, SubmitBtn, TextInput, useNavigate,
+  useState, useCookies, baseUrl, SubmitBtn, TextInput, useNavigate,
   useLocation, checkDataError, samilarData, handleUpdate, SubHeader
 } from '../../import'
 
@@ -28,9 +28,9 @@ function EditSpeciality() {
   const handleSubmit = (e) => {
     e.preventDefault()
     const options = {
-      baseUrl: baseUrl, apiUrl: 'speciality', cookies: cookies, changeSpeciality: changeSpeciality,
-      setChangeSpeciality: setChangeSpeciality, setErrorMsg: setErrorMsg, specialityData: specialityData, navigate: navigate,
-      setServerError: setServerError, checkDataError: checkDataError, samilarData: samilarData
+      baseUrl: baseUrl, apiUrl: 'speciality', cookies: cookies, changeState: changeSpeciality, path: 'specialities',
+      setChangeState: setChangeSpeciality, setErrorMsg: setErrorMsg, state: specialityData, navigate: navigate,
+      setServerError: setServerError, checkDataError: checkDataError, samilarData: samilarData, exception: []
     }
     return (handleUpdate(options))
   }

@@ -24,7 +24,7 @@ function AuthChecker({ children }) {
         .then(data => {
           if (data.type === 'admin') {
             setLoading(false)
-            navigate(path)
+            path === '/' ? navigate('/dashboard') : navigate(path)
           } else {
             setLoading(false)
             navigate('/')

@@ -24,6 +24,7 @@ import Selectspeciality from './sections/components/selectSpecialitySelect';
 import Header from './sections/components/header';
 import SubHeader from './sections/components/subHeader';
 import TableHead from './sections/components/tableHead';
+import Textarea from './sections/components/textarea';
 // settings section
 import Settings from './sections/settings/settings';
 import ChangeInfo from './sections/settings/changeInfo';
@@ -34,6 +35,7 @@ import CreateDoctor from './sections/doctors/createDoctor';
 import EditDoctor from './sections/doctors/editDoctor';
 import ContentDoctor from './sections/doctors/contentDoctor';
 import CreateTime from './sections/doctors/createTime';
+import PreviewDoctor from './sections/doctors/previewDoctor';
 // offers section
 import Offers from './sections/offers/offers';
 import CreateOffer from './sections/offers/createOffer';
@@ -88,7 +90,7 @@ export {
   Navbar, Sidebar, Footer, ServerError, LoadingComponent, ComingSoon, Doctors, SidebarNavLink, Signin, Dashboard, NotFound, AuthChecker,
   Settings, TextInput, SubmitBtn, ChangeInfo, ChangePassword, Specialities, CreateSpeciality, ContentSpeciality, EditSpeciality,
   ConfirmMsg, CreateOffer, EditOffer, Offers, ContentOffer, Selectspeciality, CreateDoctor, EditDoctor, ContentDoctor, Stars,
-  CreateTime, Details, ImageSelect, Header, SubHeader, TableHead, PreviewOffer,
+  CreateTime, Details, ImageSelect, Header, SubHeader, TableHead, PreviewOffer, Textarea, PreviewDoctor,
   // redux
   setAdminData, adminDataState, useSelector, useDispatch,
   // cookies

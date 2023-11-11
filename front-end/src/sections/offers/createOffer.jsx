@@ -1,13 +1,13 @@
 /* eslint-disable no-unused-vars */
 import {
-  Link, useState, TextInput, SubmitBtn, baseUrl, useCookies, Selectspeciality, BiSolidCloudUpload,
-  useEffect, checkDataError
+  useState, TextInput, SubmitBtn, baseUrl, useCookies, checkDataError, useNavigate, SubHeader, handleCreate,
+  Selectspeciality, ImageSelect, Textarea
 } from '../../import'
 
 function CreateOffer() {
   const emptyOffer = {
     'title': '', 'old_price': '', 'new_price': '', 'description': '',
-    'expire_date': '', 'speciality_id': ''
+    'expire_date': '', 'speciality_id': '', 'image': null
   }
   const [newOffer, setNewOffer] = useState({ ...emptyOffer })
   const [errorMsg, setErrorMsg] = useState({})
@@ -15,6 +15,7 @@ function CreateOffer() {
   const [serverError, setServerError] = useState(false)
   const [speciality, setSpeciality] = useState('')
   const [cookies] = useCookies(['token'])
+  const navigate = useNavigate()
 
   const handleChangeOffers = (e) => {
     e.preventDefault()
@@ -46,13 +47,17 @@ function CreateOffer() {
       mode: 'cors'
     }).then(response => response.json())
       .then(data => {
-        setSuccessChanges(true)
-        setErrorMsg({});
-        setNewOffer({ ...emptyOffer })
-        setSpeciality("")
-        setTimeout(() => {
-          setSuccessChanges(false)
-        }, 2000)
+        if ('error' in data) {
+          setErrorMsg({ ...data.error })
+        } else {
+          setSuccessChanges(true)
+          setErrorMsg({});
+          setNewOffer({ ...emptyOffer })
+          setSpeciality("")
+          setTimeout(() => {
+            setSuccessChanges(false)
+          }, 2000)
+        }
       })
       .catch((error) => {
         setServerError(true)
@@ -61,14 +66,8 @@ function CreateOffer() {
   }
 
   return (
-    <section className="">
-      <header className="flex justify-between items-center pb-3 border-b mb-8">
-        <h1 className="text-3xl text-teal-color font-bold">New Offer</h1>
-        <Link to='/dashboard/offers'>
-          <button className="py-1 px-3 text-medium bg-teal-color rounded-lg transition-all duration-300 cursor-pointer
-          hover:bg-dark-color text-white">Back</button>
-        </Link>
-      </header>
+    <section className="flex flex-col px-3 md:px-5 pb-[100px]">
+      <SubHeader subHead="Create new Offer" btnName='Back' btnPath='/dashboard/offers' image={false} />
       <form onSubmit={handleSubmit}>
         <fieldset className='filedset'>
           <legend className='legend'>Offer Info</legend>
@@ -80,18 +79,11 @@ function CreateOffer() {
             changeFunc={handleChangeOffers} error={errorMsg.new_price} />
           <TextInput type='date' label='Expire date' placeholder='Enter expire date' id='expire_date' value={newOffer.expire_date}
             changeFunc={handleChangeOffers} error={errorMsg.expire_date} />
-          <TextInput type='text' label='Brief description' placeholder='Enter brief description' id='description' value={newOffer.description}
-            changeFunc={handleChangeOffers} error={errorMsg.description} />
           <Selectspeciality specialityValue={newOffer} setSpecialityValue={setNewOffer} error={errorMsg}
             speciality={speciality} setSpeciality={setSpeciality} setSpecialityPrice='' />
-          <div className='w-full shrink-0 py-4 px-3 text-center border rounded-lg bg-white'>
-            <input type='file' name='image' id='image' className='hidden' disabled />
-            <label htmlFor='image' className='flex justify-center items-center border w-fit mx-auto py-2 px-4
-          bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200'>
-              <BiSolidCloudUpload className='text-2xl text-teal-color mr-3' />
-              <p>Choose a offer photo</p>
-            </label>
-          </div>
+          <Textarea placeholder='Enter offer description' id='description' changeValue={setNewOffer} value={newOffer}
+            error={errorMsg.description} />
+          <ImageSelect label="Choose offer photo" setChangeProfile={setNewOffer} changeProfile={newOffer} error={errorMsg.image} />
           <SubmitBtn value='Create' error={errorMsg.all} cancel={handleCancel} success={successChanges}
             successMsg='Created successfully' />
         </fieldset>

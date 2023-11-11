@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import {
-  useState, useCookies, Link, baseUrl, SubmitBtn, TextInput, useNavigate,
-  useLocation, checkDataError, samilarData, Selectspeciality, BiSolidCloudUpload
+  useState, useCookies, baseUrl, SubmitBtn, TextInput, useNavigate, Selectspeciality,
+  useLocation, checkDataError, samilarData, handleUpdate, SubHeader, Textarea, ImageSelect
 } from '../../import'
 
 function EditOffer() {
@@ -28,46 +28,17 @@ function EditOffer() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    setErrorMsg({});
-    const errors = checkDataError(changeOffer, ['image'])
-    if (Object.keys(errors).length > 0) {
-      setErrorMsg({ ...errors })
-      return;
+    const options = {
+      baseUrl: baseUrl, apiUrl: 'offer', cookies: cookies, changeState: changeOffer, path: 'offers',
+      setChangeState: setChangeOffer, setErrorMsg: setErrorMsg, state: offersData, navigate: navigate,
+      setServerError: setServerError, checkDataError: checkDataError, samilarData: samilarData, exception: []
     }
-    const errorSame = samilarData(changeOffer, offersData)
-    if (Object.keys(errorSame).length > 0) {
-      setErrorMsg({ ...errorSame })
-      return;
-    }
-    fetch(`${baseUrl}/api/admin/offer/${offersData.id}`, {
-      method: 'PUT',
-      headers: {
-        'Authorization': 'Bearer ' + cookies.token,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(changeOffer),
-      mode: 'cors'
-    }).then(response => response.json())
-      .then(data => {
-        setErrorMsg({});
-        setChangeOffer({ ...data })
-        navigate('/dashboard/offers')
-      })
-      .catch((error) => {
-        setServerError(true)
-        navigate('/server504error')
-      });
+    return (handleUpdate(options))
   }
 
   return (
-    <section className="">
-      <header className="flex justify-between items-center pb-3 border-b mb-8">
-        <h1 className="text-3xl text-teal-color font-bold">Edit {offersData.title}</h1>
-        <Link to='/dashboard/offers'>
-          <button className="py-1 px-3 text-medium bg-teal-color rounded-lg transition-all duration-300 cursor-pointer
-          hover:bg-dark-color text-white">Back</button>
-        </Link>
-      </header>
+    <section className="flex flex-col px-3 md:px-5 pb-[100px]">
+      <SubHeader subHead={`Update ${offersData.title}`} btnName='Back' btnPath='/dashboard/offers' image={offersData.image} />
       <form onSubmit={handleSubmit}>
         <fieldset className='filedset'>
           <legend className='legend'>Offer Info</legend>
@@ -79,18 +50,11 @@ function EditOffer() {
             changeFunc={handleChangeOffers} error={errorMsg.new_price} />
           <TextInput type='date' label='Expire date' placeholder='Enter expire date' id='expire_date' value={changeOffer.expire_date}
             changeFunc={handleChangeOffers} error={errorMsg.expire_date} />
-          <TextInput type='text' label='Brief description' placeholder='Enter brief description' id='description' value={changeOffer.description}
-            changeFunc={handleChangeOffers} error={errorMsg.description} />
           <Selectspeciality specialityValue={changeOffer} setSpecialityValue={setChangeOffer} error={errorMsg}
             speciality={speciality} setSpeciality={setSpeciality} setSpecialityPrice='' />
-          <div className='w-full shrink-0 py-4 px-3 text-center border rounded-lg bg-white'>
-            <input type='file' name='image' id='image' className='hidden' disabled />
-            <label htmlFor='image' className='flex justify-center items-center border w-fit mx-auto py-2 px-4
-          bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200'>
-              <BiSolidCloudUpload className='text-2xl text-teal-color mr-3' />
-              <p>Choose a offer photo</p>
-            </label>
-          </div>
+          <Textarea placeholder='Enter offer description' id='description' changeValue={setChangeOffer} value={changeOffer}
+            error={errorMsg.description} />
+          <ImageSelect label="Choose offer photo" setChangeProfile={setChangeOffer} changeProfile={changeOffer} error={errorMsg.image} />
           <SubmitBtn value='Update' error={errorMsg.all} cancel={handleCancel} success={false}
             successMsg='' />
         </fieldset>

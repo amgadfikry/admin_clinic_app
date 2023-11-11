@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import {
   useState, useSelector, adminDataState, TextInput, SubmitBtn, baseUrl, useCookies, setAdminData, useDispatch,
-  BiSolidCloudUpload, checkDataError, samilarData, ImageSelect
+  checkDataError, samilarData, ImageSelect
 } from '../../import.js'
 
 function ChangeInfo() {
@@ -70,7 +70,7 @@ function ChangeInfo() {
           changeFunc={handleChangeProfile} error={errorMsg.user_name} />
         <TextInput type='text' label='Email' placeholder='Enter your email address' id='email' value={changeProfile.email}
           changeFunc={handleChangeProfile} error={errorMsg.email} />
-        <ImageSelect label="Choose profile photo" setChangeProfile={setChangeProfile} changeProfile={changeProfile}/>
+        <ImageSelect label="Choose profile photo" setChangeProfile={setChangeProfile} changeProfile={changeProfile} error='' />
         <SubmitBtn value='Save Changes' error={errorMsg.all} cancel={handleCancel}
           success={successChanges} successMsg='Change successfully' />
       </fieldset>

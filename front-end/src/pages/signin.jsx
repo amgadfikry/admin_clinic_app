@@ -1,7 +1,8 @@
 /* eslint-disable no-unused-vars */
 // Desc: Signin page for admin
 import {
-  useState, useNavigate, useCookies, FaUserAlt, FaLock, baseUrl, MdEmail, useEffect, LoadingComponent
+  useState, useNavigate, useCookies, FaUserAlt, FaLock, baseUrl, MdEmail, useEffect, LoadingComponent,
+  AuthChecker
 } from '../import'
 
 function Signin() {
@@ -10,6 +11,7 @@ function Signin() {
   const [cookies, setCookie] = useCookies(['token']);
   const [serverError, setServerError] = useState(false)
   const [loading, setLoading] = useState(true);
+  const [auth, setAuth] = useState(false)
   const navigate = useNavigate();
 
   const handlechange = (e) => {
@@ -21,10 +23,6 @@ function Signin() {
   }
 
   useEffect(() => {
-    if ('token' in cookies) {
-      setLoading(false)
-      navigate('/dashboard/')
-    }
     setLoading(false)
   }, [])
 

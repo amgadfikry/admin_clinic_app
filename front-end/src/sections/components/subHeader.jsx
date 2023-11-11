@@ -7,7 +7,7 @@ function SubHeader({ subHead, btnName, image, btnPath }) {
         drop-shadow-lg flex items-center py-3 px-3 md:px-6 top-[200px] sm:top-[250px] lg:top-[300px] ' >
       {
         image &&
-        <img className='w-20 h-20 rounded-full object-cover mr-2' src={image} alt={subHead} />
+        <img className='w-20 h-20 rounded-lg object-cover mr-2' src={image} alt={subHead} />
       }
       <p className='text-teal-color font-medium text-lg md:text-xl mr-auro flex-1'>{subHead}</p>
       <Link to={btnPath}>
