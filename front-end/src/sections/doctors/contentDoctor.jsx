@@ -6,7 +6,7 @@ import {
 } from '../../import'
 
 function ContentDoctor() {
-  const tableHeadList = ['#', 'Name', 'Speciality', 'Price', 'Visits', 'Stars', 'Preview', 'Edit', 'Delete']
+  const tableHeadList = ['#','', 'Name', 'Speciality', 'Price', 'Visits', 'Stars', 'Preview', 'Edit', 'Delete']
   const [loading, setLoading] = useState(true)
   const [confirmDelete, setConfirmDelete] = useState("")
   const [doctorData, setDoctorData] = useState([])
@@ -57,7 +57,7 @@ function ContentDoctor() {
               <tbody className=" border-gray-100 text-dark-color ">
                 {doctorData.length === 0
                   ? (<tr>
-                    <td colSpan="9" className='text-2xl text-gray-400 whitespace-nowrap py-[125px] text-center'>
+                    <td colSpan="10" className='text-2xl text-gray-400 whitespace-nowrap py-[125px] text-center'>
                       No current Doctors
                     </td>
                   </tr>)
@@ -65,21 +65,19 @@ function ContentDoctor() {
                     <tr key={doctor.id} className=" even:bg-gray-200 relative">
                       {confirmDelete == doctor.id && <ConfirmMsg state={setConfirmDelete} func={deleteFunction} />}
                       <th className="flex items-center justify-center gap-3 px-2 py-3">{index + 1}</th>
-                      <td className="px-2 py-3">
-                        <div className="flex items-center justify-center ">
-                          <div className="">
-                            {doctor.image
-                              ? <img src={doctor.image} alt="admin" className='w-[30px] h-[30px] rounded-full border' />
-                              : <BsFillPersonFill className='w-[30px] h-[30px] text-gray-600 bg-gray-200 p-1 rounded-full' />
-                            }
-                          </div>
-                          <span className='ml-1'>{doctor.full_name}</span>
+                      <td className="px-2 py-3 ">
+                        <div className='min-w-[30px] flex items-center justify-center'>
+                        {doctor.image
+                          ? <img src={doctor.image} alt="admin" className='w-[30px] h-[30px] rounded-full border' />
+                          : <BsFillPersonFill className='w-[30px] h-[30px] text-gray-600 bg-gray-200 p-1 rounded-full' />
+                        }
                         </div>
                       </td>
-                      <td className="px-2 py-3">{doctor.speciality_id}</td>
+                      <td className="px-2 py-3">{doctor.full_name}</td>
+                      <td className="px-2 py-3">{doctor.speciality.name}</td>
                       <td className="px-2 py-3">{doctor.price}</td>
-                      <td className="px-2 py-3" >{doctor.appointments}</td>
-                      <td className="px-2 py-3" >{
+                      <td className="px-2 py-3" >{doctor.visits}</td>
+                      <td className="px-2 py-3 flex justify-center items-center" >{
                         <Stars starsNumber={doctor.stars} />
                       }</td>
                       <td className="px-2 py-3">

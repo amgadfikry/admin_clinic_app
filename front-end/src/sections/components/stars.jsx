@@ -23,7 +23,7 @@ function Stars({ starsNumber }) {
   }
 
   return (
-    <div className='flex items-center '>
+    <div className='flex items-center space-x-1'>
       {
         star(starsNumber).map(star => star)
       }

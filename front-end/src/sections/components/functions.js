@@ -78,7 +78,6 @@ export const handleGet = (options) => {
       navigate('/server504error')
     });
 }
-
 export const handleUpdate = (options) => {
   const { baseUrl, apiUrl, cookies, changeState, setChangeState, setErrorMsg, state, navigate, setServerError,
     checkDataError, samilarData, exception, path } = options

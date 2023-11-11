@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
   useState, Link, baseUrl, useCookies, LoadingComponent, ConfirmMsg, useEffect,
-  useNavigate, SubHeader, TableHead, handleDeleteItem, handleGet
+  useNavigate, SubHeader, TableHead, handleDeleteItem, handleGet, Details
 } from '../../import'
 
 function ContentOffer() {
@@ -13,6 +13,7 @@ function ContentOffer() {
   const [serverError, setServerError] = useState(false)
   const [cookies] = useCookies(['token'])
   const navigate = useNavigate()
+  const [seeDetails, setSeeDetails] = useState(false)
 
   const handleDelete = (e) => {
     setConfirmDelete(e.target.id)
@@ -70,9 +71,7 @@ function ContentOffer() {
                       <td className="px-2 py-3">{parseInt(offer.percentage)}%</td>
                       <td className="px-2 py-3" >{offer.expire_date}</td>
                       <td className="px-2 py-3">
-                        <Link to={`/dashboard/offers/preview/${offer.title}`} state={offer}>
-                          <button className='details-btn'>Preview</button>
-                        </Link>
+                          <button className='details-btn' onClick={() => setSeeDetails(!seeDetails)}>Preview</button>
                       </td>
                       <td className="px-2 py-3">
                         <Link to={`/dashboard/offers/edit/${offer.title}`} state={offer}>
