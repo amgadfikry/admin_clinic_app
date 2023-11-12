@@ -1,5 +1,5 @@
 import {
-  Routes, Route, ContentOffer, CreateOffer, EditOffer, Header, PreviewOffer
+  Routes, Route, ContentOffer, CreateOffer, EditOffer, Header
 } from '../../import'
 
 function Offers() {
@@ -10,7 +10,6 @@ function Offers() {
         <Route exact path='/' element={<ContentOffer />} ></Route>
         <Route exact path='create' element={<CreateOffer />} ></Route>
         <Route exact path='edit/:name' element={<EditOffer />} ></Route>
-        <Route exact path='preview/:name' element={<PreviewOffer />} ></Route>
       </Routes>
     </div>
   )

@@ -1,14 +1,14 @@
 /* eslint-disable no-unused-vars */
 import {
   useState, useCookies, baseUrl, SubmitBtn, TextInput, useNavigate, Selectspeciality,
-  useLocation, checkDataError, samilarData, handleUpdate, SubHeader, Textarea, ImageSelect
+  useLocation, checkDataError, samilarData, handleUpdate, SubHeader, Textarea, ImageSelect, TimeControl
 } from '../../import'
 
 function EditDoctor() {
   const location = useLocation()
   const doctorsData = location.state
   const specialityName = doctorsData.speciality.name
-  const currentSpecialityPrice =doctorsData.speciality.price;
+  const currentSpecialityPrice = doctorsData.speciality.price;
   const [changeDoctor, setChangeDoctor] = useState({ ...doctorsData })
   const [speciality, setSpeciality] = useState(specialityName)
   const [specialityPrice, setSpecialityPrice] = useState(currentSpecialityPrice)
@@ -31,7 +31,7 @@ function EditDoctor() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    const removedict = {...changeDoctor};
+    const removedict = { ...changeDoctor };
     ['stars', 'all_times', 'appointments', 'reviews', 'speciality', 'visits'].forEach(el => delete removedict[el])
     if (!removedict['price']) {
       removedict['price'] = parseInt(currentSpecialityPrice)
@@ -67,7 +67,8 @@ function EditDoctor() {
             successMsg='' />
         </fieldset>
       </form>
-    </section> 
+      <TimeControl doctorData={doctorsData} />
+    </section>
   )
 }
 

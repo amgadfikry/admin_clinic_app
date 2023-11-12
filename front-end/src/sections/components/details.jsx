@@ -1,27 +1,31 @@
 /* eslint-disable react/prop-types */
-function Details({ offer, state }) {
+function Details({ detailsData, setDetailsData, setSeeDetails }) {
   const handleClose = () => {
-    state("")
+    setSeeDetails(false)
+    setDetailsData({})
   }
 
   return (
-    <div className="absolute z-10 bg-teal-color bg-opacity-30 h-full w-full flex justify-center items-center">
+    <div className="absolute z-10 top-[20%] flex justify-center pb-12">
       <div className="bg-gray-200 rounded-lg w-[90%] sm:w-[80%] md:w-[70%] lg:w-[60%] flex
-        md:flex-row flex-col overflow-hidden border border-gray-300 text-dark-color">
-        <div className='flex-grow md:flex-grow-0 w-1/3 relative'>
-          <img src={offer.image} alt='offer description' className='max-w-full h-auto block' />
-          <p className='absolute top-1 left-1 bg-teal-color text-white font-medium px-3 py1'>{offer.percentage} %</p>
+        flex-col overflow-hidden  text-dark-color relative">
+        <div className='w-full relative'>
+          <img src={detailsData.image} alt='offer description' className=' block' />
+          <p className='absolute top-2 left-2 bg-teal-color text-white font-medium px-3 py2 text-lg'>{parseInt(detailsData.percentage)}%</p>
         </div>
-        <div className='flex-grow md:flex-grow-0 md:w-2/3 px-4 py-6 relative'>
-        <h3 className='font-medium text-xl'>{offer.title}</h3>
-        <p className='mb-5 text-dark-color'>{offer.description}</p>
-        <p className='line-through font-light'>{offer.old_price}</p>
-        <p className='font-light'>{offer.new_price}</p>
+        <div className='flex-grow  px-4 py-6 relative'>
+          <h3 className='font-medium text-2xl mb-2'>{detailsData.title}</h3>
+          <div className='flex items-center mb-2'>
+            <p className='line-through font-light mr-2 bg-red-600 py-1 px-2 text-white'>{detailsData.old_price}</p>
+            <p className='mr-2'>&rarr;</p>
+            <p className='font-light bg-teal-color py-1 px-2 text-white'>{detailsData.new_price}</p>
+          </div>
+          <p className='mb-5 text-dark-color whitespace-normal mt-5'>{detailsData.description}</p>
         </div>
 
         <div className="flex justify-center items-center">
-          <button className="py-1 px-1 text-medium bg-teal-color rounded-lg transition-all duration-300 cursor-pointer
-          hover:bg-dark-color text-white absolute top-1 left-1" onClick={handleClose}>X</button>
+          <button className="w-6 h-6 p-2 rounded-full text-medium bg-teal-color transition-all duration-300 cursor-pointer
+          hover:bg-dark-color text-white absolute top-1 right-1 flex justify-center items-center" onClick={handleClose}>X</button>
         </div>
 
       </div>

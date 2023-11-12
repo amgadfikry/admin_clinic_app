@@ -35,13 +35,13 @@ import CreateDoctor from './sections/doctors/createDoctor';
 import EditDoctor from './sections/doctors/editDoctor';
 import ContentDoctor from './sections/doctors/contentDoctor';
 import CreateTime from './sections/doctors/createTime';
+import TimeControl from './sections/doctors/timeControl';
 import PreviewDoctor from './sections/doctors/previewDoctor';
 // offers section
 import Offers from './sections/offers/offers';
 import CreateOffer from './sections/offers/createOffer';
 import EditOffer from './sections/offers/editOffer';
 import ContentOffer from './sections/offers/contentOffer';
-import PreviewOffer from './sections/offers/previewOffer';
 // specialities section
 import Specialities from './sections/specialities/specialities';
 import CreateSpeciality from './sections/specialities/createSpeciality';
@@ -85,12 +85,14 @@ import headerPhoto from './assets/header.jpg'
 // functions
 import { handleDeleteItem, handleCreate, handleGet, handleUpdate } from './sections/components/functions'
 
+import Select from "react-select";
+
 export {
   // react components and pages
   Navbar, Sidebar, Footer, ServerError, LoadingComponent, ComingSoon, Doctors, SidebarNavLink, Signin, Dashboard, NotFound, AuthChecker,
   Settings, TextInput, SubmitBtn, ChangeInfo, ChangePassword, Specialities, CreateSpeciality, ContentSpeciality, EditSpeciality,
   ConfirmMsg, CreateOffer, EditOffer, Offers, ContentOffer, Selectspeciality, CreateDoctor, EditDoctor, ContentDoctor, Stars,
-  CreateTime, Details, ImageSelect, Header, SubHeader, TableHead, PreviewOffer, Textarea, PreviewDoctor,
+  CreateTime, Details, ImageSelect, Header, SubHeader, TableHead, Textarea, PreviewDoctor, TimeControl,
   // redux
   setAdminData, adminDataState, useSelector, useDispatch,
   // cookies
@@ -110,5 +112,7 @@ export {
   headerPhoto,
   //functions
   handleDeleteItem, handleCreate, handleGet, handleUpdate,
+
+  Select
 }
 
