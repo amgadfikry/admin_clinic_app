@@ -1,5 +1,5 @@
 import {
-  Routes, Route, CreateDoctor, EditDoctor, ContentDoctor, Header, PreviewDoctor
+  Routes, Route, CreateDoctor, EditDoctor, ContentDoctor, Header, PreviewDoctor, CreateTime
 } from '../../import'
 
 function Doctors() {
@@ -11,6 +11,7 @@ function Doctors() {
         <Route exact path='create' element={<CreateDoctor />} ></Route>
         <Route exact path='edit/:name' element={<EditDoctor />} ></Route>
         <Route exact path='preview/:name' element={<PreviewDoctor />} ></Route>
+        <Route exact path='time' element={<CreateTime />} ></Route>
       </Routes>
     </div>
   )

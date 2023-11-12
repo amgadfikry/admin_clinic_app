@@ -55,25 +55,40 @@ def manipulate_doctor(doctor_id):
 		return jsonify({}), 200
 
 
-@admin_routes.route('/doctor/times/<doctor_id>/<time_id>', methods=['PUT', 'DELETE'], strict_slashes=False)
+@admin_routes.route('/doctor/times/<doctor_id>', methods=['PUT'], strict_slashes=False)
 @jwt_required()
 @admin_required
-def add_times(doctor_id, time_id):
+def add_times(doctor_id):
 	""" add new time record to record or remove it
 			Return:
 				- empty json with code 200 if delete request
 				- json of time added with code 200 if patch request
 	"""
 	doctor = Session.query(Doctor).filter_by(id=doctor_id).first()
+	data = request.get_json()
+	for time_id in data:
+		t = Session.query(Time).filter_by(id=time_id).first()
+		if t in doctor.all_times:
+			print("")
+		else:
+			doctor.all_times.append(t)
+	Session.commit()
+	return jsonify({}), 200
+
+
+@admin_routes.route('/doctor/times/<doctor_id>/<time_id>', methods=['DELETE'], strict_slashes=False)
+@jwt_required()
+@admin_required
+def delete_times(doctor_id, time_id):
+	""" delete  time record from doctor record
+			Return:
+				- empty json with code 200 if delete request
+	"""
+	doctor = Session.query(Doctor).filter_by(id=doctor_id).first()
 	time = Session.query(Time).filter_by(id=time_id).first()
-	if request.method == 'PATCH':
-		doctor.all_times.append(time)
-		Session.commit()
-		return jsonify(time.to_dict()), 200
-	else:
-		doctor.all_times.remove(time)
-		Session.commit()
-		return jsonify({}), 200
+	doctor.all_times.remove(time)
+	Session.commit()
+	return jsonify({}), 200
 
 
 @admin_routes.route('/doctor', methods=['GET'], strict_slashes=False)
@@ -105,7 +120,7 @@ def get_all_doctors():
 		visits = [ v for v in doc.appointments if v.attend]
 		doc_dict['visits'] = len(visits)
 		doc_dict['appointments'] = [ a.to_dict() for a in doc.appointments]
-		doc_dict['all_times'] = [ t.to_dict() for t in doc.appointments]
+		doc_dict['all_times'] = [ t.to_dict() for t in doc.all_times]
 		doctors_dict.append(doc_dict)
 	return jsonify(doctors_dict), 200
 

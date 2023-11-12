@@ -6,6 +6,7 @@ from api.admin import admin_routes, admin_required
 from flask import jsonify, request
 from flask_jwt_extended import jwt_required
 from models.time import Time
+from sqlalchemy import and_
 
 
 @admin_routes.route('/time', methods=['POST'], strict_slashes=False)
@@ -17,6 +18,14 @@ def create_time():
 				- json of created time with code 201
 	"""
 	data = request.get_json()
+	time = Session.query(Time).filter(
+		and_(
+			Time.day == data['day'],
+			Time.start == data['start'],
+			Time.end == data['end']
+	)).first()
+	if time:
+		return jsonify({'error': 'Time add previously'})
 	new_time = Time(**data)
 	Session.add(new_time)
 	Session.commit()
@@ -46,9 +55,7 @@ def get_times():
 			Return:
 				- json list of all times with code 200
 	"""
-	times = Session.query(Time).all()
-	time_dict = []
-	for time in times:
-		time_dict.append(time.to_dict())
-	return jsonify(time_dict), 200
+	times = Session.query(Time).order_by(Time.day).all()
+	time_list = [t.to_dict() for t in times]
+	return jsonify(time_list), 200
 	

@@ -37,6 +37,7 @@ import ContentDoctor from './sections/doctors/contentDoctor';
 import CreateTime from './sections/doctors/createTime';
 import TimeControl from './sections/doctors/timeControl';
 import PreviewDoctor from './sections/doctors/previewDoctor';
+import DoctorTimeShow from './sections/doctors/doctorTimeShow';
 // offers section
 import Offers from './sections/offers/offers';
 import CreateOffer from './sections/offers/createOffer';
@@ -92,7 +93,7 @@ export {
   Navbar, Sidebar, Footer, ServerError, LoadingComponent, ComingSoon, Doctors, SidebarNavLink, Signin, Dashboard, NotFound, AuthChecker,
   Settings, TextInput, SubmitBtn, ChangeInfo, ChangePassword, Specialities, CreateSpeciality, ContentSpeciality, EditSpeciality,
   ConfirmMsg, CreateOffer, EditOffer, Offers, ContentOffer, Selectspeciality, CreateDoctor, EditDoctor, ContentDoctor, Stars,
-  CreateTime, Details, ImageSelect, Header, SubHeader, TableHead, Textarea, PreviewDoctor, TimeControl,
+  CreateTime, Details, ImageSelect, Header, SubHeader, TableHead, Textarea, PreviewDoctor, TimeControl, DoctorTimeShow,
   // redux
   setAdminData, adminDataState, useSelector, useDispatch,
   // cookies
