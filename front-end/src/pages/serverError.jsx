@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import {
-  useState, useEffect, LoadingComponent
+  useState, useEffect, LoadingComponent, Link
 } from '../import'
 import error from '../assets/error.jpg'
 
@@ -25,6 +25,7 @@ function ServerError() {
               OOPS! Something went wrong on our end.<br></br>
               We are working to resolve this issue and should be back running soon.
             </p>
+            <button className='btn-dark'><Link to='/dashboard/'>Homepage</Link></button>
           </div>
           <div className="w-full lg:flex lg:justify-end lg:w-1/2">
             <img src={error}

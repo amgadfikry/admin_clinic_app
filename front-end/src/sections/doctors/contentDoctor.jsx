@@ -6,7 +6,7 @@ import {
 } from '../../import'
 
 function ContentDoctor() {
-  const tableHeadList = ['#','', 'Name', 'Speciality', 'Price', 'Visits', 'Stars', 'Preview', 'Edit', 'Delete']
+  const tableHeadList = ['#', '', 'Name', 'Speciality', 'Price', 'Visits', 'Stars', 'Preview', 'Edit', 'Delete']
   const [loading, setLoading] = useState(true)
   const [confirmDelete, setConfirmDelete] = useState("")
   const [doctorData, setDoctorData] = useState([])
@@ -67,10 +67,10 @@ function ContentDoctor() {
                       <th className="flex items-center justify-center gap-3 px-2 py-3">{index + 1}</th>
                       <td className="px-2 py-3 ">
                         <div className='min-w-[30px] flex items-center justify-center'>
-                        {doctor.image
-                          ? <img src={doctor.image} alt="admin" className='w-[30px] h-[30px] rounded-full border' />
-                          : <BsFillPersonFill className='w-[30px] h-[30px] text-gray-600 bg-gray-200 p-1 rounded-full' />
-                        }
+                          {doctor.image
+                            ? <img src={doctor.image} alt="admin" className='w-[30px] h-[30px] rounded-full border' />
+                            : <BsFillPersonFill className='w-[30px] h-[30px] text-gray-600 bg-gray-200 p-1 rounded-full' />
+                          }
                         </div>
                       </td>
                       <td className="px-2 py-3">{doctor.full_name}</td>

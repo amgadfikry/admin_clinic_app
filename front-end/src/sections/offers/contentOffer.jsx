@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
   useState, Link, baseUrl, useCookies, LoadingComponent, ConfirmMsg, useEffect,
-  useNavigate, SubHeader, TableHead, handleDeleteItem, handleGet, Details
+  useNavigate, SubHeader, TableHead, handleDeleteItem, handleGet, DetailsOffer
 } from '../../import'
 
 function ContentOffer() {
@@ -56,7 +56,7 @@ function ContentOffer() {
   } else {
     return (
       <>
-        {seeDetails && <Details detailsData={detailsData} setDetailsData={setDetailsData} setSeeDetails={setSeeDetails} />}
+        {seeDetails && <DetailsOffer detailsData={detailsData} setDetailsData={setDetailsData} setSeeDetails={setSeeDetails} />}
         <section className="flex flex-col px-3 md:px-5 pb-[100px] whitespace-nowrap">
           <SubHeader subHead="All Offers" btnName='Create new' btnPath='/dashboard/offers/create' image={false} />
           <div className="rounded-lg overflow-hidden">
