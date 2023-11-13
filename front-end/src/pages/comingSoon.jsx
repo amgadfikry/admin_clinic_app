@@ -1,19 +1,61 @@
+import {
+  useState, useEffect
+} from '../import'
+
 function ComingSoon() {
+  const calculateTimeLeft = () => {
+    const difference = +new Date(`12/31/2023`) - +new Date();
+    let timeLeft = {};
+
+    if (difference > 0) {
+      timeLeft = {
+        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((difference / 1000 / 60) % 60),
+        seconds: Math.floor((difference / 1000) % 60),
+      };
+    }
+
+    return timeLeft;
+  };
+
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setTimeLeft(calculateTimeLeft());
+    }, 1000);
+    return () => clearTimeout(timer);
+  });
+
+
   return (
-    <div className="relative w-full flex items-center justify-center bg-cover bg-center
-    text-center px-5 z-[-5] min-h-full">
-      <div className="absolute top-0 right-0 bottom-0 left-0  opacity-75"></div>
-      <div className="z-50 flex flex-col justify-center text-teal-color">
-        <h1 className="text-5xl mb-1">We are <b>Almost</b> there!</h1>
-        <p>Stay tuned for amazing features!!!</p>
-        <div className="mt-10 mb-5">
-          <div className="shadow w-full bg-gray-300 mt-2 max-w-2xl mx-auto rounded-full">
-            <div className="rounded-full bg-teal-color text-xs leading-none text-center text-white py-1 w-[75%]">75%</div>
-          </div>
+    <div className='relative min-h-full py-10 px-4 flex flex-col justify-center items-center'>
+      <h1 className='text-center text-teal-color text-2xl font-bold mb-5'>Coming Soon!</h1>
+      <div className='flex space-x-2' >
+        <div className='flex flex-col justify-center items-center'>
+          <p className='px-4 py-4 border border-teal-color text-3xl font-blod text-teal-color
+          rounded-lg'>{String(timeLeft.days).padStart(2, '0')}</p>
+          <p className='text-teal-color'>Days</p>
+        </div>
+        <div className='flex flex-col justify-center items-center'>
+          <p className='px-4 py-4 border border-teal-color text-3xl font-blod text-teal-color
+          rounded-lg'>{String(timeLeft.hours).padStart(2, '0')}</p>
+          <p className='text-teal-color'>Hours</p>
+        </div>
+        <div className='flex flex-col justify-center items-center'>
+          <p className='px-4 py-4 border border-teal-color text-3xl font-blod text-teal-color
+          rounded-lg'>{String(timeLeft.minutes).padStart(2, '0')}</p>
+          <p className='text-teal-color'>Mins</p>
+        </div>
+        <div className='flex flex-col justify-center items-center'>
+          <p className='px-4 py-4 border border-teal-color text-3xl font-blod text-teal-color
+          rounded-lg'>{String(timeLeft.seconds).padStart(2, '0')}</p>
+          <p className='text-teal-color'>Secs</p>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default ComingSoon
