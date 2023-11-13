@@ -9,6 +9,7 @@ from models.user import User
 from models.appointment import Appointment
 from models.review import Review
 from models.testimonial import Testimonial
+from models.doctor import Doctor
 
 
 @admin_routes.route('/user/<user_id>', methods=['GET'], strict_slashes=False)
@@ -34,3 +35,25 @@ def get_user(user_id):
 		testimonial_dict.append(testi.to_dict())
 	user_dict['testimonials'] = testimonial_dict
 	return jsonify(user_dict), 200
+
+
+@admin_routes.route('/overview', methods=['GET'], strict_slashes=False)
+@jwt_required()
+@admin_required
+def get_overview():
+	""" get overview information about all states
+			Return:
+				- json of user information with code 200
+	"""
+	doctors = Session.query(Doctor).all()
+	users = Session.query(User).all()
+	appointments= Session.query(Appointment).filter_by(attend=True).all()
+	income = 0
+	for app in appointments:
+		doctor = Session.query(Doctor).filter_by(id=app.doctor_id).first()
+		income += doctor.price
+	dict_result = [
+		{'name': 'Total doctors', 'value': len(doctors)}, {'name': 'Total users', 'value': len(users)},
+		{'name': 'Appointments', 'value': len(appointments)}, {'name': 'Total income', 'value': income}
+	]
+	return jsonify(dict_result), 200
