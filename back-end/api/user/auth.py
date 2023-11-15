@@ -18,6 +18,12 @@ def signup():
 				- json of msg successfull signup
 	"""
 	data = request.get_json()
+	user = Session.query(User).filter_by(user_name=data['user_name']).first()
+	if user:
+		return jsonify({'error': 'Exist user name'}), 200
+	user = Session.query(User).filter_by(email=data['email']).first()
+	if user:
+		return jsonify({'error': 'Exist email address'}), 200
 	data['password'] = generate_password_hash(data.get('password'), method='scrypt')
 	new_user = User(**data)
 	Session.add(new_user)
@@ -32,14 +38,15 @@ def signin():
 				- json of new access token with code 201 if successfull signin
 				- json with msg if faild signin with code 401 if failed signin
 	"""
-	user_name = request.json.get('user_name', None)
+	email = request.json.get('email', None)
 	password = request.json.get('password', None)
-	user = Session.query(User).filter_by(user_name=user_name).first()
+	user = Session.query(User).filter_by(email=email).first()
 	if user and check_password_hash(user.password, password):
 		access_token = create_access_token(identity=user.id)
-		return jsonify({'access_token': access_token}), 200
+		return jsonify({'access_token': access_token}), 201
 	else:
-		return jsonify({'msg': 'Invalid user name or password'}), 401
+		return jsonify({'error': 'Invalid user name or password'}), 200
+
 
 
 @user_routes.route('/state', methods=['GET'], strict_slashes=False)
