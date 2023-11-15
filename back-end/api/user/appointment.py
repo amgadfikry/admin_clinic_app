@@ -6,6 +6,8 @@ from api.user import user_routes, user_required
 from flask import jsonify, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from models.appointment import Appointment
+from models.doctor import Doctor
+import base64
 
 
 @user_routes.route('/appointment', methods=['POST'], strict_slashes=False)
@@ -21,7 +23,7 @@ def create_appointment():
 	new_appointment = Appointment(**data)
 	Session.add(new_appointment)
 	Session.commit()
-	return jsonify(new_appointment.to_dict()), 201
+	return jsonify({}), 201
 
 
 @user_routes.route('/appointment/<appointment_id>', methods=['DELETE'], strict_slashes=False)
@@ -47,7 +49,14 @@ def get_appointment():
 				- json list of all appointments with code 200
 	"""
 	appointments = Session.query(Appointment).filter_by(user_id=get_jwt_identity()).all()
-	appointment_dict = []
+	appointment_list = []
 	for app in appointments:
-		appointment_dict.append(app.to_dict())
-	return jsonify(appointment_dict), 200
+		app_dict = app.to_dict()
+		doctor = Session.query(Doctor).filter_by(id=app.doctor_id).first()
+		app_dict['doctor_name'] = doctor.full_name
+		doctor_dict = doctor.to_dict()
+		if doctor_dict.get('image'):
+			image_data = base64.b64encode(doctor_dict['image']).decode('utf-8')
+			app_dict['doctor_image'] = 'data:image/jpeg;base64,' + image_data
+		appointment_list.append(app_dict)
+	return jsonify(appointment_list), 200

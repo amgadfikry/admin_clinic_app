@@ -16,7 +16,7 @@ from flask_cors import CORS
 app = Flask('__name__')
 
 # allow cors for api
-CORS(app, resources={r'/api/*': {'origins': 'http://localhost:5173'}})
+CORS(app, resources={r'/api/*': {'origins': '*'}})
 
 # add secret key to flask app
 app.config['secret_key'] = 'da9bf1fe5f672ddcea2f3d9634c31ce4d67d8b2d1fb61eac6f0ab29b81919f6f'

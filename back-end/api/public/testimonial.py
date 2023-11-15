@@ -19,7 +19,7 @@ def get_all_testimonials():
 	testimonial_list = []
 	for testi in testimonials:
 		dict_testimonial = testi.to_dict()
-		user = Session.query(User).filter_by(id=testi.user_id)
+		user = Session.query(User).filter_by(id=testi.user_id).first()
 		dict_testimonial['user_name'] = user.full_name
 		user_dict = user.to_dict()
 		if user_dict.get('image'):
@@ -27,5 +27,5 @@ def get_all_testimonials():
 			dict_testimonial['user_image'] = 'data:image/jpeg;base64,' + image_data
 		else:
 			dict_testimonial['user_image'] = None
-		testimonial_dict.append(dict_testimonial)
+		testimonial_list.append(dict_testimonial)
 	return jsonify(testimonial_list), 200

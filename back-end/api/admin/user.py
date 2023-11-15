@@ -50,8 +50,7 @@ def get_overview():
 	appointments= Session.query(Appointment).filter_by(attend=True).all()
 	income = 0
 	for app in appointments:
-		doctor = Session.query(Doctor).filter_by(id=app.doctor_id).first()
-		income += doctor.price
+		income += app.price
 	dict_result = [
 		{'name': 'Total doctors', 'value': len(doctors)}, {'name': 'Total users', 'value': len(users)},
 		{'name': 'Appointments', 'value': len(appointments)}, {'name': 'Total income', 'value': income}

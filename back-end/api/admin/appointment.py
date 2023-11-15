@@ -9,6 +9,7 @@ from models.appointment import Appointment
 from models.user import User
 from models.speciality import Speciality
 from models.doctor import Doctor
+import base64
 
 
 @admin_routes.route('/appointment/<appointment_id>', methods=['PUT', 'DELETE'], strict_slashes=False)

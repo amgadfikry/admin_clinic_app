@@ -10,6 +10,8 @@ from models.user import User
 from models.appointment import Appointment
 from models.review import Review
 from models.testimonial import Testimonial
+import base64
+from api import check_change_password
 
 @user_routes.route('/signup', methods=['POST'], strict_slashes=False)
 def signup():
@@ -58,17 +60,49 @@ def user_state():
 				- json of user dictionary information with code 200
 	"""
 	user = Session.query(User).filter_by(id=get_jwt_identity()).first()
-	user_dict = user.to_dict()
-	reviews_dict = []
-	for review in user.reviews:
-		reviews_dict.append(review.to_dict())
-	user_dict['reviews'] = reviews_dict
-	appointments_dict = []
-	for appointment in user.appointments:
-		appointments_dict.append(appointment.to_dict())
-	user_dict['appointments'] = appointments_dict
-	testimonial_dict = []
-	for testi in user.testimonials:
-		testimonial_dict.append(testi.to_dict())
-	user_dict['testimonials'] = testimonial_dict
-	return jsonify(user_dict), 200
+	user_data = user.to_dict()
+	if user_data.get('image'):
+		image_data = base64.b64encode(user_data['image']).decode('utf-8')
+		user_data['image'] = 'data:image/jpeg;base64,' + image_data
+	return jsonify(user_data), 200
+
+
+@user_routes.route('/update', methods=['PUT'], strict_slashes=False)
+@jwt_required()
+@user_required
+def update_info():
+	""" change user info in database
+			Return:
+			json of new data of user
+	"""
+	user = Session.query(User).filter_by(id=get_jwt_identity()).first()
+	data = request.get_json()
+	if data.get('image'):
+		image_data = data['image'].split(',')[1]
+		data['image'] = base64.b64decode(image_data)
+	user.update(**data)
+	Session.commit()
+	user_data = user.to_dict()
+	if user_data.get('image'):
+		image_data = base64.b64encode(user_data['image']).decode('utf-8')
+		user_data['image'] = 'data:image/jpeg;base64,' + image_data
+	return jsonify(user_data), 200
+
+
+@user_routes.route('/password', methods=['PUT'], strict_slashes=False)
+@jwt_required()
+@user_required
+def password():
+	""" change user info in database
+			Return:
+			json of new data of user
+	"""
+	user = Session.query(User).filter_by(id=get_jwt_identity()).first()
+	data = request.get_json()
+	errors = check_change_password(data, user.password)
+	if errors:
+		return jsonify({'error': errors}), 200
+	correct_data = {"password": generate_password_hash(data.get('new_password'), method='scrypt')}
+	user.update(**correct_data)
+	Session.commit()
+	return jsonify({}), 200
