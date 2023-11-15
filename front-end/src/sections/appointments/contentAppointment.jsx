@@ -19,18 +19,20 @@ function ContentAppointment() {
   }
 
   const deleteFunction = () => {
+    console.log(confirmDelete)
     const otions = {
-      baseUrl: baseUrl, apiUrl: 'testimonial', id: confirmDelete, dataState: appointmentData, cookies: cookies,
+      baseUrl: baseUrl, apiUrl: 'appointment', id: confirmDelete, dataState: appointmentData, cookies: cookies,
       setDataState: setAppointmentData, setConfirmDelete: setConfirmDelete, navigate: navigate, setServerError: setServerError
     }
     handleDeleteItem(otions)
   }
 
   const handleAttend = (e) => {
-    setAppointmentData(...appointmentData, appointmentData.attend = !appointmentData.attend)
-    const removedict = { ...appointmentData };
-    ['user_name', 'user_image', 'doctor_name', 'speciality'].forEach(el => delete removedict[el])
-    fetch(`${baseUrl}/api/admin/appointment/${removedict.id}`, {
+    const currentApp = appointmentData.findIndex(app => app.id == e.target.id)
+    const copy = [...appointmentData]
+    const removedict = { 'attend': !copy[currentApp].attend };
+
+    fetch(`${baseUrl}/api/admin/appointment/${e.target.id}`, {
       method: 'PUT',
       headers: {
         'Authorization': 'Bearer ' + cookies.token,
@@ -40,7 +42,8 @@ function ContentAppointment() {
       mode: 'cors'
     }).then(response => response.json())
       .then(data => {
-        setAppointmentData({ ...data })
+        copy[currentApp].attend = !copy[currentApp].attend
+        setAppointmentData(copy)
       })
       .catch((error) => {
         setServerError(true)
@@ -95,16 +98,20 @@ function ContentAppointment() {
                           }
                         </div>
                       </td>
+                      <td className="px-2 py-3">{app.date}</td>
                       <td className="px-2 py-3">{app.user_name}</td>
                       <td className="px-2 py-3">{app.speciality}</td>
                       <td className="px-2 py-3">{app.doctor_name}</td>
                       <td className="px-2 py-3">{app.price}</td>
                       <td className="px-2 py-3 flex justify-center items-center" >
-                        {
-                          app.attend
-                            ? <FaUserCheck className='text-green-500 text-2xl' id={app.id} ocClick={handleAttend} />
-                            : <FaUserTimes className='text-red-500 text-2xl' id={app.id} ocClick={handleAttend} />
-                        }
+                        <div className='text-2xl cursor-pointer flex justify-center items-center' id={app.id}
+                          onClick={(e) => handleAttend(e)} >
+                          {
+                            app.attend
+                              ? <FaUserCheck className='text-green-500 text-2xl cursor-pointer' style={{ pointerEvents: "none" }} />
+                              : <FaUserTimes className='text-red-500 text-2xl cursor-pointer' style={{ pointerEvents: "none" }} />
+                          }
+                        </div>
                       </td>
                       <td className="px-2 py-3">
                         <button className='delete-btn' onClick={handleDelete} id={app.id}>Delete</button>

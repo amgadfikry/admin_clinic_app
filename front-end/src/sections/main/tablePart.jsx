@@ -26,16 +26,16 @@ function TablePart({ appointments, doctors }) {
                 </tr>)
                 : (appointments.map((app) => (
                   <tr key={app.id} className="border-b">
-                    <td className="px-2 py-3 ">{app.user}</td>
+                    <td className="px-2 py-3 ">{app.user_name}</td>
                     <td className="px-2 py-3">{app.speciality}</td>
-                    <td className="px-2 py-3">{app.doctor}</td>
+                    <td className="px-2 py-3">{app.doctor_name}</td>
                     <td className="px-2 py-3" >{app.price}</td>
                     <td className="px-2 py-3" >{app.date}</td>
                     <td className="px-2 py-3 flex justify-center items-center">
                       {
                         app.attend
-                          ? (<span className="w-10 h-10 bg-green-600 rounded-full "></span>)
-                          : (<span className="w-10 h-10 bg-gray-500 rounded-full "></span>)
+                          ? (<span className="w-6 h-6 bg-green-600 rounded-full "></span>)
+                          : (<span className="w-6 h-6 bg-gray-500 rounded-full "></span>)
                       }
                     </td>
                   </tr>

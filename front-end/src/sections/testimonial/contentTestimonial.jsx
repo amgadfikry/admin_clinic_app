@@ -34,10 +34,11 @@ function ContentTestimonial() {
   }
 
   const handleLive = (e) => {
-    setTestimonialData(...testimonialData, testimonialData.live = !testimonialData.live)
-    const removedict = { ...testimonialData };
-    ['user_name', 'user_image'].forEach(el => delete removedict[el])
-    fetch(`${baseUrl}/api/admin/testimonial/${removedict.id}`, {
+    const currentTesti = testimonialData.findIndex(testi => testi.id == e.target.id)
+    const copy = [...testimonialData]
+    const removedict = { 'live': !copy[currentTesti].live };
+
+    fetch(`${baseUrl}/api/admin/testimonial/${e.target.id}`, {
       method: 'PUT',
       headers: {
         'Authorization': 'Bearer ' + cookies.token,
@@ -47,7 +48,8 @@ function ContentTestimonial() {
       mode: 'cors'
     }).then(response => response.json())
       .then(data => {
-        setTestimonialData({ ...data })
+        copy[currentTesti].live = !copy[currentTesti].live
+        setTestimonialData(copy)
       })
       .catch((error) => {
         setServerError(true)
@@ -108,12 +110,15 @@ function ContentTestimonial() {
                         <td className="px-2 py-3 flex justify-center items-center" >{
                           <Stars starsNumber={testi.stars} />
                         }</td>
-                        <td className="px-2 py-3 flex justify-center items-center" >
-                          {
-                            testi.live
-                              ? <FaEye className='text-green-500 text-2xl' id={testi.id} ocClick={handleLive} />
-                              : <FaEyeSlash className='text-red-500 text-2xl' id={testi.id} ocClick={handleLive} />
-                          }
+                        <td className="px-2 py-3" >
+                          <div className='text-2xl cursor-pointer flex justify-center items-center' id={testi.id}
+                            onClick={(e) => handleLive(e)} >
+                            {
+                              testi.live
+                                ? <FaEye className='text-green-500 text-2xl cursor-pointer' style={{ pointerEvents: "none" }} />
+                                : <FaEyeSlash className='text-red-500 text-2xl cursor-pointer' style={{ pointerEvents: "none" }} />
+                            }
+                          </div>
                         </td>
                         <td className="px-2 py-3">
                           <button className='details-btn' onClick={handleDetails} id={testi.id}>Preview</button>
