@@ -34,7 +34,7 @@ The inspiration behind the project came from the challenges faced by me as a phy
 [Amgad Fikry Mohamed](https://github.com/amgadfikry)
 
 ### Installation
-- Clone the repository: git clone https://github.com/your_username/healthhub.git
+- Clone the repository.
 - Navigate to the project directory: cd clinic_app
 - Install backend dependencies: pip install -r requirements.txt
 - Install frontend dependencies: cd frontend && npm install
