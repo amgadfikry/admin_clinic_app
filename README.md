@@ -1,4 +1,4 @@
-# Clinic App
+# Clinic Management App
 CMS clinic management app for admins and users dashboard.
 
 ### Screenshots
@@ -26,27 +26,25 @@ Clinic Management System is a comprehensive solution designed to streamline the 
 ### The Story
 The inspiration behind the project came from the challenges faced by me as a physiotherapist in managing both the clinic and its online presence. The clinic app aims to simplify the digital presence of medical service providers, making clinic and record management efficient.
 
-### Project Links:
-- [Admin Dashboard](https://admin.amgadfikry.tech/)
-- [User Landing Page and Dashboard](https://www.amgadfikry.tech/)
-
 ### Author:
 [Amgad Fikry Mohamed](https://github.com/amgadfikry)
 
 ### Installation
-- Clone the repository.
-- Navigate to the project directory: cd clinic_app
-- Install backend dependencies: pip install -r requirements.txt
-- Install frontend dependencies: cd frontend && npm install
-- config database by using init_database.sql and create_admin.py
-- Run the backend server: flash --app api.app run
-- Run the frontend application: cd frontend && npm run dev
+1. Clone the repository.
+  ```git clone https://github.com/amgadfikry/clinic_management_app.git```
+2. Navigate to the project directory
+  ```cd clinic_management_app```
+3. Install Docker and docker-compose if not installed
+4. Up the docker-compose file in the background
+  ```docker compose up -d```
+5. Show logs of the container and make sure both front-end and back-end services are running
+  ```docker compose logs -f```
 
 ### Usage
-- Access the admin dashboard at https://admin.amgadfikry.tech/ with the provided credentials email: admin, password: admin, please not change password or email.
-- Explore and manage clinic-related features.
-- Access the user landing page and dashboard at https://www.amgadfikry.tech/.
-- Sign up, explore features, and make appointments.
+1. Access the admin dashboard at http://localhost:5173/ with the provided credentials email: admin@example.com, password: admin, please do not change the password or email.
+2. Explore and manage clinic-related features like adding new specialties, new doctors, new offers,and new times
+3. Access the user landing page and dashboard at http://localhost:5174/.
+4. Sign up, explore features, and make appointments.
 
 ### Contributing
 If you would like to contribute to the project, please follow these steps:
@@ -55,9 +53,6 @@ If you would like to contribute to the project, please follow these steps:
 - Commit your changes: git commit -m 'Add a new feature'
 - Push to the branch: git push origin feature-name
 - Submit a pull request.
-
-### Related Projects
-[user and landing page](https://github.com/amgadfikry/user_clinic_app)
 
 ### Licensing
 This project is licensed under the MIT License.
