@@ -16,8 +16,6 @@ services:
       #- ./frontend/.env
     depends_on:
       - server
-    expose:
-      - 5174
     command: npm run dev -- --port 5174 --host
 
   # Front-end_admin service (admin dashboard)
@@ -37,8 +35,6 @@ services:
       #- ./frontend/.env
     depends_on:
       - server
-    expose:
-      - 5173
     command: npm run dev -- --host
 
   # back-end servive (server)
@@ -50,8 +46,8 @@ services:
       frontend-server:
         ipv4_address: 172.29.0.6
       mysql-server:
-    ports:
-      - 5000:5000
+    expose:
+      - 5000
     volumes:
       - ./back-end:/app
     environment:
@@ -70,8 +66,8 @@ services:
     restart: always
     networks:
       - mysql-server
-    ports:
-      - 3306:3306
+    expose:
+      - 3306
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
     volumes:
