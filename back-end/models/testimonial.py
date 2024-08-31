@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """ module that create table of testimonials inherite from Base
-		of sqlalchemy and from Basemodel
+	of sqlalchemy and from Basemodel
 """
 from models.base_model import Base, BaseModel
 from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
@@ -8,10 +8,10 @@ from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
 
 class Testimonial(BaseModel, Base):
 	""" class or models to create reviews tables in databases
-			Columns:
-				user_id: string represent user id as foreign key
-				details: long string represent review details
-				stars: integer represent number of stars given to doctor in review
+		Columns:
+			user_id: string represent user id as foreign key (required field)
+			details: long string represent review details (required field)
+			stars: integer represent number of stars given to doctor in review (required field)
 	"""
 	__tablename__ = 'testimonials'
 	user_id = Column(String(60), ForeignKey('users.id'), nullable=False)

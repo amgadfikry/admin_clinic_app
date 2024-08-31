@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """ module of base_model class that hold all common features in all
-		others models of sqlalchemy as created at, updated at, id
+	others models of sqlalchemy that represents tables
+	as created at, updated at, id
 """
 from uuid import uuid4
 from datetime import datetime
@@ -11,11 +12,11 @@ Base = declarative_base()
 
 class BaseModel:
 	""" model that is base for other models prepresents tables of database
-			using sqlalchemy
-			Columns:
-				id: represnt id column in table using uuid library
-				created_at: represend date of creation of new row in table using datetime library
-				updated_at: represend updated date when update row in table using datetime library
+		using sqlalchemy
+		Columns:
+			id: represnt id column in table using uuid library (required field , unique field)
+			created_at: represend date of creation of new row in table using datetime library (required field)
+			updated_at: represend updated date when update row in table using datetime library (required field)
 	"""
 	id = Column(String(60), primary_key=True, nullable=False, unique=True)
 	created_at = Column(String(60), nullable=False)
@@ -24,14 +25,12 @@ class BaseModel:
 
 	def __init__(self, *args, **kwargs):
 		""" init magic method that initate the new value in start of class
-				if new instance create new value
-				if provide dictionary of value set values to column
-				and pass key values that not part from models as table_name
-				ATTR:
-					*args: list of arguments of function
-					**kwargs: dictionary of values that add to rows
+			if new instance create new value
+			if provide dictionary of value set values to column and pass key values that not part from models as table_name
+			ATTR:
+				*args: list of arguments of function
+				**kwargs: dictionary of values that add to rows
 		"""
-		#			if hasattr(self, key):
 		for key, value in kwargs.items():
 			if key not in ['table_name']:
 				setattr(self, key, value)
@@ -51,7 +50,7 @@ class BaseModel:
 
 	def to_dict(self):
 		""" instance public method that convert class to dictionary with
-				add new dict key and value represent table name
+			add new dict key and value represent table name
 		"""
 		new_dict = {}
 		new_dict.update(self.__dict__)
@@ -64,11 +63,10 @@ class BaseModel:
 
 
 	def update(self, *args, **kwargs):
-		""" public instance method that update value in model
-				and update updated_at value
-				Params:
-					key: represent key or column name in table
-					value: represent new value to update it
+		""" public instance method that update value in model and update updated_at value
+			Params:
+				key: represent key or column name in table
+				value: represent new value to update it
 		"""
 		for key, value in kwargs.items():
 			if key == 'updated_at':

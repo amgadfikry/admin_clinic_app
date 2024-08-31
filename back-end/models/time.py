@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """ module that create table of times inherite from Base
-		of sqlalchemy and from Basemodel
+	of sqlalchemy and from Basemodel
 """
 from models.base_model import Base, BaseModel
 from sqlalchemy import Column, String, Integer
@@ -9,11 +9,11 @@ from sqlalchemy.orm import column_property
 
 class Time(BaseModel, Base):
 	""" class or models to create times tables in databases
-			Columns:
-				day: string represent day of clinic
-				start: string represent start of clinic in hours 24 format
-				end: string represent end of clinic in hours 24 format
-				max_patients: calculate numbers of pateints in hours of work based on other columns values
+		Columns:
+			day: string represent day of clinic (required field)
+			start: string represent start of clinic in hours 24 format (required field)
+			end: string represent end of clinic in hours 24 format (required field)
+			max_patients: calculate numbers of pateints in hours of work based on other columns values
 	"""
 	__tablename__ = 'times'
 	day = Column(String(60), nullable=False)

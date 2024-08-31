@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """ module that create table of reviews inherite from Base
-		of sqlalchemy and from Basemodel
+	of sqlalchemy and from Basemodel
 """
 from models.base_model import Base, BaseModel
 from sqlalchemy import Column, String, Integer, ForeignKey
@@ -8,11 +8,11 @@ from sqlalchemy import Column, String, Integer, ForeignKey
 
 class Review(BaseModel, Base):
 	""" class or models to create reviews tables in databases
-			Columns:
-				user_id: string represent user id as foreign key
-				doctor_id: string represent doctor id as foreign key
-				text: long string represent review details
-				stars: integer represent number of stars given to doctor in review
+		Columns:
+			user_id: string represent user id as foreign key (required field)
+			doctor_id: string represent doctor id as foreign key (required field)
+			text: long string represent review details (optional field)
+			stars: integer represent number of stars given to doctor in review (required field)
 	"""
 	__tablename__ = 'reviews'
 	user_id = Column(String(60), ForeignKey('users.id'), nullable=False)

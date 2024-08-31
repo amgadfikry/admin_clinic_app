@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """ module that create table of admin inherite from Base
-		of sqlalchemy and from Basemodel
+	of sqlalchemy and from Basemodel
 """
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, LargeBinary
@@ -8,12 +8,12 @@ from sqlalchemy import Column, String, LargeBinary
 
 class Admin(BaseModel, Base):
 	""" class or models to create admins tables in databases
-			Columns:
-				admin_name: string represent admin full name
-				admin_name: string represent admin user_name
-				password:  hashed string represent password of admin
-				email: string represent email of admin
-				image: binary represent profile image of admin
+		Columns:
+			admin_name: string represent admin full name (required field)
+			admin_name: string represent admin user_name (required field)
+			password:  hashed string represent password of admin (required field)
+			email: string represent email of admin (required field)
+			image: binary represent profile image of admin (optional field)
 	"""
 	__tablename__ = 'admins'
 	admin_name = Column(String(256), nullable=False)
