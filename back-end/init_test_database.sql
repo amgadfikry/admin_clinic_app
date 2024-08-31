@@ -7,5 +7,14 @@ CREATE USER IF NOT EXISTS 'api_test'@'%' IDENTIFIED BY 'test';
 -- Grant all privileges on the 'clinic_test_db' database to the 'api_test' user
 GRANT ALL PRIVILEGES ON clinic_test_db.* TO 'api_test'@'%';
 
+-- Create a new database if it does not exist
+CREATE DATABASE IF NOT EXISTS clinic_db;
+
+-- Create a user 'api' with a password if it does not exist
+CREATE USER IF NOT EXISTS 'api'@'%' IDENTIFIED BY 'api';
+
+-- Grant all privileges on the 'clinic_test_db' database to the 'api_test' user
+GRANT ALL PRIVILEGES ON clinic_db.* TO 'api'@'%';
+
 -- Flush privileges to apply the changes immediately
 FLUSH PRIVILEGES;
