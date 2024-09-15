@@ -19,7 +19,7 @@ import os
 
 
 # create engine with mysql database
-engine = create_engine('mysql+mysqldb://api:api@mysql:3306/clinic_db')
+engine = create_engine('mysql+mysqldb://api_test:test@mysql:3306/clinic_test_db')
 
 # create all table by add it to metadata of Base class of sqlalchemy
 Base.metadata.create_all(engine)
